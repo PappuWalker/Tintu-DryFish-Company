@@ -160,4 +160,19 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  @keyframes fade-in-right {
+    0% {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .animate-fade-in-right {
+    animation: fade-in-right 0.5s ease-out forwards; /* Changed from 1.5s to 0.9s */
+  }
 }

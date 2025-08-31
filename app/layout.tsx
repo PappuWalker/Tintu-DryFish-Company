@@ -34,7 +34,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="bg-background text-foreground font-sans antialiased">
         <CartProvider>
           <SiteHeader />
-          <div className="pt-16"> {/* Add padding to account for fixed header */}
+          <div className="pt-16"> {/* Added padding-top to display content after the fixed header */}
             <Suspense fallback={null}>{children}</Suspense>
           </div>
           <Analytics />
