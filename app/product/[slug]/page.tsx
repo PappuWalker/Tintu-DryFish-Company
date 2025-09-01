@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { ProductSection } from "@/components/product-section";
 import { products } from "@/lib/products";
 import { Button } from "@/components/ui/button";
@@ -11,7 +11,9 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
   const { addToCart } = useCart();
   const [quantity, setQuantity] = useState(1);
 
-  const product = products.find(p => p.name.toLowerCase().replace(/\s+/g, '-') === decodeURIComponent(params.slug));
+  const resolvedParams = React.use(Promise.resolve(params));
+  const { slug } = resolvedParams;
+  const product = products.find(p => p.name.toLowerCase().replace(/\s+/g, '-') === decodeURIComponent(slug));
 
   if (!product) {
     return <div className="container mx-auto px-4 py-10 text-center">Product not found.</div>;
