@@ -3,7 +3,7 @@ import { Hero } from "@/components/hero"
 import { HighlyRecommendedSection } from "@/components/highly-recommended-section"
 import { ProductSection } from "@/components/product-section"
 import { Reviews } from "@/components/reviews"
-import { SiteFooter } from "@/components/site-footer"
+import StickyFooter from "@/components/ui/footer"
 import { getRandomProducts } from "@/lib/products"
 import { getHighlyRecommendedProducts } from "@/lib/highly-recommended-products"
 
@@ -35,7 +35,7 @@ export default function HomePage() {
         <Reviews />
       </section>
 
-      <SiteFooter />
+      <StickyFooter />
     </main>
   )
 }

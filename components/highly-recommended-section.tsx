@@ -11,10 +11,10 @@ import { slugify } from "@/lib/utils";
 const ProductCard = memo(({ product, isActive }: { product: Product; isActive: boolean }) => (
   <Link
     href={`/product/${slugify(product.name)}`}
-    className={`p-4 cursor-pointer text-center transition-all duration-300 ease-in-out rounded-lg block
+    className={`p-2 md:p-4 cursor-pointer text-center transition-all duration-300 ease-in-out rounded-lg block
                 ${isActive ? 'bg-gradient-to-r from-[#020a08] via-[#2f3c41] to-[#020a08] text-white shadow-lg scale-105' : 'bg-gray-100 text-gray-800 hover:bg-gray-200'}`}
   >
-    <span className="block font-semibold text-lg">
+    <span className="block font-semibold text-sm md:text-lg">
       {product.name}
     </span>
   </Link>
@@ -77,7 +77,7 @@ export function HighlyRecommendedSection() {
     <section className="container mx-auto py-8 px-4 product-showcase-section">
       <h2 className="text-3xl font-bold text-center mb-8">Highly Recommended</h2>
       <div className="flex flex-col gap-8 items-center">
-        <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
           {products.map((product, index) => (
             <ProductCard
               key={product.id}
@@ -86,7 +86,7 @@ export function HighlyRecommendedSection() {
             />
           ))}
         </div>
-        <div className="w-full relative max-w-[1000px] h-[500px] overflow-hidden rounded-lg shadow-lg"> {/* Set card size to 1000x500 */}
+        <div className="relative w-[315px] h-[250px] md:w-full md:h-[500px] md:max-w-[1000px] lg:w-[1000px] lg:h-[600px] overflow-hidden rounded-lg shadow-lg mx-auto"> {/* 315x250 mobile, 1000x500 on md, 1000x700 on lg+ */}
           {products.map((product, index) => (
             <ProductImage
               key={product.id}

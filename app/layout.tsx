@@ -6,6 +6,8 @@ import "./globals.css"
 import { Suspense } from "react"
 import { SiteHeader } from "@/components/site-header"
 import { CartProvider } from "@/context/cart-context"
+import { ThemeProvider } from "@/components/theme-provider"
+import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
   title: "Tintu Cuts",
@@ -30,15 +32,18 @@ const firaCode = Fira_Code({
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${montserratAlternates.variable} ${lora.variable} ${firaCode.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${montserratAlternates.variable} ${lora.variable} ${firaCode.variable}`}>
       <body className="bg-background text-foreground font-sans antialiased">
-        <CartProvider>
-          <SiteHeader />
-          <div className="pt-16"> {/* Added padding-top to display content after the fixed header */}
-            <Suspense fallback={null}>{children}</Suspense>
-          </div>
-          <Analytics />
-        </CartProvider>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false} disableTransitionOnChange>
+          <CartProvider>
+            <SiteHeader />
+            <div className="pt-16"> {/* Added padding-top to display content after the fixed header */}
+              <Suspense fallback={null}>{children}</Suspense>
+            </div>
+            <Analytics />
+          </CartProvider>
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   )
