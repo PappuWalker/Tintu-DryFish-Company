@@ -12,7 +12,7 @@ const ProductCard = memo(({ product, isActive }: { product: Product; isActive: b
   <Link
     href={`/product/${slugify(product.name)}`}
     className={`p-4 cursor-pointer text-center transition-all duration-300 ease-in-out rounded-lg block
-                ${isActive ? 'bg-[#172526] text-white shadow-lg scale-105' : 'bg-gray-100 text-gray-800 hover:bg-gray-200'}`}
+                ${isActive ? 'bg-gradient-to-r from-[#020a08] via-[#2f3c41] to-[#020a08] text-white shadow-lg scale-105' : 'bg-gray-100 text-gray-800 hover:bg-gray-200'}`}
   >
     <span className="block font-semibold text-lg">
       {product.name}

@@ -11,8 +11,7 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
   const { addToCart } = useCart();
   const [quantity, setQuantity] = useState(1);
 
-  const resolvedParams = React.use(Promise.resolve(params));
-  const { slug } = resolvedParams;
+  const { slug } = params;
   const product = products.find(p => p.name.toLowerCase().replace(/\s+/g, '-') === decodeURIComponent(slug));
 
   if (!product) {

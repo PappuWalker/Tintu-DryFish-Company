@@ -23,7 +23,7 @@ export function ProductSection({ title, products }: { title: string; products: P
               background="transparent"
               borderRadius="10px"
               borderColor="transparent"
-              className="flex flex-col h-[528px] rounded-lg hover:shadow-lg transition-shadow cursor-pointer overflow-hidden"
+              className="flex flex-col h-[528px] rounded-lg shadow-lg transition-shadow cursor-pointer overflow-hidden"
             >
               <div className="p-0">
                 <div className="aspect-square overflow-hidden rounded-t-lg">

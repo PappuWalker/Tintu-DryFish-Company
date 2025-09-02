@@ -37,12 +37,12 @@ export const CustomButton: React.FC<ButtonProps> = ({
       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#212b2e] to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out"></div>
 
       {/* Overlay glow */}
-      <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#020a08] via-[#212b2e] to-[#020a08] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+      <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#020a08] via-[#536469] to-[#020a08] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
       {/* Content */}
       <div className="relative z-10 flex items-center gap-4">
         {/* Icon */}
-        <div className="p-3 rounded-lg bg-gradient-to-br from-[#020a08] to-[#212b2e] backdrop-blur-sm group-hover:from-[#020a08] group-hover:to-[#212b2e] transition-all duration-300 w-10 h-10 text-white group-hover:text-white/90 transition-all duration-300 group-hover:scale-110 drop-shadow-lg flex items-center justify-center">
+        <div className="p-3 rounded-lg bg-gradient-to-br from-[#020a08] to-[#4f5557] backdrop-blur-sm group-hover:from-[#020a08] group-hover:to-[#690000] transition-all duration-300 w-10 h-10 text-white group-hover:text-white/90 transition-all duration-300 group-hover:scale-110 drop-shadow-lg flex items-center justify-center">
           {icon}
         </div>
 

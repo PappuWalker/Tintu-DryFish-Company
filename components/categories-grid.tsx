@@ -26,9 +26,9 @@ export function CategoriesGrid() {
         <Link href={`/category/${encodeURIComponent(cat.key.replace(/\s+/g, '-'))}`} key={cat.key}>
           <GlareHover
             glareColor="#ffffff"
-            glareOpacity={0.3}
+            glareOpacity={10.3}
             glareAngle={-30}
-            glareSize={300}
+            glareSize={700}
             transitionDuration={800}
             playOnce={false}
             width="auto"
@@ -37,7 +37,7 @@ export function CategoriesGrid() {
             borderRadius="10px"
             borderColor="transparent"
           >
-            <div className="rounded-lg hover:shadow-lg transition-shadow cursor-pointer relative overflow-hidden">
+            <div className="rounded-lg shadow-lg transition-shadow cursor-pointer relative overflow-hidden">
               <img
                 src={cat.image}
                 alt={`${cat.label} category`}
