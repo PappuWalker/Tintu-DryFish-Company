@@ -23,15 +23,15 @@ export function SiteHeader() {
       <div className="container flex h-16 items-center justify-between gap-4 px-4">
         {/* Mobile: search bar (166x36), theme, hamburger */}
         <div className="ml-auto flex items-center md:hidden gap-2">
-          <button
-            type="button"
+          <Button
+            variant="ghost"
+            size="icon"
             aria-label="Open search"
             onClick={() => setCommandOpen(true)}
-            className="w-[166px] h-9 rounded-md border border-white/20 bg-white/10 px-3 text-left text-sm text-white/80 flex items-center gap-2 hover:bg-white/15 focus:outline-none focus:ring-2 focus:ring-white/30"
+            className="text-white hover:bg-white/20"
           >
-            <Search className="h-4 w-4 text-white/70" />
-            <span className="truncate">Search</span>
-          </button>
+            <Search className="h-5 w-5" />
+          </Button>
           <ThemeToggle />
           <Sheet>
             <SheetTrigger asChild>

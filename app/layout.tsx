@@ -7,7 +7,8 @@ import { Suspense } from "react"
 import { SiteHeader } from "@/components/site-header"
 import { CartProvider } from "@/context/cart-context"
 import { ThemeProvider } from "@/components/theme-provider"
-import { Toaster } from "@/components/ui/toaster"
+import { Toaster } from "@/components/ui/toaster";
+import { ConditionalFloatingCartButton } from "@/components/conditional-floating-cart-button";
 
 export const metadata: Metadata = {
   title: "Tintu Cuts",
@@ -40,6 +41,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <div className="pt-16"> {/* Added padding-top to display content after the fixed header */}
               <Suspense fallback={null}>{children}</Suspense>
             </div>
+            <ConditionalFloatingCartButton />
             <Analytics />
           </CartProvider>
           <Toaster />

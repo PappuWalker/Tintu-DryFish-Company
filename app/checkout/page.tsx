@@ -35,21 +35,21 @@ export default function CheckoutPage() {
               {cart.map((item) => (
                 <div key={item.name} className="flex items-center gap-4 border rounded-xl p-3 md:p-4">
                   <img src={item.image} alt={item.name} className="w-16 h-16 md:w-20 md:h-20 object-cover rounded-lg" />
-                  <div className="flex-1 min-w-0">
-                    <h3 className="font-semibold truncate">{item.name}</h3>
-                    <p className="text-muted-foreground">₹{item.price.toFixed(2)}</p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Button variant="outline" size="icon" onClick={() => updateQuantity(item.name, item.quantity - 1)} aria-label="Decrease quantity">
-                      <Minus className="h-4 w-4" />
-                    </Button>
-                    <span className="text-base md:text-lg font-semibold w-6 text-center">{item.quantity}</span>
-                    <Button variant="outline" size="icon" onClick={() => updateQuantity(item.name, item.quantity + 1)} aria-label="Increase quantity">
-                      <Plus className="h-4 w-4" />
-                    </Button>
-                    <Button variant="ghost" size="icon" onClick={() => removeFromCart(item.name)} aria-label="Remove item">
-                      <Trash2 className="h-4 w-4 text-red-500" />
-                    </Button>
+                  <div className="flex-1 min-w-0 pr-2">
+                    <h3 className="font-semibold whitespace-normal">{item.name}</h3>
+                    <p className="text-muted-foreground mb-2">₹{item.price.toFixed(2)}</p> {/* Added mb-2 for spacing */}
+                    <div className="flex items-center gap-2">
+                      <Button variant="outline" size="icon" onClick={() => updateQuantity(item.name, item.quantity - 1)} aria-label="Decrease quantity">
+                        <Minus className="h-4 w-4" />
+                      </Button>
+                      <span className="text-base md:text-lg font-semibold w-6 text-center">{item.quantity}</span>
+                      <Button variant="outline" size="icon" onClick={() => updateQuantity(item.name, item.quantity + 1)} aria-label="Increase quantity">
+                        <Plus className="h-4 w-4" />
+                      </Button>
+                      <Button variant="ghost" size="icon" onClick={() => removeFromCart(item.name)} aria-label="Remove item">
+                        <Trash2 className="h-4 w-4 text-red-500" />
+                      </Button>
+                    </div>
                   </div>
                 </div>
               ))}
