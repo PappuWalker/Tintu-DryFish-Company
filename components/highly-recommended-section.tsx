@@ -3,8 +3,7 @@
 import React, { useState, useEffect, useCallback, memo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { getHighlyRecommendedProducts } from "@/lib/highly-recommended-products";
-import { Product } from "@/lib/products";
+import { getRandomProducts, Product } from "@/lib/products";
 import { slugify } from "@/lib/utils";
 
 // Memoized components for better performance
@@ -53,7 +52,11 @@ export function HighlyRecommendedSection() {
   useEffect(() => {
     setIsMounted(true);
     // Fetch and shuffle products only on the client side
-    setProducts(getHighlyRecommendedProducts(8));
+    const fetchAndSetProducts = async () => {
+      const randomProducts = await getRandomProducts(4); // Fetch 4 random products
+      setProducts(randomProducts);
+    };
+    fetchAndSetProducts();
   }, []);
 
   // Product rotation effect

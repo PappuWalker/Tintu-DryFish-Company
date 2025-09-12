@@ -1,15 +1,24 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import { CategoriesGrid } from "@/components/categories-grid"
 import { Hero } from "@/components/hero"
 import { HighlyRecommendedSection } from "@/components/highly-recommended-section"
 import { ProductSection } from "@/components/product-section"
 import { Reviews } from "@/components/reviews"
 import StickyFooter from "@/components/ui/footer"
-import { getRandomProducts } from "@/lib/products"
-import { getHighlyRecommendedProducts } from "@/lib/highly-recommended-products"
+import { getRandomProducts, Product } from "@/lib/products"
 
 export default function HomePage() {
-  const featuredProducts = getRandomProducts(8);
-  const highlyRecommendedProducts = getHighlyRecommendedProducts(8);
+  const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    const loadFeaturedProducts = async () => {
+      const products = await getRandomProducts(8);
+      setFeaturedProducts(products);
+    };
+    loadFeaturedProducts();
+  }, []);
 
   return (
     <main className="min-h-screen">

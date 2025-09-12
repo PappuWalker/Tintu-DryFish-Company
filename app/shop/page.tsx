@@ -1,18 +1,31 @@
 "use client"
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ProductSection } from "@/components/product-section";
-import { products } from "@/lib/products";
+import { fetchProducts, Product } from "@/lib/products";
 import { Button } from "@/components/ui/button";
 
 export default function ShopPage() {
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("all products");
+  const [uniqueCategories, setUniqueCategories] = useState<string[]>([]);
 
-  const uniqueCategories = ["all products", ...Array.from(new Set(products.map(p => p.category)))];
+  useEffect(() => {
+    const loadProducts = async () => {
+      const fetchedProducts = await fetchProducts();
+      setAllProducts(fetchedProducts);
+
+      const categoriesFromApi = Array.from(new Set(fetchedProducts.map(p => p.category)));
+      // Ensure "frozen" and "non frozen" tabs are always present
+      const allPossibleCategories = ["all products", ...categoriesFromApi, "frozen", "non frozen"];
+      setUniqueCategories(Array.from(new Set(allPossibleCategories)));
+    };
+    loadProducts();
+  }, []);
 
   const filteredProducts = selectedCategory === "all products"
-    ? products
-    : products.filter(p => p.category.toLowerCase() === selectedCategory.toLowerCase());
+    ? allProducts
+    : allProducts.filter(p => p.category.toLowerCase() === selectedCategory.toLowerCase());
 
   return (
     <div className="container mx-auto px-4 py-10">

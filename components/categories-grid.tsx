@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link"
+import { useState, useEffect } from "react";
 import { CustomButton } from "@/components/ui/custom-button"
-import { products } from "@/lib/products"
+import { fetchProducts, Product } from "@/lib/products"
 import GlareHover from './GlareHover'
 
 const categoryIcons: { [key: string]: string } = {
@@ -11,14 +14,31 @@ const categoryIcons: { [key: string]: string } = {
 };
 
 export function CategoriesGrid() {
-  const uniqueCategories = Array.from(new Set(products.map(p => p.category))).map(category => {
-    const product = products.find(p => p.category === category);
-    return {
-      key: category,
-      label: category.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '),
-      image: product?.image || "/placeholder.svg?height=400&width=400&query=category"
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
+  const [uniqueCategories, setUniqueCategories] = useState<
+    { key: string; label: string; image: string }[]
+  >([]);
+
+  useEffect(() => {
+    const loadProducts = async () => {
+      const fetchedProducts = await fetchProducts();
+      setAllProducts(fetchedProducts);
+
+      const categoriesFromApi = Array.from(new Set(fetchedProducts.map(p => p.category)));
+      const allPossibleCategories = [...categoriesFromApi, "frozen", "non frozen"]; // Ensure frozen and non frozen tabs are always present
+
+      const categoriesData = Array.from(new Set(allPossibleCategories)).map(category => {
+        const product = fetchedProducts.find(p => p.category === category);
+        return {
+          key: category,
+          label: category.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '),
+          image: product?.image || "/placeholder.svg?height=400&width=400&query=category"
+        };
+      });
+      setUniqueCategories(categoriesData);
     };
-  });
+    loadProducts();
+  }, []);
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">

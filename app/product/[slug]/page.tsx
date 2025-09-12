@@ -1,24 +1,39 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ProductSection } from "@/components/product-section";
-import { products } from "@/lib/products";
+import { fetchProducts, Product } from "@/lib/products";
 import { Button } from "@/components/ui/button";
 import { Star, Minus, Plus, ShoppingCart } from "lucide-react";
 import { useCart } from "@/context/cart-context";
+import { useParams } from "next/navigation";
 
-export default function ProductDetailPage({ params }: { params: { slug: string } }) {
+export default function ProductDetailPage() {
+  const params = useParams<{ slug: string }>();
   const { addToCart } = useCart();
   const [quantity, setQuantity] = useState(1);
+  const [product, setProduct] = useState<Product | null>(null);
+  const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
 
-  const { slug } = params;
-  const product = products.find(p => p.name.toLowerCase().replace(/\s+/g, '-') === decodeURIComponent(slug));
+  const slug = decodeURIComponent(String(params.slug));
+
+  useEffect(() => {
+    const loadProduct = async () => {
+      const allProducts = await fetchProducts();
+      const foundProduct = allProducts.find(p => p.name.toLowerCase().replace(/\s+/g, '-') === decodeURIComponent(slug));
+      setProduct(foundProduct || null);
+
+      if (foundProduct) {
+        const related = allProducts.filter(p => p.category === foundProduct.category && p.name !== foundProduct.name).slice(0, 4);
+        setRelatedProducts(related);
+      }
+    };
+    loadProduct();
+  }, [slug]);
 
   if (!product) {
     return <div className="container mx-auto px-4 py-10 text-center">Product not found.</div>;
   }
-
-  const relatedProducts = products.filter(p => p.category === product.category && p.name !== product.name).slice(0, 4);
 
   const handleAddToCart = () => {
     addToCart(product, quantity);

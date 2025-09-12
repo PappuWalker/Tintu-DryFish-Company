@@ -4,7 +4,7 @@ import * as React from "react"
 import { CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
 import { useRouter } from "next/navigation"
 import { Search } from "lucide-react"
-import { products } from "@/lib/products"
+import { fetchProducts, Product } from "@/lib/products"
 
 export function CommandMenu({
   open,
@@ -14,6 +14,7 @@ export function CommandMenu({
   onOpenChange: (open: boolean) => void
 }) {
   const router = useRouter()
+  const [products, setProducts] = React.useState<Product[]>([]);
 
   React.useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
@@ -25,6 +26,14 @@ export function CommandMenu({
     window.addEventListener("keydown", onKeyDown)
     return () => window.removeEventListener("keydown", onKeyDown)
   }, [open, onOpenChange])
+
+  React.useEffect(() => {
+    const loadProducts = async () => {
+      const fetchedProducts = await fetchProducts();
+      setProducts(fetchedProducts);
+    };
+    loadProducts();
+  }, []);
 
   const go = (href: string) => {
     onOpenChange(false)
