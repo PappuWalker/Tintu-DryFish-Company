@@ -18,28 +18,21 @@ export default function ContactPage() {
               <div className="p-2 rounded-lg bg-primary/10 text-primary"><Mail className="w-5 h-5" /></div>
               <div>
                 <p className="font-semibold">Email</p>
-                <p className="text-sm text-muted-foreground">info@tintudryfish.com</p>
+                <p className="text-sm text-muted-foreground">Tintucuts@gmail.com</p>
               </div>
             </div>
             <div className="mt-4 flex items-start gap-3">
               <div className="p-2 rounded-lg bg-primary/10 text-primary"><Phone className="w-5 h-5" /></div>
               <div>
                 <p className="font-semibold">Phone</p>
-                <p className="text-sm text-muted-foreground">+91 98765 43210</p>
+                <p className="text-sm text-muted-foreground">+91 9962040219,  +91 6383115007</p>
               </div>
             </div>
             <div className="mt-4 flex items-start gap-3">
               <div className="p-2 rounded-lg bg-primary/10 text-primary"><MapPin className="w-5 h-5" /></div>
               <div>
                 <p className="font-semibold">Address</p>
-                <p className="text-sm text-muted-foreground">123 Dry Fish Lane, Seafood City, India</p>
-              </div>
-            </div>
-            <div className="mt-4 flex items-start gap-3">
-              <div className="p-2 rounded-lg bg-primary/10 text-primary"><Clock className="w-5 h-5" /></div>
-              <div>
-                <p className="font-semibold">Hours</p>
-                <p className="text-sm text-muted-foreground">Mon - Sat: 9:00 AM - 7:00 PM</p>
+                <p className="text-sm text-muted-foreground">No: 4G, 1 Cross Street,Bhavani Nagar, Old Pallavaram, Chennai-600117</p>
               </div>
             </div>
           </div>
@@ -71,6 +64,22 @@ export default function ContactPage() {
               </div>
             </form>
           </div>
+        </div>
+      </div>
+
+      {/* Google Map */}
+      <div className="mt-10">
+        <h2 className="text-2xl md:text-3xl font-bold tracking-tight mb-4 text-center">Find Us on the Map</h2>
+        <div className="relative h-[400px] w-full overflow-hidden rounded-2xl border border-border shadow-xl">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.9957000000003!2d80.20900000000001!3d12.971599999999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a525d2d2d2d2d2d%3A0x2d2d2d2d2d2d2d2d!2sNo%3A4G%2C1%20Cross%20Street%2CBhavani%20Nagar%2C%20Old%20Pallavaram%2CChennai-600117!5e0!3m2!1sen!2sin!4v1678912345678!5m2!1sen!2sin"
+            width="100%"
+            height="100%"
+            style={{ border: 0 }}
+            allowFullScreen={true}
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          ></iframe>
         </div>
       </div>
     </div>

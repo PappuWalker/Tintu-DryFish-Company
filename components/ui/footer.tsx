@@ -1,6 +1,7 @@
 "use client"
 
 import { motion, type Variants } from "motion/react"
+import { Instagram, MessageCircle } from "lucide-react"; // Import social media icons
 
 // Animation variants for reusability
 const containerVariants: Variants = {
@@ -62,15 +63,26 @@ const backgroundVariants: Variants = {
 // Footer data for better maintainability
 const footerData = {
   sections: [
-    { title: "Links", links: ["Shop", "Categories", "Contact"] },
-    { title: "Company", links: ["Tintu Cuts", "Our Mission", "Careers", "Press"] },
-    { title: "Support", links: ["Help Center", "Shipping", "Returns", "Track Order"] },
-    { title: "Resources", links: ["Blog", "Recipes", "Community", "FAQ"] },
+    {
+      title: "Links",
+      links: [
+        { label: "Shop", href: "/shop" },
+        { label: "Categories", href: "/category" },
+        { label: "Contact", href: "/contact" },
+      ],
+    },
+    {
+      title: "Company",
+      links: [
+        { label: "Tintu Cuts", href: "/" },
+        { label: "Our Mission", href: "/about" },
+        { label: "Help Center", href: "/contact" },
+      ],
+    },
   ],
   social: [
-    { href: "#", label: "Twitter", icon: "T" },
-    { href: "#", label: "GitHub", icon: "G" },
-    { href: "#", label: "LinkedIn", icon: "L" },
+    { href: "https://www.instagram.com/tintu_cuts?igsh=NTA4YTkxZDJiNW80&utm_source=qr", label: "Instagram", icon: <Instagram className="w-4 h-4" /> },
+    { href: "https://chat.whatsapp.com/KDn1mXcSfANFnlD5G2tMDq?mode=ems_copy_t", label: "WhatsApp", icon: <MessageCircle className="w-4 h-4" /> },
   ],
   title: "Tintu Cuts",
   subtitle: "Premium seafood, fresh or frozen, delivered fast.",
@@ -78,7 +90,7 @@ const footerData = {
 }
 
 // Reusable components
-const NavSection = ({ title, links, index }: { title: string; links: string[]; index: number }) => (
+const NavSection = ({ title, links, index }: { title: string; links: { label: string; href: string }[]; index: number }) => (
   <motion.div variants={itemVariants} custom={index} className="flex flex-col gap-2">
     <motion.h3
       initial={{ opacity: 0, y: -10 }}
@@ -93,7 +105,7 @@ const NavSection = ({ title, links, index }: { title: string; links: string[]; i
         key={linkIndex}
         variants={linkVariants}
         custom={linkIndex}
-        href="#"
+        href={link.href}
         whileHover={{
           x: 8,
           transition: { type: "spring", stiffness: 300, damping: 20 },
@@ -101,7 +113,7 @@ const NavSection = ({ title, links, index }: { title: string; links: string[]; i
         className="text-muted-foreground hover:text-foreground transition-colors duration-300 font-sans text-xs md:text-sm group relative"
       >
         <span className="relative">
-          {link}
+          {link.label}
           <motion.span
             className="absolute bottom-0 left-0 h-0.5 bg-primary"
             initial={{ width: 0 }}
@@ -114,7 +126,7 @@ const NavSection = ({ title, links, index }: { title: string; links: string[]; i
   </motion.div>
 )
 
-const SocialLink = ({ href, label, icon, index }: { href: string; label: string; icon: string; index: number }) => (
+const SocialLink = ({ href, label, icon, index }: { href: string; label: string; icon: React.ReactNode; index: number }) => (
   <motion.a
     variants={socialVariants}
     custom={index}
@@ -129,7 +141,7 @@ const SocialLink = ({ href, label, icon, index }: { href: string; label: string;
     aria-label={label}
   >
     <motion.span
-      className="text-xs md:text-sm font-bold text-muted-foreground group-hover:text-primary-foreground"
+      className="text-muted-foreground group-hover:text-primary-foreground" // Removed font-bold and text-xs/sm as icon components handle their own sizing/styling
       whileHover={{ scale: 1.1 }}
     >
       {icon}

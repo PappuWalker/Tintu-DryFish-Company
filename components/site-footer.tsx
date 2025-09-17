@@ -10,36 +10,41 @@ export function SiteFooter() {
           <h4 className="font-medium">Links</h4>
           <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
             <li>
-              <a href="#" className="hover:text-foreground">
+              <a href="/shop" className="hover:text-foreground">
                 Shop
               </a>
             </li>
             <li>
-              <a href="#categories" className="hover:text-foreground">
+              <a href="/category" className="hover:text-foreground">
                 Categories
               </a>
             </li>
             <li>
-              <a href="#" className="hover:text-foreground">
+              <a href="/contact" className="hover:text-foreground">
                 Contact
               </a>
             </li>
           </ul>
         </div>
         <div>
-          <h4 className="font-medium">Stay Updated</h4>
-          <p className="mt-2 text-sm text-muted-foreground">Get the latest arrivals and offers.</p>
-          <form className="mt-3 flex gap-2 md:max-w-sm">
-            <input
-              type="email"
-              placeholder="Your email"
-              className="flex-1 rounded-md border border-input bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring"
-              aria-label="Email address"
-            />
-            <button type="submit" className="rounded-md bg-accent px-3 md:px-4 py-2 text-accent-foreground text-sm whitespace-nowrap">
-              Subscribe
-            </button>
-          </form>
+          <h4 className="font-medium">Company</h4>
+          <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
+            <li>
+              <a href="/" className="hover:text-foreground">
+                Tintu Cuts
+              </a>
+            </li>
+            <li>
+              <a href="/about" className="hover:text-foreground">
+                Our Mission
+              </a>
+            </li>
+            <li>
+              <a href="/contact" className="hover:text-foreground">
+                Help Center
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
       <div className="border-t border-border">

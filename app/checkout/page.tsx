@@ -5,9 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import Link from "next/link";
+import React, { useState } from "react";
 
 export default function CheckoutPage() {
   const { cart, updateQuantity, removeFromCart, cartTotal, clearCart } = useCart();
+  const [ackDeliveryCharges, setAckDeliveryCharges] = useState(false);
 
   if (cart.length === 0) {
     return (
@@ -98,14 +100,33 @@ export default function CheckoutPage() {
               </div>
               <div className="flex justify-between py-3">
                 <span>Shipping</span>
-                <span>₹50.00</span>
+                <span className="text-sm text-muted-foreground">
+                  {cartTotal >= 5000 ? "Free delivery" : "Calculated at delivery"}
+                </span>
               </div>
               <div className="flex justify-between py-3 font-bold text-lg">
                 <span>Total</span>
-                <span>₹{(cartTotal + 50).toFixed(2)}</span>
+                <span>₹{cartTotal.toFixed(2)}</span>
               </div>
             </div>
-            <Button className="w-full bg-primary text-primary-foreground hover:opacity-90">Proceed to Payment</Button>
+            <div className="flex items-start gap-3 rounded-lg border p-3 bg-white/60">
+              <input
+                id="delivery-ack"
+                type="checkbox"
+                className="mt-1 h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+                checked={ackDeliveryCharges}
+                onChange={(e) => setAckDeliveryCharges(e.target.checked)}
+              />
+              <label htmlFor="delivery-ack" className="text-sm text-gray-700 leading-relaxed font-semibold">
+                Delivery charges apply to all orders and are calculated based on distance from our location. You'll pay these charges when your order is delivered. Spend ₹5,000 or more to get free delivery.
+              </label>
+            </div>
+            <Button
+              className="w-full bg-primary text-primary-foreground hover:opacity-90"
+              disabled={!ackDeliveryCharges}
+            >
+              Proceed to Payment
+            </Button>
             <p className="text-xs text-muted-foreground">By continuing, you agree to our Terms and Privacy Policy.</p>
           </div>
         </div>
