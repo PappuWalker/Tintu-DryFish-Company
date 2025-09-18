@@ -2,6 +2,7 @@
 
 import { motion, type Variants } from "motion/react"
 import { Instagram, MessageCircle } from "lucide-react"; // Import social media icons
+import { useLanguage } from "@/context/language-context"
 
 // Animation variants for reusability
 const containerVariants: Variants = {
@@ -60,23 +61,23 @@ const backgroundVariants: Variants = {
   },
 }
 
-// Footer data for better maintainability
-const footerData = {
+// Helper to build localized footer data
+const buildFooterData = (t: (k: string, f?: string) => string) => ({
   sections: [
     {
-      title: "Links",
+      title: t("footer.links", "Links"),
       links: [
-        { label: "Shop", href: "/shop" },
-        { label: "Categories", href: "/category" },
-        { label: "Contact", href: "/contact" },
+        { label: t("nav.shop", "Shop"), href: "/shop" },
+        { label: t("footer.categories", "Categories"), href: "/category" },
+        { label: t("nav.contact", "Contact"), href: "/contact" },
       ],
     },
     {
-      title: "Company",
+      title: t("footer.company", "Company"),
       links: [
-        { label: "Tintu Cuts", href: "/" },
-        { label: "Our Mission", href: "/about" },
-        { label: "Help Center", href: "/contact" },
+        { label: t("hero.brand", "Tintu Cuts"), href: "/" },
+        { label: t("footer.ourMission", "Our Mission"), href: "/about" },
+        { label: t("footer.helpCenter", "Help Center"), href: "/contact" },
       ],
     },
   ],
@@ -84,10 +85,10 @@ const footerData = {
     { href: "https://www.instagram.com/tintu_cuts?igsh=NTA4YTkxZDJiNW80&utm_source=qr", label: "Instagram", icon: <Instagram className="w-4 h-4" /> },
     { href: "https://chat.whatsapp.com/KDn1mXcSfANFnlD5G2tMDq?mode=ems_copy_t", label: "WhatsApp", icon: <MessageCircle className="w-4 h-4" /> },
   ],
-  title: "Tintu Cuts",
-  subtitle: "Premium seafood, fresh or frozen, delivered fast.",
-  copyright: `©${new Date().getFullYear()} Tintu Cuts. All rights reserved.`,
-}
+  title: t("hero.brand", "Tintu Cuts"),
+  subtitle: t("footer.tagline", "Premium seafood, fresh or frozen, delivered fast."),
+  copyright: `©${new Date().getFullYear()} ${t("hero.brand", "Tintu Cuts")}. ${t("footer.copyright", "All rights reserved.")}`,
+})
 
 // Reusable components
 const NavSection = ({ title, links, index }: { title: string; links: { label: string; href: string }[]; index: number }) => (
@@ -150,15 +151,17 @@ const SocialLink = ({ href, label, icon, index }: { href: string; label: string;
 )
 
 export default function StickyFooter() {
+  const { t } = useLanguage()
+  const footerData = buildFooterData(t)
   return (
-    <div className="relative h-[32vh]" style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}>
-      <div className="relative h-[calc(100vh+32vh)] -top-[100vh]">
-        <div className="h-[32vh] sticky top-[calc(100vh-32vh)]">
+    <div className="relative h-[32vh] footer-outer" style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}>
+      <div className="relative h-[calc(100vh+32vh)] -top-[100vh] footer-mid">
+        <div className="h-[32vh] sticky top-[calc(100vh-32vh)] footer-sticky">
           <motion.div
             initial="hidden"
             animate="visible"
             variants={containerVariants}
-            className="bg-gradient-to-br from-card via-muted to-card/90 py-2 md:py-4 px-3 md:px-6 h-full w-full flex flex-col justify-between relative overflow-hidden"
+            className="bg-gradient-to-br from-card via-muted to-card/90 py-2 md:py-4 px-3 md:px-6 h-full w-full flex flex-col justify-between relative overflow-hidden footer-root"
           >
             {/* Animated Background Elements */}
             <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent pointer-events-none" />
@@ -217,7 +220,7 @@ export default function StickyFooter() {
                     scale: 1.02,
                     transition: { type: "spring", stiffness: 300, damping: 20 },
                   }}
-                  className="text-[8vw] md:text-[6vw] lg:text-[5vw] xl:text-[4vw] leading-[0.8] font-sans bg-gradient-to-r from-foreground via-muted-foreground to-foreground/60 bg-clip-text text-transparent cursor-default"
+                  className="text-[8vw] md:text-[6vw] lg:text-[5vw] xl:text-[4vw] leading-[0.8] font-sans bg-gradient-to-r from-foreground via-muted-foreground to-foreground/60 bg-clip-text text-transparent cursor-default footer-brand-title"
                 >
                   {footerData.title}
                 </motion.h1>

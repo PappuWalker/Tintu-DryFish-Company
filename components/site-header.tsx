@@ -9,11 +9,37 @@ import { ThemeToggle } from "@/components/theme-toggle"
 import { CommandMenu, CommandButton } from "@/components/command-menu"
 import { CartDrawer } from "@/components/cart-drawer"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
+import { useLanguage } from "@/context/language-context"
 
 export function SiteHeader() {
   const { cartItemCount } = useCart();
   const [commandOpen, setCommandOpen] = useState(false)
   const [cartOpen, setCartOpen] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const { lang, setLang, t } = useLanguage()
+
+  function LanguageToggle() {
+    return (
+      <div className="flex items-center gap-1 rounded-md p-0.5 bg-black/10 dark:bg-white/10">
+        <Button
+          variant={lang === "en" ? "secondary" : "ghost"}
+          size="sm"
+          className="h-7 px-2 text-xs"
+          onClick={() => setLang("en")}
+        >
+          <span className={`${lang === "en" ? "text-black" : "text-white"} dark:text-white`}>EN</span>
+        </Button>
+        <Button
+          variant={lang === "ta" ? "secondary" : "ghost"}
+          size="sm"
+          className="h-7 px-2 text-xs"
+          onClick={() => setLang("ta")}
+        >
+          <span className={`${lang === "ta" ? "text-black" : "text-white"} dark:text-white`}>தமிழ்</span>
+        </Button>
+      </div>
+    )
+  }
 
   return (
     <header
@@ -26,14 +52,15 @@ export function SiteHeader() {
           <Button
             variant="ghost"
             size="icon"
-            aria-label="Open search"
+            aria-label={t("search.open", "Open search")}
             onClick={() => setCommandOpen(true)}
             className="text-white hover:bg-white/20"
           >
             <Search className="h-5 w-5" />
           </Button>
           <ThemeToggle />
-          <Sheet>
+          <LanguageToggle />
+          <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" aria-label="Open menu" className="text-white hover:bg-white/20">
                 <Menu className="h-5 w-5" />
@@ -48,42 +75,47 @@ export function SiteHeader() {
                   <img src="/images/tinty.png" alt="Tintu Cuts" className="h-6 w-6" />
                   <div className="flex flex-col leading-none">
                     <h3 className="text-base font-semibold text-white">Tintu Cuts</h3>
-                    <p className="text-xs text-white/70">Menu</p>
+                    <p className="text-xs text-white/70">{t("nav.menu", "Menu")}</p>
                   </div>
+                  {/* Removed LanguageToggle from inside the Sheet menu */}
                 </div>
               </div>
               <nav className="pl-1 pr-2 py-2 grid gap-0.5">
                 <Link
                   href="/"
                   className="flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-sm hover:bg-white/10 transition-colors"
-                  aria-label="Home"
+                  onClick={() => setMenuOpen(false)}
+                  aria-label={t("nav.home", "Home")}
                 >
                   <Home className="h-5 w-5 text-white/80" />
-                  <span>Home</span>
+                  <span>{t("nav.home", "Home")}</span>
                 </Link>
                 <Link
                   href="/shop"
                   className="flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-sm hover:bg-white/10 transition-colors"
-                  aria-label="Shop"
+                  onClick={() => setMenuOpen(false)}
+                  aria-label={t("nav.shop", "Shop")}
                 >
                   <Store className="h-5 w-5 text-white/80" />
-                  <span>Shop</span>
+                  <span>{t("nav.shop", "Shop")}</span>
                 </Link>
                 <Link
                   href="/about"
                   className="flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-sm hover:bg-white/10 transition-colors"
-                  aria-label="About"
+                  onClick={() => setMenuOpen(false)}
+                  aria-label={t("nav.about", "About")}
                 >
                   <Info className="h-5 w-5 text-white/80" />
-                  <span>About</span>
+                  <span>{t("nav.about", "About")}</span>
                 </Link>
                 <Link
                   href="/contact"
                   className="flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-sm hover:bg-white/10 transition-colors"
-                  aria-label="Contact"
+                  onClick={() => setMenuOpen(false)}
+                  aria-label={t("nav.contact", "Contact")}
                 >
                   <Phone className="h-5 w-5 text-white/80" />
-                  <span>Contact</span>
+                  <span>{t("nav.contact", "Contact")}</span>
                 </Link>
                 <div className="my-2 h-px bg-white/10" />
                 <Button
@@ -91,7 +123,7 @@ export function SiteHeader() {
                   onClick={() => setCartOpen(true)}
                 >
                   <ShoppingCart className="h-5 w-5" />
-                  View Cart{cartItemCount > 0 ? ` (${cartItemCount})` : ''}
+                  {t("cart.view", "View Cart")} {cartItemCount > 0 ? `(${cartItemCount})` : ''}
                 </Button>
               </nav>
             </SheetContent>
@@ -104,33 +136,46 @@ export function SiteHeader() {
             className="flex items-center text-sm md:text-sm lg:text-base font-semibold text-white"
           >
             <Home className="mr-2 h-4 w-4" aria-hidden="true" />
-            <span>Home</span>
+            <span>{t("nav.home", "Home")}</span>
           </Link>
           <Link
             href="/shop"
             className="flex items-center text-sm md:text-sm lg:text-base font-semibold text-white"
           >
             <Store className="mr-2 h-4 w-4" aria-hidden="true" />
-            <span>Shop</span>
+            <span>{t("nav.shop", "Shop")}</span>
           </Link>
           <Link
             href="/about"
             className="flex items-center text-sm md:text-sm lg:text-base font-semibold text-white"
           >
             <Info className="mr-2 h-4 w-4" aria-hidden="true" />
-            <span>About</span>
+            <span>{t("nav.about", "About")}</span>
           </Link>
           <Link
             href="/contact"
             className="flex items-center text-sm md:text-sm lg:text-base font-semibold text-white"
           >
             <Phone className="mr-2 h-4 w-4" aria-hidden="true" />
-            <span>Contact</span>
+            <span>{t("nav.contact", "Contact")}</span>
           </Link>
         </nav>
         <div className="hidden md:flex items-center gap-2">
-          <CommandButton onClick={() => setCommandOpen(true)} />
+          {lang === "ta" ? (
+            <Button
+              variant="ghost"
+              size="icon"
+              aria-label={t("search.open", "Open search")}
+              onClick={() => setCommandOpen(true)}
+              className="text-white hover:bg-white/20"
+            >
+              <Search className="h-5 w-5" />
+            </Button>
+          ) : (
+            <CommandButton onClick={() => setCommandOpen(true)} />
+          )}
           <ThemeToggle />
+          <LanguageToggle />
           <Button variant="ghost" size="icon" className="relative text-white hover:bg-white/20" onClick={() => setCartOpen(true)}>
             <ShoppingCart className="h-5 w-5" />
             {cartItemCount > 0 && (
@@ -138,7 +183,7 @@ export function SiteHeader() {
                 {cartItemCount}
               </span>
             )}
-            <span className="sr-only">Cart</span>
+            <span className="sr-only">{t("cart.label", "Cart")}</span>
           </Button>
         </div>
       </div>

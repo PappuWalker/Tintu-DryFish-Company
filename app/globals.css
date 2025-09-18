@@ -163,6 +163,11 @@
     @apply bg-background text-foreground;
   }
 
+  /* When Tamil language is active, apply the Tamil font variable from next/font */
+  :is(html.lang-ta) body {
+    font-family: var(--font-tamil), var(--font-sans), ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  }
+
   @keyframes fade-in-right {
     0% {
       opacity: 0;
@@ -176,5 +181,109 @@
 
   .animate-fade-in-right {
     animation: fade-in-right 0.5s ease-out forwards; /* Changed from 1.5s to 0.9s */
+  }
+}
+
+/* ================================
+   Tamil-only responsive overrides
+   Scope with html.lang-ta to avoid affecting English
+   ================================ */
+@layer components {
+  /* Hero: stack rotating text under tagline on md+ for Tamil */
+  @media (min-width: 768px) {
+    :is(html.lang-ta) .hero-tagline {
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      gap: 0.5rem;
+    }
+  }
+
+  /* Hero: reduce text sizes on mobile for Tamil */
+  @media (max-width: 640px) {
+    :is(html.lang-ta) .hero-title {
+      font-size: 2.00rem !important; /* ~text-lg */
+      line-height: 1.2 !important;
+    }
+    :is(html.lang-ta) .hero-tagline > span {
+      font-size: 1.5rem; /* ~text-2xl */
+      line-height: 1.2;
+    }
+    :is(html.lang-ta) .rotating-text .inline-block {
+      font-size: 1.125rem !important; /* ~text-lg */
+      line-height: 1.2;
+    }
+    /* Stack CTA buttons vertically: Explore below Shop Now */
+    :is(html.lang-ta) .hero-cta {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+  }
+
+  /* Categories: smaller button text on mobile for Tamil */
+  @media (max-width: 640px) {
+    :is(html.lang-ta) .categories-grid button p {
+      font-size: 0.75rem; /* text-xs */
+    }
+  }
+
+  /* Highly Recommended: reduce heading size on small devices for Tamil */
+  @media (max-width: 767px) {
+    :is(html.lang-ta) .product-showcase-section h2,
+    :is(html.lang-ta) .product-showcase-section .hr-title,
+    :is(html.lang-ta) h2.hr-title {
+      font-size: 0.875rem !important; /* text-sm */
+      line-height: 1.2 !important;
+    }
+  }
+
+  /* Product cards: center Add to Cart on mobile for Tamil */
+  @media (max-width: 640px) {
+    :is(html.lang-ta) .product-section .card-actions {
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  /* Footer: lighter brand weight on desktop/tablet for Tamil */
+  @media (min-width: 768px) {
+    :is(html.lang-ta) .footer-brand-title {
+      font-weight: 600; /* reduce boldness */
+    }
+    /* Keep brand on one line on tablet */
+    :is(html.lang-ta) .footer-brand-title {
+      white-space: nowrap;
+    }
+  }
+
+  /* Tamil-only: reduce footer brand title size on desktop */
+  @media (min-width: 1024px) {
+    :is(html.lang-ta) .footer-brand-title {
+      font-size: 4vw !important;
+    }
+  }
+  @media (min-width: 1280px) {
+    :is(html.lang-ta) .footer-brand-title {
+      font-size: 3.5vw !important;
+    }
+  }
+
+  /* Footer: reduce overall text sizes on mobile for Tamil */
+  @media (max-width: 640px) {
+    :is(html.lang-ta) .footer-root h3 {
+      font-size: 0.75rem; /* text-xs */
+    }
+    :is(html.lang-ta) .footer-root h4 {
+      font-size: 0.75rem;
+    }
+    :is(html.lang-ta) .footer-root a,
+    :is(html.lang-ta) .footer-root p {
+      font-size: 0.75rem; /* text-xs */
+    }
+    /* Reduce brand title (Tintu Cuts) in footer for Tamil mobile */
+    :is(html.lang-ta) .footer-brand-title {
+      font-size: 5vw !important;
+      line-height: 1 !important;
+    }
   }
 }

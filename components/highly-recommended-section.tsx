@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { getRandomProducts, Product } from "@/lib/products";
 import { slugify } from "@/lib/utils";
+import { useLanguage } from "@/context/language-context";
 
 // Memoized components for better performance
 const ProductCard = memo(({ product, isActive }: { product: Product; isActive: boolean }) => (
@@ -43,6 +44,7 @@ export function HighlyRecommendedSection() {
   const [products, setProducts] = useState<Product[]>([]);
   const [activeProductIndex, setActiveProductIndex] = useState(0);
   const [isMounted, setIsMounted] = useState(false);
+  const { t } = useLanguage();
 
   // Memoized handlers
   const handleProductClick = useCallback((index: number) => {
@@ -78,7 +80,7 @@ export function HighlyRecommendedSection() {
 
   return (
     <section className="container mx-auto py-8 px-4 product-showcase-section">
-      <h2 className="text-3xl font-bold text-center mb-8">Highly Recommended</h2>
+      <h2 className="text-3xl font-bold text-center mb-8 hr-title">{t("home.highlyRecommended", "Highly Recommended")}</h2>
       <div className="flex flex-col gap-8 items-center">
         <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
           {products.map((product, index) => (

@@ -5,10 +5,12 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { CartDrawer } from "./cart-drawer"; // Import the CartDrawer component
 import { Button } from "@/components/ui/button"; // Import Button component
+import { useLanguage } from "@/context/language-context";
 
 export function FloatingCartButton() {
   const { cartItemCount } = useCart();
   const [isCartDrawerOpen, setIsCartDrawerOpen] = useState(false);
+  const { t } = useLanguage();
 
   return (
     <>
@@ -24,7 +26,7 @@ export function FloatingCartButton() {
             <Button
               className="relative flex items-center justify-center w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-lg cursor-pointer hover:bg-primary/90 transition-colors p-0"
               onClick={() => setIsCartDrawerOpen(true)}
-              aria-label="View cart"
+              aria-label={t("cart.view", "View Cart")}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

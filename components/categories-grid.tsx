@@ -5,19 +5,23 @@ import { useState, useEffect } from "react";
 import { CustomButton } from "@/components/ui/custom-button"
 import { fetchProducts, Product } from "@/lib/products"
 import GlareHover from './GlareHover'
+import { useLanguage } from "@/context/language-context"
 
-const categoryIcons: { [key: string]: string } = {
-  "Dry fish": "/images/dry-fish.png",
-  "Fresh cut": "/images/Fresh-fish.png",
-  "Frozen": "/images/frozen-meat.png",
-  "Non frozen": "/images/non-meat.png",
-};
+const getCategoryIcon = (categoryKey: string) => {
+  const c = categoryKey.toLowerCase();
+  if (c.includes("dry")) return "/images/dry-fish.png";
+  if (c.includes("fresh")) return "/images/Fresh-fish.png";
+  if (c.includes("frozen")) return "/images/frozen-meat.png";
+  if (c.includes("non frozen") || c.includes("non-frozen") || c.includes("non")) return "/images/non-meat.png";
+  return "/images/Fresh-fish.png";
+}
 
 export function CategoriesGrid() {
   const [allProducts, setAllProducts] = useState<Product[]>([]);
   const [uniqueCategories, setUniqueCategories] = useState<
     { key: string; label: string; image: string }[]
   >([]);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const loadProducts = async () => {
@@ -40,8 +44,17 @@ export function CategoriesGrid() {
     loadProducts();
   }, []);
 
+  const localizeCategory = (categoryKey: string, fallback: string) => {
+    const c = categoryKey.toLowerCase();
+    if (c.includes('dry')) return t('category.dryFish', 'Dry Fish');
+    if (c.includes('fresh')) return t('category.freshCut', 'Fresh Cut');
+    if (c.includes('frozen')) return t('category.frozen', 'Frozen');
+    if (c.includes('non frozen') || c.includes('non-frozen') || c.includes('non')) return t('category.nonFrozen', 'Non Frozen');
+    return fallback;
+  };
+
   return (
-    <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 categories-grid">
       {uniqueCategories.map((cat) => (
         <Link href={`/category/${encodeURIComponent(cat.key.replace(/\s+/g, '-'))}`} key={cat.key}>
           <GlareHover
@@ -66,15 +79,15 @@ export function CategoriesGrid() {
               <div className="absolute inset-0 flex items-center justify-center translate-y-24 md:translate-y-42">
                 {/* Mobile: keep current small size */}
                 <CustomButton
-                  icon={<img src={categoryIcons[cat.label]} alt={cat.label} className="w-11 h-11 object-contain" />}
-                  title={cat.label}
+                  icon={<img src={getCategoryIcon(cat.key)} alt={cat.label} className="w-11 h-11 object-contain" />}
+                  title={localizeCategory(cat.key, cat.label)}
                   size="xs"
                   className="bg-white text-black hover:bg-white scale-100 md:hidden"
                 />
                 {/* md+ : larger button for iPad/PC */}
                 <CustomButton
-                  icon={<img src={categoryIcons[cat.label]} alt={cat.label} className="w-12 h-12 lg:w-14 lg:h-14 object-contain" />}
-                  title={cat.label}
+                  icon={<img src={getCategoryIcon(cat.key)} alt={cat.label} className="w-12 h-12 lg:w-14 lg:h-14 object-contain" />}
+                  title={localizeCategory(cat.key, cat.label)}
                   size="sm"
                   className="hidden md:inline-flex bg-white text-black hover:bg-white md:scale-110 lg:scale-125 xl:scale-150"
                 />

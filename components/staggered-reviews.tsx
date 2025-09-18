@@ -3,11 +3,12 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useLanguage } from "@/context/language-context";
 
 const SQRT_5000 = Math.sqrt(5000);
 
-// Dummy review data, adapted from components/reviews.tsx
-const reviewsData = [
+// Dummy review data (English)
+const reviewsDataEn = [
   {
     id: "r1",
     name: "Anita",
@@ -66,17 +67,35 @@ const reviewsData = [
   },
 ];
 
-// Map reviewsData to the format expected by StaggerTestimonials
-const mappedTestimonials = reviewsData.map(review => ({
-  tempId: Math.random(), // StaggerTestimonials uses tempId, so generate one
+// Dummy review data (Tamil)
+const reviewsDataTa = [
+  { id: "r1", name: "அனிதா", text: "மிகவும் புது மீன் மற்றும் வேகமான டெலிவரி. சால்மன் கிரில்லுக்கு சரியானது!", rating: 5, imgSrc: "https://i.pravatar.cc/150?img=1" },
+  { id: "r2", name: "ராகுல்", text: "உலர் மீன் மற்றும் உறைந்த இறால் வகைகள் அருமை. மீண்டும் ஆர்டர் செய்வேன்.", rating: 4, imgSrc: "https://i.pravatar.cc/150?img=2" },
+  { id: "r3", name: "மீரா", text: "புதிய வெட்டுகள்—சுத்தமாகவும் உடனே சமைக்க தயாராகவும். டிண்டு கட்ட்ஸை பரிந்துரைக்கிறேன்.", rating: 5, imgSrc: "https://i.pravatar.cc/150?img=3" },
+  { id: "r4", name: "பிரியா", text: "மீனின் தரம் எப்போதும் சிறந்தது. எப்போதும் புது!", rating: 5, imgSrc: "https://i.pravatar.cc/150?img=4" },
+  { id: "r5", name: "சுரேஷ்", text: "வேகமான டெலிவரி மற்றும் நன்றாக பேக் செய்யப்பட்டது. இறால் ருசியாக இருந்தது.", rating: 4, imgSrc: "https://i.pravatar.cc/150?img=5" },
+  { id: "r6", name: "தீபா", text: "டிண்டு கட்ட்ஸ் என் கடலுணவுக்கான முதன்மை தேர்வாகிவிட்டது. ஒருபோதும் ஏமாற்றவில்லை.", rating: 5, imgSrc: "https://i.pravatar.cc/150?img=6" },
+  { id: "r7", name: "அர்ஜுன்", text: "சிறந்த சேவை மற்றும் புது தயாருப்புகள். மிகவும் திருப்தி!", rating: 5, imgSrc: "https://i.pravatar.cc/150?img=7" },
+  { id: "r8", name: "கவ்யா", text: "உலர் மீன் வகைகள் அற்புதம். இயல்பான சுவை.", rating: 4, imgSrc: "https://i.pravatar.cc/150?img=8" },
+];
+
+const mapReviews = (data: typeof reviewsDataEn) => data.map(review => ({
+  tempId: Math.random(),
   testimonial: review.text,
-  by: `${review.name}, ${review.rating} Stars`, // Combine name and rating for 'by' field
+  by: `${review.name}, ${review.rating} ★`,
   imgSrc: review.imgSrc,
 }));
 
+type Testimonial = {
+  tempId: number;
+  testimonial: string;
+  by: string;
+  imgSrc: string;
+};
+
 interface TestimonialCardProps {
   position: number;
-  testimonial: typeof mappedTestimonials[0];
+  testimonial: Testimonial;
   handleMove: (steps: number) => void;
   cardSize: number;
 }
@@ -147,7 +166,8 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
 
 export const StaggeredReviews: React.FC = () => {
   const [cardSize, setCardSize] = useState(365);
-  const [testimonialsList, setTestimonialsList] = useState(mappedTestimonials);
+  const { t, lang } = useLanguage();
+  const [testimonialsList, setTestimonialsList] = useState(mapReviews(lang === 'ta' ? reviewsDataTa : reviewsDataEn));
 
   const handleMove = (steps: number) => {
     const newList = [...testimonialsList];
@@ -178,6 +198,11 @@ export const StaggeredReviews: React.FC = () => {
     return () => window.removeEventListener("resize", updateSize);
   }, []);
 
+  // Switch data when language changes
+  useEffect(() => {
+    setTestimonialsList(mapReviews(lang === 'ta' ? reviewsDataTa : reviewsDataEn));
+  }, [lang]);
+
   useEffect(() => {
     const interval = setInterval(() => {
       handleMove(1);
@@ -189,7 +214,7 @@ export const StaggeredReviews: React.FC = () => {
 
   return (
     <section className="container mx-auto px-4 py-10">
-      <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center">What Our Customers Say</h2>
+      <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center">{t("reviews.title", "What Our Customers Say")}</h2>
       <div
         className="relative w-full overflow-hidden bg-muted/30"
         style={{ height: 600 }}
@@ -216,7 +241,7 @@ export const StaggeredReviews: React.FC = () => {
               "bg-background border-2 border-border hover:bg-primary hover:text-primary-foreground",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             )}
-            aria-label="Previous testimonial"
+            aria-label={t("reviews.prev", "Previous testimonial")}
           >
             <ChevronLeft />
           </button>
@@ -227,7 +252,7 @@ export const StaggeredReviews: React.FC = () => {
               "bg-background border-2 border-border hover:bg-primary hover:text-primary-foreground",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             )}
-            aria-label="Next testimonial"
+            aria-label={t("reviews.next", "Next testimonial")}
           >
             <ChevronRight />
           </button>

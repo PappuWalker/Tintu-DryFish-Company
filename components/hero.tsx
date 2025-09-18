@@ -2,11 +2,13 @@
 
 import { Button } from "@/components/ui/button"
 import RotatingText from './RotatingText'
+import { useLanguage } from "@/context/language-context"
 
 export function Hero() {
+  const { t } = useLanguage()
   return (
     <header
-      className="relative bg-cover bg-center bg-no-repeat min-h-screen flex items-center"
+      className="relative bg-cover bg-center bg-no-repeat min-h-screen flex items-center hero-root"
       style={{ backgroundImage: `url('/images/hero-banner.png')` }}
     >
       <div className="absolute inset-0 bg-black opacity-50"></div> {/* Overlay for text readability */}
@@ -16,13 +18,18 @@ export function Hero() {
             <div className="md:mt-14">
               <div className="flex items-center gap-2">
                 <img src="/images/tinty.png" alt="Tintu Cuts Logo" className="h-15 w-15 md:h-17 md:w-17" />
-                <h1 className="text-4xl md:text-7xl font-bold tracking-tight text-pretty">Tintu Cuts</h1>
+                <h1 className="text-4xl md:text-7xl font-bold tracking-tight text-pretty hero-title">{t("hero.brand", "Tintu Cuts")}</h1>
               </div>
-              <h2 className="mt-4 text-white leading-relaxed max-w-prose flex flex-col md:flex-row items-start md:items-center gap-2 ml-4">
-                <span className="text-3xl md:text-3xl font-bold">We deliver</span>
+              <h2 className="mt-4 text-white leading-relaxed max-w-prose flex flex-col md:flex-row items-start md:items-center gap-2 ml-4 hero-tagline">
+                <span className="text-3xl md:text-3xl font-bold">{t("hero.tagline.leading", "We deliver")}</span>
                 <RotatingText
-                  texts={["fresh-cut", "dry-fish", "frozen-meat", "non-frozen meat"]}
-                  mainClassName="inline-block bg-[#d50b17] text-white rounded-lg px-3 py-1.5 transition-all duration-300 ease-in-out"
+                  texts={[
+                    t("hero.rotating.1", "fresh-cut"),
+                    t("hero.rotating.2", "dry-fish"),
+                    t("hero.rotating.3", "frozen-meat"),
+                    t("hero.rotating.4", "non-frozen meat"),
+                  ]}
+                  mainClassName="inline-block bg-[#d50b17] text-white rounded-lg px-3 py-1.5 transition-all duration-300 ease-in-out rotating-text"
                   staggerFrom={"last"}
                   initial={{ y: "100%" }}
                   animate={{ y: 0 }}
@@ -35,13 +42,13 @@ export function Hero() {
                 />
               </h2>
               <h3 className="mt-4 text-white leading-relaxed max-w-prose ml-4 text-lg md:text-xl font-bold">
-                Dive into a world of exquisite seafood. Freshness guaranteed, taste perfected, delivered right to your table.
+                {t("hero.subtitle", "Dive into a world of exquisite seafood. Freshness guaranteed, taste perfected, delivered right to your table.")}
               </h3>
-              <div className="mt-6 flex items-center gap-3 ml-4">
-                <Button  className="bg-[#f9bb10] text-black hover:opacity-90"><a href="shop">Shop Now</a></Button>
+              <div className="mt-6 flex items-center gap-3 ml-4 hero-cta">
+                <Button  className="bg-[#f9bb10] text-black hover:opacity-90"><a href="shop">{t("btn.shopNow", "Shop Now")}</a></Button>
                 <a href="#categories">
                   <Button className="bg-white text-black border border-border hover:bg-white/90">
-                    Explore Categories
+                    {t("btn.exploreCategories", "Explore Categories")}
                   </Button>
                 </a>
               </div>

@@ -4,11 +4,13 @@ import { useState, useEffect } from "react";
 import { ProductSection } from "@/components/product-section";
 import { fetchProducts, Product } from "@/lib/products";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/context/language-context";
 
 export default function ShopPage() {
   const [allProducts, setAllProducts] = useState<Product[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("all products");
   const [uniqueCategories, setUniqueCategories] = useState<string[]>([]);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const loadProducts = async () => {
@@ -27,9 +29,20 @@ export default function ShopPage() {
     ? allProducts
     : allProducts.filter(p => p.category.toLowerCase() === selectedCategory.toLowerCase());
 
+  const localizeCategory = (category: string) => {
+    const c = category.toLowerCase();
+    if (c === 'all products') return t('shop.allProducts', 'all products');
+    if (c === 'frozen') return t('shop.frozen', 'frozen');
+    if (c === 'non frozen') return t('shop.nonFrozen', 'non frozen');
+    if (c === 'dry fish' || c.includes('dry')) return t('category.dryFish', 'Dry Fish');
+    if (c === 'fresh cut' || c.includes('fresh')) return t('category.freshCut', 'Fresh Cut');
+    // Fallback: capitalize words
+    return category.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+  };
+
   return (
     <div className="container mx-auto px-4 py-10">
-      <h1 className="text-3xl font-bold mb-6">Shop Our Products</h1>
+      <h1 className="text-3xl font-bold mb-6">{t("shop.title", "Shop Our Products")}</h1>
       <div className="flex space-x-4 mb-8 overflow-x-auto">
         {uniqueCategories.map(category => (
           <Button
@@ -38,11 +51,18 @@ export default function ShopPage() {
             onClick={() => setSelectedCategory(category)}
             className="capitalize flex-shrink-0"
           >
-            {category.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
+            {localizeCategory(category)}
           </Button>
         ))}
       </div>
-      <ProductSection title={`${selectedCategory.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')} Products`} products={filteredProducts} />
+      <ProductSection
+        title={
+          selectedCategory === 'all products'
+            ? t('shop.title', 'Shop Our Products')
+            : `${localizeCategory(selectedCategory)} ${t('shop.products', 'Products')}`
+        }
+        products={filteredProducts}
+      />
     </div>
   );
 }

@@ -6,18 +6,20 @@ import { Input } from "@/components/ui/input";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import Link from "next/link";
 import React, { useState } from "react";
+import { useLanguage } from "@/context/language-context";
 
 export default function CheckoutPage() {
   const { cart, updateQuantity, removeFromCart, cartTotal, clearCart } = useCart();
   const [ackDeliveryCharges, setAckDeliveryCharges] = useState(false);
+  const { t } = useLanguage();
 
   if (cart.length === 0) {
     return (
       <div className="container mx-auto px-4 py-10 text-center">
-        <h1 className="text-3xl font-bold mb-4">Your Cart is Empty</h1>
-        <p className="text-lg text-muted-foreground mb-6">Looks like you haven't added anything to your cart yet.</p>
+        <h1 className="text-3xl font-bold mb-4">{t("checkout.empty.title", "Your Cart is Empty")}</h1>
+        <p className="text-lg text-muted-foreground mb-6">{t("checkout.empty.subtitle", "Looks like you haven't added anything to your cart yet.")}</p>
         <Link href="/shop">
-          <Button className="bg-primary text-primary-foreground hover:opacity-90">Start Shopping</Button>
+          <Button className="bg-primary text-primary-foreground hover:opacity-90">{t("btn.startShopping", "Start Shopping")}</Button>
         </Link>
       </div>
     );
@@ -25,17 +27,17 @@ export default function CheckoutPage() {
 
   return (
     <div className="container mx-auto px-4 py-10">
-      <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-6">Checkout</h1>
+      <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-6">{t("checkout.title", "Checkout")}</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
         {/* Left: Items + Shipping */}
         <div className="lg:col-span-2 space-y-6">
           {/* Items */}
-          <div className="rounded-2xl border bg-white/60 backdrop-blur p-4 md:p-6">
-            <h2 className="text-xl md:text-2xl font-semibold mb-4">Your Items</h2>
+          <div className="rounded-2xl border border-border bg-card/80 dark:bg-card/60 backdrop-blur p-4 md:p-6">
+            <h2 className="text-xl md:text-2xl font-semibold mb-4">{t("checkout.items", "Your Items")}</h2>
             <div className="space-y-4">
               {cart.map((item) => (
-                <div key={item.name} className="flex items-center gap-4 border rounded-xl p-3 md:p-4">
+                <div key={item.name} className="flex items-center gap-4 border border-border rounded-xl p-3 md:p-4">
                   <img src={item.image} alt={item.name} className="w-16 h-16 md:w-20 md:h-20 object-cover rounded-lg" />
                   <div className="flex-1 min-w-0 pr-2">
                     <h3 className="font-semibold whitespace-normal">{item.name}</h3>
@@ -57,33 +59,33 @@ export default function CheckoutPage() {
               ))}
             </div>
             <div className="pt-4">
-              <Button variant="outline" onClick={clearCart}>Clear Cart</Button>
+              <Button variant="outline" onClick={clearCart}>{t("checkout.clearCart", "Clear Cart")}</Button>
             </div>
           </div>
 
           {/* Shipping */}
-          <div className="rounded-2xl border bg-white/60 backdrop-blur p-4 md:p-6">
-            <h2 className="text-xl md:text-2xl font-semibold mb-4">Shipping Information</h2>
+          <div className="rounded-2xl border border-border bg-card/80 dark:bg-card/60 backdrop-blur p-4 md:p-6">
+            <h2 className="text-xl md:text-2xl font-semibold mb-4">{t("checkout.shipping", "Shipping Information")}</h2>
             <form className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="col-span-1 md:col-span-2">
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700">Full Name</label>
-                <Input type="text" id="name" placeholder="John Doe" />
+                <label htmlFor="name" className="block text-sm font-medium text-foreground">{t("form.fullName", "Full Name")}</label>
+                <Input type="text" id="name" placeholder={t("form.placeholder.fullName", "John Doe")} />
               </div>
               <div className="col-span-1 md:col-span-2">
-                <label htmlFor="address" className="block text-sm font-medium text-gray-700">Address</label>
-                <Input type="text" id="address" placeholder="123 Main St" />
+                <label htmlFor="address" className="block text-sm font-medium text-foreground">{t("form.address", "Address")}</label>
+                <Input type="text" id="address" placeholder={t("form.placeholder.address", "123 Main St")} />
               </div>
               <div>
-                <label htmlFor="city" className="block text-sm font-medium text-gray-700">City</label>
-                <Input type="text" id="city" placeholder="Anytown" />
+                <label htmlFor="city" className="block text-sm font-medium text-foreground">{t("form.city", "City")}</label>
+                <Input type="text" id="city" placeholder={t("form.placeholder.city", "Anytown")} />
               </div>
               <div>
-                <label htmlFor="zip" className="block text-sm font-medium text-gray-700">Zip Code</label>
-                <Input type="text" id="zip" placeholder="12345" />
+                <label htmlFor="zip" className="block text-sm font-medium text-foreground">{t("form.zip", "Zip Code")}</label>
+                <Input type="text" id="zip" placeholder={t("form.placeholder.zip", "12345")} />
               </div>
               <div className="col-span-1 md:col-span-2">
-                <label htmlFor="notes" className="block text-sm font-medium text-gray-700">Order Notes (optional)</label>
-                <textarea id="notes" rows={3} className="mt-1 w-full rounded-md border border-gray-300 shadow-sm focus:border-primary focus:ring-primary p-2 text-sm" placeholder="Any special instructions?" />
+                <label htmlFor="notes" className="block text-sm font-medium text-foreground">{t("form.notes", "Order Notes (optional)")}</label>
+                <textarea id="notes" rows={3} className="mt-1 w-full rounded-md border border-border bg-background text-foreground placeholder:text-muted-foreground shadow-sm focus:border-primary focus:ring-primary p-2 text-sm" placeholder={t("form.placeholder.notes", "Any special instructions?")} />
               </div>
             </form>
           </div>
@@ -91,43 +93,43 @@ export default function CheckoutPage() {
 
         {/* Right: Summary */}
         <div className="lg:col-span-1">
-          <div className="lg:sticky lg:top-24 rounded-2xl border bg-white/70 backdrop-blur p-4 md:p-6 space-y-4">
-            <h2 className="text-xl md:text-2xl font-semibold">Order Summary</h2>
+          <div className="lg:sticky lg:top-24 rounded-2xl border border-border bg-card/80 dark:bg-card/60 backdrop-blur p-4 md:p-6 space-y-4">
+            <h2 className="text-xl md:text-2xl font-semibold">{t("checkout.summary", "Order Summary")}</h2>
             <div className="divide-y">
               <div className="flex justify-between py-3">
-                <span>Subtotal</span>
+                <span>{t("summary.subtotal", "Subtotal")}</span>
                 <span>₹{cartTotal.toFixed(2)}</span>
               </div>
               <div className="flex justify-between py-3">
-                <span>Shipping</span>
+                <span>{t("summary.shipping", "Shipping")}</span>
                 <span className="text-sm text-muted-foreground">
-                  {cartTotal >= 5000 ? "Free delivery" : "Calculated at delivery"}
+                  {cartTotal >= 5000 ? t("summary.freeDelivery", "Free delivery") : t("summary.calculatedAtDelivery", "Calculated at delivery")}
                 </span>
               </div>
               <div className="flex justify-between py-3 font-bold text-lg">
-                <span>Total</span>
+                <span>{t("summary.total", "Total")}</span>
                 <span>₹{cartTotal.toFixed(2)}</span>
               </div>
             </div>
-            <div className="flex items-start gap-3 rounded-lg border p-3 bg-white/60">
+            <div className="flex items-start gap-3 rounded-lg border border-border p-3 bg-muted/40">
               <input
                 id="delivery-ack"
                 type="checkbox"
-                className="mt-1 h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+                className="mt-1 h-4 w-4 rounded border-border text-primary focus:ring-primary"
                 checked={ackDeliveryCharges}
                 onChange={(e) => setAckDeliveryCharges(e.target.checked)}
               />
-              <label htmlFor="delivery-ack" className="text-sm text-gray-700 leading-relaxed font-semibold">
-                Delivery charges apply to all orders and are calculated based on distance from our location. You'll pay these charges when your order is delivered. Spend ₹5,000 or more to get free delivery.
+              <label htmlFor="delivery-ack" className="text-sm text-foreground leading-relaxed font-semibold">
+                {t("checkout.deliveryAck", "Delivery charges apply to all orders and are calculated based on distance from our location. You'll pay these charges when your order is delivered. Spend ₹5,000 or more to get free delivery.")}
               </label>
             </div>
             <Button
               className="w-full bg-primary text-primary-foreground hover:opacity-90"
               disabled={!ackDeliveryCharges}
             >
-              Proceed to Payment
+              {t("btn.proceedToPayment", "Proceed to Payment")}
             </Button>
-            <p className="text-xs text-muted-foreground">By continuing, you agree to our Terms and Privacy Policy.</p>
+            <p className="text-xs text-muted-foreground">{t("checkout.termsNote", "By continuing, you agree to our Terms and Privacy Policy.")}</p>
           </div>
         </div>
       </div>

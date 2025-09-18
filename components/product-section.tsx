@@ -7,9 +7,11 @@ import GlareHover from './GlareHover'
 import { useCart } from "@/context/cart-context"
 import { useCallback } from "react";
 import { MinusIcon, PlusIcon } from "@radix-ui/react-icons";
+import { useLanguage } from "@/context/language-context"
 
 export function ProductSection({ title, products }: { title: string; products: Product[] }) {
   const { cart, addToCart, updateQuantity } = useCart();
+  const { t } = useLanguage();
 
   const handleAdd = useCallback((e: React.MouseEvent, p: Product) => {
     e.preventDefault();
@@ -24,7 +26,7 @@ export function ProductSection({ title, products }: { title: string; products: P
   }, [updateQuantity]);
 
   return (
-    <div>
+    <div className="product-section">
       <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-pretty mb-6">{title}</h2>
       <div className="grid gap-4 grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
         {products.map((p, index) => {
@@ -58,7 +60,7 @@ export function ProductSection({ title, products }: { title: string; products: P
                   <h3 className="text-base font-semibold">{p.name}</h3>
                   <p className="mt-2 text-primary font-semibold">₹{p.price.toFixed(2)}</p>
                 </div>
-                <div className="p-4 pt-0">
+                <div className="p-4 pt-0 card-actions">
                   {cartItem ? (
                     <div className="flex items-center justify-between rounded-md border border-primary text-primary w-[90px] h-[35px]">
                       <Button
@@ -79,7 +81,7 @@ export function ProductSection({ title, products }: { title: string; products: P
                     </div>
                   ) : (
                     <Button className="w-full bg-primary text-primary-foreground hover:opacity-90" onClick={(e) => handleAdd(e, p)}>
-                      Add to Cart
+                      {t("product.addToCart", "Add to Cart")}
                     </Button>
                   )}
                 </div>
