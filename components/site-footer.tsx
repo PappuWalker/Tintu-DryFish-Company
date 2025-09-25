@@ -27,6 +27,31 @@ export function SiteFooter() {
           </ul>
         </div>
         <div>
+          <h4 className="font-medium">Policies</h4>
+          <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
+            <li>
+              <a href="/refund-policy" className="hover:text-foreground">
+                Refund Policy
+              </a>
+            </li>
+            <li>
+              <a href="/terms-and-conditions" className="hover:text-foreground">
+                Terms and Conditions
+              </a>
+            </li>
+            <li>
+              <a href="/shipping-policy" className="hover:text-foreground">
+                Shipping Policy
+              </a>
+            </li>
+            <li>
+              <a href="/privacy-policy" className="hover:text-foreground">
+                Privacy Policy
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div>
           <h4 className="font-medium">Company</h4>
           <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
             <li>

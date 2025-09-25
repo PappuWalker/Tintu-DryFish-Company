@@ -80,6 +80,15 @@ const buildFooterData = (t: (k: string, f?: string) => string) => ({
         { label: t("footer.helpCenter", "Help Center"), href: "/contact" },
       ],
     },
+    {
+      title: t("footer.policies", "Policies"),
+      links: [
+        { label: t("footer.refundPolicy", "Refund Policy"), href: "/refund-policy" },
+        { label: t("footer.terms", "Terms and Conditions"), href: "/terms-and-conditions" },
+        { label: t("footer.shippingPolicy", "Shipping Policy"), href: "/shipping-policy" },
+        { label: t("footer.privacyPolicy", "Privacy Policy"), href: "/privacy-policy" },
+      ],
+    },
   ],
   social: [
     { href: "https://www.instagram.com/tintu_cuts?igsh=NTA4YTkxZDJiNW80&utm_source=qr", label: "Instagram", icon: <Instagram className="w-4 h-4" /> },
