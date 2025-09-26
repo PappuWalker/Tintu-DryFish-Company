@@ -25,6 +25,36 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* License */}
+      <section className="container mx-auto px-4 pb-14">
+        <h2 className="text-2xl md:text-3xl font-bold mb-4">{t("about.license", "Business License")}</h2>
+        <div className="rounded-2xl border border-border bg-card p-4 md:p-6">
+          <div className="flex items-center justify-between gap-4 flex-wrap">
+            <p className="text-sm text-muted-foreground">
+              {t("about.license.desc", "You can view or download our official license copy here.")}
+            </p>
+            <div className="flex items-center gap-2">
+              <a
+                href="/images/TINTU%20CUTS%20-%20LICENSE%20COPY.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center rounded-md px-3 py-2 bg-primary text-primary-foreground text-sm font-medium hover:opacity-90"
+              >
+                {t("about.license.view", "View License")}
+              </a>
+              <a
+                href="/images/TINTU%20CUTS%20-%20LICENSE%20COPY.pdf"
+                download
+                className="inline-flex items-center rounded-md px-3 py-2 border border-border text-sm font-medium hover:bg-accent"
+              >
+                {t("about.license.download", "Download PDF")}
+              </a>
+            </div>
+          </div>
+          {/* License preview intentionally hidden; only buttons shown */}
+        </div>
+      </section>
+
       {/* Mission */}
       <section className="container mx-auto px-4 py-10">
         <div className="grid md:grid-cols-2 gap-8 items-center">

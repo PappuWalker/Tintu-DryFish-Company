@@ -23,20 +23,20 @@ export function CartDrawer({ open, onOpenChange }: { open: boolean; onOpenChange
           ) : (
             <ul className="space-y-4">
               {cart.map((item) => (
-                <li key={item.name} className="flex gap-3">
+                <li key={`${item.name}-${item.weightKg}`} className="flex gap-3">
                   <img src={item.image || "/placeholder.svg?height=80&width=80"} alt={item.name} className="h-20 w-20 rounded object-cover" />
                   <div className="flex-1">
                     <div className="flex items-start justify-between gap-2">
                       <div>
-                        <h4 className="font-medium leading-tight">{item.name}</h4>
-                        <p className="text-sm text-muted-foreground">₹{item.price.toFixed(2)}</p>
+                        <h4 className="font-medium leading-tight">{item.name} <span className="text-xs text-muted-foreground">· {item.weightKg} kg</span></h4>
+                        <p className="text-sm text-muted-foreground">₹{(item.price * item.weightKg).toFixed(2)}{" "}<span className="text-xs">per unit</span></p>
                       </div>
-                      <button className="text-xs text-muted-foreground hover:text-foreground" onClick={() => removeFromCart(item.name)}>{t("drawer.cart.remove", "Remove")}</button>
+                      <button className="text-xs text-muted-foreground hover:text-foreground" onClick={() => removeFromCart(item.name, item.weightKg)}>{t("drawer.cart.remove", "Remove")}</button>
                     </div>
                     <div className="mt-2 flex items-center gap-2">
-                      <Button variant="outline" size="icon" aria-label="Decrease" onClick={() => updateQuantity(item.name, item.quantity - 1)}>-</Button>
+                      <Button variant="outline" size="icon" aria-label="Decrease" onClick={() => updateQuantity(item.name, item.weightKg, item.quantity - 1)}>-</Button>
                       <span className="w-8 text-center text-sm">{item.quantity}</span>
-                      <Button variant="outline" size="icon" aria-label="Increase" onClick={() => updateQuantity(item.name, item.quantity + 1)}>+</Button>
+                      <Button variant="outline" size="icon" aria-label="Increase" onClick={() => updateQuantity(item.name, item.weightKg, item.quantity + 1)}>+</Button>
                     </div>
                   </div>
                 </li>

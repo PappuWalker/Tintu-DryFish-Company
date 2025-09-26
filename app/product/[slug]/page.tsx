@@ -14,8 +14,10 @@ export default function ProductDetailPage() {
   const { addToCart, cart } = useCart();
   const { t } = useLanguage();
   const [quantity, setQuantity] = useState(1);
+  const [weightKg, setWeightKg] = useState<1 | 2>(1);
   const [product, setProduct] = useState<Product | null>(null);
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
+  const [justAdded, setJustAdded] = useState(false);
 
   const slug = decodeURIComponent(String(params.slug));
 
@@ -33,12 +35,19 @@ export default function ProductDetailPage() {
     loadProduct();
   }, [slug]);
 
+  // Reset quantity to 1 when switching weight to keep pricing intuitive
+  useEffect(() => {
+    setQuantity(1);
+  }, [weightKg]);
+
   if (!product) {
     return <div className="container mx-auto px-4 py-10 text-center">{t("product.notFound", "Product not found.")}</div>;
   }
 
   const handleAddToCart = () => {
-    addToCart(product, quantity);
+    addToCart(product, quantity, weightKg);
+    setJustAdded(true);
+    setTimeout(() => setJustAdded(false), 2000);
   };
 
   const localizeCategory = (categoryKey: string) => {
@@ -87,8 +96,8 @@ export default function ProductDetailPage() {
             </div>
           </div>
 
-          <div className="flex items-center justify-between mb-6">
-            <span className="text-2xl font-bold">{t("product.total", "Total")} ₹{(product.price * quantity).toFixed(2)}</span>
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-2xl font-bold">{t("product.price", "Price")} ₹{(product.price * weightKg).toFixed(2)}</span>
             <div className="flex items-center space-x-2">
               <Button variant="outline" size="icon" onClick={() => setQuantity(prev => Math.max(1, prev - 1))}>
                 <Minus className="h-4 w-4" />
@@ -99,12 +108,35 @@ export default function ProductDetailPage() {
               </Button>
             </div>
           </div>
+          <div className="mb-6 text-sm text-muted-foreground">
+            {t("product.total", "Total")}: ₹{(product.price * weightKg * quantity).toFixed(2)}
+          </div>
+          {/* Weight selector */}
+          <div className="flex items-center gap-2 mb-6">
+            <span className="text-sm text-muted-foreground">Weight</span>
+            <div className="flex items-center gap-2">
+              <Button
+                variant={weightKg === 1 ? "default" : "outline"}
+                size="sm"
+                onClick={() => setWeightKg(1)}
+              >
+                1 kg
+              </Button>
+              <Button
+                variant={weightKg === 2 ? "default" : "outline"}
+                size="sm"
+                onClick={() => setWeightKg(2)}
+              >
+                2 kg
+              </Button>
+            </div>
+          </div>
           <Button
             className="w-full bg-primary text-primary-foreground hover:opacity-90 disabled:opacity-70"
             onClick={handleAddToCart}
-            disabled={inCart}
+            disabled={justAdded}
           >
-            <ShoppingCart className="h-5 w-5 mr-2" /> {inCart ? t("product.addedToCart", "Added to Cart") : t("product.addToCart", "Add to Cart")}
+            <ShoppingCart className="h-5 w-5 mr-2" /> {justAdded ? t("product.addedToCart", "Added to Cart") : t("product.addToCart", "Add to Cart")}
           </Button>
         </div>
       </div>

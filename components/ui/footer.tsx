@@ -101,7 +101,11 @@ const buildFooterData = (t: (k: string, f?: string) => string) => ({
 
 // Reusable components
 const NavSection = ({ title, links, index }: { title: string; links: { label: string; href: string }[]; index: number }) => (
-  <motion.div variants={itemVariants} custom={index} className="flex flex-col gap-2">
+  <motion.div
+    variants={itemVariants}
+    custom={index}
+    className={`flex flex-col gap-2 ${index === 2 ? "col-span-2 md:col-span-1" : ""}`}
+  >
     <motion.h3
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
@@ -110,29 +114,35 @@ const NavSection = ({ title, links, index }: { title: string; links: { label: st
     >
       {title}
     </motion.h3>
-    {links.map((link, linkIndex) => (
-      <motion.a
-        key={linkIndex}
-        variants={linkVariants}
-        custom={linkIndex}
-        href={link.href}
-        whileHover={{
-          x: 8,
-          transition: { type: "spring", stiffness: 300, damping: 20 },
-        }}
-        className="text-muted-foreground hover:text-foreground transition-colors duration-300 font-sans text-xs md:text-sm group relative"
-      >
-        <span className="relative">
-          {link.label}
-          <motion.span
-            className="absolute bottom-0 left-0 h-0.5 bg-primary"
-            initial={{ width: 0 }}
-            whileHover={{ width: "100%" }}
-            transition={{ duration: 0.3 }}
-          />
-        </span>
-      </motion.a>
-    ))}
+    {/* Links container: for the third section (Policies), show two columns on mobile to save vertical space */}
+    <div
+      className={index === 2 ? "policies-links grid grid-cols-2 gap-1 -mx-2 px-2 md:flex md:flex-col" : "flex flex-col"}
+      style={index === 2 ? { gridTemplateColumns: "repeat(2, minmax(170px, 1fr))" } : undefined}
+    >
+      {links.map((link, linkIndex) => (
+        <motion.a
+          key={linkIndex}
+          variants={linkVariants}
+          custom={linkIndex}
+          href={link.href}
+          whileHover={{
+            x: 8,
+            transition: { type: "spring", stiffness: 300, damping: 20 },
+          }}
+          className={`text-muted-foreground hover:text-foreground transition-colors duration-300 font-sans text-xs md:text-sm group relative`}
+        >
+          <span className="relative">
+            {link.label}
+            <motion.span
+              className="absolute bottom-0 left-0 h-0.5 bg-primary"
+              initial={{ width: 0 }}
+              whileHover={{ width: "100%" }}
+              transition={{ duration: 0.3 }}
+            />
+          </span>
+        </motion.a>
+      ))}
+    </div>
   </motion.div>
 )
 
@@ -170,7 +180,7 @@ export default function StickyFooter() {
             initial="hidden"
             animate="visible"
             variants={containerVariants}
-            className="bg-gradient-to-br from-card via-muted to-card/90 py-2 md:py-4 px-3 md:px-6 h-full w-full flex flex-col justify-between relative overflow-hidden footer-root"
+            className="bg-gradient-to-br from-card via-muted to-card/90 py-2 md:py-4 px-1 md:px-6 h-full w-full flex flex-col justify-between relative overflow-hidden footer-root"
           >
             {/* Animated Background Elements */}
             <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent pointer-events-none" />

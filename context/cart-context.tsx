@@ -4,14 +4,15 @@ import React, { createContext, useState, useContext, ReactNode } from 'react';
 import { Product } from '@/lib/products';
 
 interface CartItem extends Product {
-  quantity: number;
+  quantity: number; // number of units for this weight variant
+  weightKg: 1 | 2; // variant weight in kg
 }
 
 interface CartContextType {
   cart: CartItem[];
-  addToCart: (product: Product, quantity: number) => void;
-  removeFromCart: (productName: string) => void;
-  updateQuantity: (productName: string, quantity: number) => void;
+  addToCart: (product: Product, units: number, weightKg: 1 | 2) => void;
+  removeFromCart: (productName: string, weightKg: 1 | 2) => void;
+  updateQuantity: (productName: string, weightKg: 1 | 2, quantity: number) => void;
   clearCart: () => void;
   cartTotal: number;
   cartItemCount: number;
@@ -22,27 +23,30 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
 
-  const addToCart = (product: Product, quantity: number) => {
+  const addToCart = (product: Product, units: number, weightKg: 1 | 2) => {
     setCart((prevCart) => {
-      const existingItem = prevCart.find((item) => item.name === product.name);
+      const existingItem = prevCart.find((item) => item.name === product.name && item.weightKg === weightKg);
       if (existingItem) {
         return prevCart.map((item) =>
-          item.name === product.name ? { ...item, quantity: item.quantity + quantity } : item
+          item.name === product.name && item.weightKg === weightKg
+            ? { ...item, quantity: item.quantity + units }
+            : item
         );
-      } else {
-        return [...prevCart, { ...product, quantity }];
       }
+      return [...prevCart, { ...product, quantity: units, weightKg }];
     });
   };
 
-  const removeFromCart = (productName: string) => {
-    setCart((prevCart) => prevCart.filter((item) => item.name !== productName));
+  const removeFromCart = (productName: string, weightKg: 1 | 2) => {
+    setCart((prevCart) => prevCart.filter((item) => !(item.name === productName && item.weightKg === weightKg)));
   };
 
-  const updateQuantity = (productName: string, quantity: number) => {
+  const updateQuantity = (productName: string, weightKg: 1 | 2, quantity: number) => {
     setCart((prevCart) =>
       prevCart.map((item) =>
-        item.name === productName ? { ...item, quantity: Math.max(1, quantity) } : item
+        item.name === productName && item.weightKg === weightKg
+          ? { ...item, quantity: Math.max(1, quantity) }
+          : item
       )
     );
   };
@@ -51,7 +55,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     setCart([]);
   };
 
-  const cartTotal = cart.reduce((total, item) => total + item.price * item.quantity, 0);
+  const cartTotal = cart.reduce((total, item) => total + (item.price * item.weightKg) * item.quantity, 0);
   const cartItemCount = cart.reduce((count, item) => count + item.quantity, 0);
 
   return (

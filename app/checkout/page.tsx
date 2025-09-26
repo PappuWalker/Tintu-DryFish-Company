@@ -37,20 +37,20 @@ export default function CheckoutPage() {
             <h2 className="text-xl md:text-2xl font-semibold mb-4">{t("checkout.items", "Your Items")}</h2>
             <div className="space-y-4">
               {cart.map((item) => (
-                <div key={item.name} className="flex items-center gap-4 border border-border rounded-xl p-3 md:p-4">
+                <div key={`${item.name}-${item.weightKg}`} className="flex items-center gap-4 border border-border rounded-xl p-3 md:p-4">
                   <img src={item.image} alt={item.name} className="w-16 h-16 md:w-20 md:h-20 object-cover rounded-lg" />
                   <div className="flex-1 min-w-0 pr-2">
-                    <h3 className="font-semibold whitespace-normal">{item.name}</h3>
-                    <p className="text-muted-foreground mb-2">₹{item.price.toFixed(2)}</p> {/* Added mb-2 for spacing */}
+                    <h3 className="font-semibold whitespace-normal">{item.name} <span className="text-xs text-muted-foreground">· {item.weightKg} kg</span></h3>
+                    <p className="text-muted-foreground mb-2">₹{(item.price * item.weightKg).toFixed(2)} <span className="text-xs">per unit</span></p>
                     <div className="flex items-center gap-2">
-                      <Button variant="outline" size="icon" onClick={() => updateQuantity(item.name, item.quantity - 1)} aria-label="Decrease quantity">
+                      <Button variant="outline" size="icon" onClick={() => updateQuantity(item.name, item.weightKg, item.quantity - 1)} aria-label="Decrease quantity">
                         <Minus className="h-4 w-4" />
                       </Button>
                       <span className="text-base md:text-lg font-semibold w-6 text-center">{item.quantity}</span>
-                      <Button variant="outline" size="icon" onClick={() => updateQuantity(item.name, item.quantity + 1)} aria-label="Increase quantity">
+                      <Button variant="outline" size="icon" onClick={() => updateQuantity(item.name, item.weightKg, item.quantity + 1)} aria-label="Increase quantity">
                         <Plus className="h-4 w-4" />
                       </Button>
-                      <Button variant="ghost" size="icon" onClick={() => removeFromCart(item.name)} aria-label="Remove item">
+                      <Button variant="ghost" size="icon" onClick={() => removeFromCart(item.name, item.weightKg)} aria-label="Remove item">
                         <Trash2 className="h-4 w-4 text-red-500" />
                       </Button>
                     </div>
