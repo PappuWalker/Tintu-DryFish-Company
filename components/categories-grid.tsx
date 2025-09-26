@@ -28,10 +28,13 @@ export function CategoriesGrid() {
       const fetchedProducts = await fetchProducts();
       setAllProducts(fetchedProducts);
 
-      const categoriesFromApi = Array.from(new Set(fetchedProducts.map(p => p.category)));
-      const allPossibleCategories = [...categoriesFromApi, "frozen", "non frozen"]; // Ensure frozen and non frozen tabs are always present
+      const categoriesFromApi = Array.from(new Set(fetchedProducts.map(p => p.category)))
+        .filter((category) => {
+          const c = String(category || '').toLowerCase();
+          return c !== 'frozen' && c !== 'non frozen' && c !== 'non-frozen';
+        });
 
-      const categoriesData = Array.from(new Set(allPossibleCategories)).map(category => {
+      const categoriesData = categoriesFromApi.map(category => {
         const product = fetchedProducts.find(p => p.category === category);
         return {
           key: category,

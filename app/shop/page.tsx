@@ -17,9 +17,12 @@ export default function ShopPage() {
       const fetchedProducts = await fetchProducts();
       setAllProducts(fetchedProducts);
 
-      const categoriesFromApi = Array.from(new Set(fetchedProducts.map(p => p.category)));
-      // Ensure "frozen" and "non frozen" tabs are always present
-      const allPossibleCategories = ["all products", ...categoriesFromApi, "frozen", "non frozen"];
+      const categoriesFromApi = Array.from(new Set(fetchedProducts.map(p => p.category)))
+        .filter((category) => {
+          const c = String(category || '').toLowerCase();
+          return c !== 'frozen' && c !== 'non frozen' && c !== 'non-frozen';
+        });
+      const allPossibleCategories = ["all products", ...categoriesFromApi];
       setUniqueCategories(Array.from(new Set(allPossibleCategories)));
     };
     loadProducts();

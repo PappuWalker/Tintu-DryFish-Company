@@ -13,7 +13,7 @@ export type Product = {
   image_url?: string;
 };
 
-const API_URL = "https://tintu-dash.vercel.app/api/products";
+const API_URL = "https://admin.tintucuts.com/api/products";
 
 let cachedProducts: Product[] | null = null;
 
