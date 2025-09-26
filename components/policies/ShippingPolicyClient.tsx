@@ -26,6 +26,7 @@ export default function ShippingPolicyClient() {
                 <li><a className="hover:text-foreground text-muted-foreground" href="#intro">{t("policy.shipping.toc.overview", "Overview")}</a></li>
                 <li><a className="hover:text-foreground text-muted-foreground" href="#charges">{t("policy.shipping.toc.charges", "Shipping Charges")}</a></li>
                 <li><a className="hover:text-foreground text-muted-foreground" href="#time">{t("policy.shipping.toc.time", "Delivery Time")}</a></li>
+                <li><a className="hover:text-foreground text-muted-foreground" href="#damaged">{t("policy.shipping.toc.damaged", "Damaged or Defective Items")}</a></li>
                 <li><a className="hover:text-foreground text-muted-foreground" href="#tracking">{t("policy.shipping.toc.tracking", "Tracking")}</a></li>
                 <li><a className="hover:text-foreground text-muted-foreground" href="#contact">{t("policy.shipping.toc.contact", "Contact Us")}</a></li>
               </ul>
@@ -36,7 +37,7 @@ export default function ShippingPolicyClient() {
             <div className="rounded-xl border border-border bg-card p-6 md:p-8 shadow-sm">
               <div className="prose prose-sm md:prose-base max-w-none prose-headings:scroll-mt-24">
                 <h2 id="intro">{t("policy.shipping.toc.overview", "Overview")}</h2>
-                <p>{t("policy.shipping.body.overview.1", "Thank you for shopping at Tintu DryFish Company. We are committed to delivering your order with good quality packaging within the given time frame. We ship throughout the week, except on Sundays and public holidays.")}</p>
+                <p>{t("policy.shipping.body.overview.1", "Thank you for shopping at Tintu Cuts. We are committed to delivering your order with good quality packaging within the given time frame. We ship throughout the week, except on Sundays and public holidays.")}</p>
 
                 <h2 id="charges">{t("policy.shipping.toc.charges", "Shipping Charges")}</h2>
                 <div className="rounded-lg border border-blue-300 bg-blue-50 p-4 not-prose">
@@ -48,14 +49,17 @@ export default function ShippingPolicyClient() {
                 </div>
 
                 <h2 id="time">{t("policy.shipping.toc.time", "Delivery Time")}</h2>
-                <p>{t("policy.shipping.body.time.1", "Orders are dispatched within 3-5 working days. Most orders are delivered within 7 to 10 working days. Delivery of all orders will be duly done to the address as mentioned by you at the time of placing the order.")}</p>
+                <p>{t("policy.shipping.body.time.1", "Orders are dispatched within 24 hours. Delivery of all orders will be duly done to the address as mentioned by you at the time of placing the order.")}</p>
+
+                <h2 id="damaged">{t("policy.shipping.toc.damaged", "Damaged or Defective Items")}</h2>
+                <p>{t("policy.shipping.body.damaged.1", "If you receive a damaged or defective product, we will arrange a replacement to be delivered within 24 hours.")}</p>
 
                 <h2 id="tracking">{t("policy.shipping.toc.tracking", "Tracking")}</h2>
                 <p>{t("policy.shipping.body.tracking.1", "Once your order is dispatched, you will receive an email with the tracking details. You can track your order using the tracking number provided.")}</p>
 
                 <h2 id="contact">{t("policy.shipping.toc.contact", "Contact Us")}</h2>
                 <p>{t("policy.shipping.body.contact.1", "If you have any questions about our Shipping Policy, please contact us:")}</p>
-                <ul>
+                <ul className="space-y-2">
                   <li>By email: tintucuts@gmail.com</li>
                   <li>By phone: +91 9962040219,  +91 6383115007</li>
                   <li>By address: No: 4G, 1 Cross Street, Bhavani Nagar, Old Pallavaram, Chennai - 600117</li>

@@ -37,7 +37,7 @@ export default function PrivacyPolicyClient() {
             <div className="rounded-xl border border-border bg-card p-6 md:p-8 shadow-sm">
               <div className="prose prose-sm md:prose-base max-w-none prose-headings:scroll-mt-24">
                 <h2 id="overview">{t("policy.privacy.toc.overview", "Overview")}</h2>
-                <p>{t("policy.privacy.body.overview.1", "At Tintu DryFish Company, we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your information when you visit our website.")}</p>
+                <p>{t("policy.privacy.body.overview.1", "At Tintu Cuts, we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your information when you visit our website.")}</p>
 
                 <div className="rounded-lg border border-emerald-300 bg-emerald-50 p-4 not-prose my-4">
                   <p className="text-emerald-900 text-sm">
@@ -59,7 +59,7 @@ export default function PrivacyPolicyClient() {
 
                 <h2 id="contact">{t("policy.privacy.toc.contact", "Contact")}</h2>
                 <p>{t("policy.privacy.body.contact.1", "If you have any questions about our Privacy Policy, please contact us:")}</p>
-                <ul>
+                <ul className="space-y-2">
                   <li>By email: tintucuts@gmail.com</li>
                   <li>By phone: +91 9962040219,  +91 6383115007</li>
                   <li>By address: No: 4G, 1 Cross Street, Bhavani Nagar, Old Pallavaram, Chennai - 600117</li>

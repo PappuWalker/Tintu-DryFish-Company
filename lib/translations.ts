@@ -122,6 +122,8 @@ export const translations = {
     // About Page
     "about.title": "About Tintu Cuts",
     "about.subtitle": "Premium fresh-cut seafood, dry fish, and meat—prepared hygienically and delivered fast.",
+    "about.license": "Business License",
+    "about.license.number": "License Number",
     "about.ourMission": "Our Mission",
     "about.ourMission.text": "We source responsibly and prepare with care. Our mission is to make quality seafood and meats accessible, affordable, and consistently fresh—so your meals are always memorable.",
     "about.stats.orders": "Orders Delivered",
@@ -164,7 +166,7 @@ export const translations = {
     "policy.privacy.toc.security": "Security",
     "policy.privacy.toc.consent": "Your Consent",
     "policy.privacy.toc.contact": "Contact",
-    "policy.privacy.body.overview.1": "At Tintu DryFish Company, we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your information when you visit our website.",
+    "policy.privacy.body.overview.1": "At Tintu Cuts, we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your information when you visit our website.",
     "policy.privacy.body.callout": "We respect your privacy — we don't sell your data, and we only collect what is needed to fulfill your orders and provide support.",
     "policy.privacy.body.collect.1": "We may collect personal information from you, such as your name, shipping address, email address, and phone number, when you place an order on our site. This information is used solely for the purpose of processing and delivering your order.",
     "policy.privacy.body.use.1": "We do not sell, trade, or otherwise transfer your personally identifiable information to outside parties. We are committed to ensuring that your information is secure and will not be shared with any third parties, except as required by law.",
@@ -180,10 +182,12 @@ export const translations = {
     "policy.shipping.toc.time": "Delivery Time",
     "policy.shipping.toc.tracking": "Tracking",
     "policy.shipping.toc.contact": "Contact Us",
-    "policy.shipping.body.overview.1": "Thank you for shopping at Tintu DryFish Company. We are committed to delivering your order with good quality packaging within the given time frame. We ship throughout the week, except on Sundays and public holidays.",
+    "policy.shipping.body.overview.1": "Thank you for shopping at Tintu Cuts. We are committed to delivering your order with good quality packaging within the given time frame. We ship throughout the week, except on Sundays and public holidays.",
     "policy.shipping.body.charges.callout": "Delivery charges apply to all orders and are calculated based on the distance from our location. You will be required to pay these charges when your order is delivered.",
     "policy.shipping.body.charges.free": "Spend ₹5,000 or more to get free delivery.",
     "policy.shipping.body.time.1": "Orders are dispatched within 24 hours. Delivery of all orders will be duly done to the address as mentioned by you at the time of placing the order.",
+    "policy.shipping.toc.damaged": "Damaged or Defective Items",
+    "policy.shipping.body.damaged.1": "If you receive a damaged or defective product, we will arrange a replacement to be delivered within 24 hours.",
     "policy.shipping.body.tracking.1": "Once your order is dispatched, you will receive an email with the tracking details. You can track your order using the tracking number provided.",
     "policy.shipping.body.contact.1": "If you have any questions about our Shipping Policy, please contact us:",
 
@@ -197,7 +201,8 @@ export const translations = {
     "policy.refund.body.overview.1": "We aim for your complete satisfaction. If you receive a damaged, incorrect, or severely delayed order, you may be eligible for a refund as per the terms below.",
     "policy.refund.body.eligibility.1": "Refunds are considered for products that are damaged on arrival, incorrectly delivered, or not delivered within the promised timeframe. Proof such as photos or videos may be required.",
     "policy.refund.body.process.1": "To request a refund, contact us within 24 hours of delivery with your order ID, a brief description of the issue, and any supporting images.",
-    "policy.refund.body.delivery.1": "Return and replacement delivery time is 24 hours.",
+    "policy.refund.body.delivery.1": "For damaged or defective products, return and replacement delivery time is 24 hours.",
+    "policy.refund.body.credit.1": "Once a refund is approved, the amount will be credited within 2–5 business days.",
     "policy.refund.body.contact.1": "For refund requests or questions, please reach out:",
 
     // Policy pages (Terms)
@@ -340,6 +345,8 @@ export const translations = {
     // About Page
     "about.title": "டிண்டு கட்ட்ஸ் பற்றி",
     "about.subtitle": "உயர்தர புதிய வெட்டிய கடலுணவு, உலர் மீன் மற்றும் இறைச்சி — சுத்தமாக தயாரித்து விரைவாக டெலிவரி.",
+    "about.license": "வணிக உரிமம்",
+    "about.license.number": "லைசன்ஸ் எண்",
     "about.ourMission": "எங்கள் நோக்கம்",
     "about.ourMission.text": "நாங்கள் பொறுப்புடன் மூலப்பொருட்களை பெறுகிறோம், அன்புடன் தயாரிக்கிறோம். உயர்தர கடலுணவு மற்றும் இறைச்சியை எளிதில், மலிவாகவும் எப்போதும் புதியதாகவும் வழங்குவதே எங்கள் குறிக்கோள் — உங்கள் உணவுகள் எப்போதும் நினைவில் நிற்கட்டும்.",
     "about.stats.orders": "டெலிவரி செய்யப்பட்ட ஆர்டர்கள்",
@@ -382,7 +389,7 @@ export const translations = {
     "policy.privacy.toc.security": "பாதுகாப்பு",
     "policy.privacy.toc.consent": "உங்கள் சம்மதம்",
     "policy.privacy.toc.contact": "தொடர்பு",
-    "policy.privacy.body.overview.1": "டிண்டு டிரைஃபிஷ் கம்பெனியில், உங்கள் தனியுரிமையை பாதுகாப்பது எங்களின் பொறுப்பு. இந்த தனியுரிமைக் கொள்கை, நீங்கள் எங்கள் இணையதளத்தைப் பயன்படுத்தும்போது உங்கள் தகவலை எவ்வாறு சேகரிக்கிறோம், பயன்படுத்துகிறோம் மற்றும் பாதுகாப்பதாக வைக்கிறோம் என்பதை விளக்குகிறது.",
+    "policy.privacy.body.overview.1": "டிண்டு கட்ட்ஸ், உங்கள் தனியுரிமையை பாதுகாப்பது எங்களின் பொறுப்பு. இந்த தனியுரிமைக் கொள்கை, நீங்கள் எங்கள் இணையதளத்தைப் பயன்படுத்தும்போது உங்கள் தகவலை எவ்வாறு சேகரிக்கிறோம், பயன்படுத்துகிறோம் மற்றும் பாதுகாப்பதாக வைக்கிறோம் என்பதை விளக்குகிறது.",
     "policy.privacy.body.callout": "நாங்கள் உங்கள் தரவைக் கடையில் விற்கவில்லை — உங்கள் ஆர்டர்களை நிறைவேற்றவும் ஆதரவு வழங்கவும் தேவையானவற்றை மட்டுமே சேகரிக்கிறோம்.",
     "policy.privacy.body.collect.1": "எங்கள் தளத்தில் ஆர்டர் செய்யும்போது, உங்கள் பெயர், அனுப்பும் முகவரி, மின்னஞ்சல் முகவரி, தொலைபேசி எண் போன்ற தனிப்பட்ட தகவலை நாங்கள் சேகரிக்கலாம். இந்த தகவல் உங்கள் ஆர்டரை செயல்படுத்தவும் டெலிவரி செய்யவும் மட்டுமே பயன்படுத்தப்படுகிறது.",
     "policy.privacy.body.use.1": "உங்கள் தனிப்பட்ட தகவலை நாங்கள் வெளிப்படையாக விற்கவோ, பரிமாறிக்கொள்ளவோ செய்யமாட்டோம். சட்டத்தால் தேவைப்படுவது தவிர உங்கள் தகவல் பாதுகாப்பாக இருக்கும் என்பதை உறுதி செய்வோம்.",
@@ -398,10 +405,12 @@ export const translations = {
     "policy.shipping.toc.time": "டெலிவரி நேரம்",
     "policy.shipping.toc.tracking": "டிராக்கிங்",
     "policy.shipping.toc.contact": "எங்களை தொடர்பு கொள்ள",
-    "policy.shipping.body.overview.1": "டிண்டு டிரைஃபிஷ் கம்பெனியில் வாங்கியதற்கு நன்றி. குறிப்பிட்ட நேரத்திற்குள் தரமான பேக்கேஜிங்குடன் உங்கள் ஆர்டரை டெலிவரி செய்ய நாங்கள் உறுதியாக உள்ளோம். ஞாயிற்றுக்கிழமை மற்றும் அரசு விடுமுறைகளைத் தவிர்த்து வாரம் முழுவதும் அனுப்புகிறோம்.",
+    "policy.shipping.body.overview.1": "டிண்டு கட்ட்ஸ்-இல் வாங்கியதற்கு நன்றி. குறிப்பிட்ட நேரத்திற்குள் தரமான பேக்கேஜிங்குடன் உங்கள் ஆர்டரை டெலிவரி செய்ய நாங்கள் உறுதியாக உள்ளோம். ஞாயிற்றுக்கிழமை மற்றும் அரசு விடுமுறைகளைத் தவிர்த்து வாரம் முழுவதும் அனுப்புகிறோம்.",
     "policy.shipping.body.charges.callout": "எங்கள் இடத்திலிருந்து தூரத்தின் அடிப்படையில் அனைத்து ஆர்டர்களுக்கும் டெலிவரி கட்டணங்கள் பயன்படும். இந்த கட்டணத்தை உங்கள் ஆர்டர் டெலிவரியின் போது செலுத்த வேண்டும்.",
     "policy.shipping.body.charges.free": "₹5,000 அல்லது அதற்கு மேல் செலவிட்டால் இலவச டெலிவரி.",
     "policy.shipping.body.time.1": "ஆர்டர்கள் 24 மணி நேரத்திற்குள் அனுப்பப்படும். நீங்கள் ஆர்டர் செய்யும்போது குறிப்பிடும் முகவரிக்கே டெலிவரி செய்யப்படும்.",
+    "policy.shipping.toc.damaged": "சேதமடைந்த அல்லது கோளாறான பொருட்கள்",
+    "policy.shipping.body.damaged.1": "நீங்கள் சேதமடைந்தது அல்லது கோளாறான தயாரிப்பைப் பெற்றால், 24 மணி நேரத்திற்குள் மாற்றுப் பொருளை டெலிவரி செய்வோம்.",
     "policy.shipping.body.tracking.1": "உங்கள் ஆர்டர் அனுப்பப்பட்டவுடன், டிராக்கிங் விவரங்களுடன் ஒரு மின்னஞ்சல் கிடைக்கும். வழங்கப்பட்ட டிராக்கிங் எண்களை பயன்படுத்தி உங்கள் ஆர்டரை கண்காணிக்கலாம்.",
     "policy.shipping.body.contact.1": "எங்கள் அனுப்பும் கொள்கை குறித்த கேள்விகள் இருப்பின், தயவுசெய்து எங்களை தொடர்பு கொள்ளுங்கள்:",
 
@@ -415,7 +424,8 @@ export const translations = {
     "policy.refund.body.overview.1": "உங்கள் முழுமையான திருப்தியே எங்கள் நோக்கம். சேதமடைந்தது, தவறானது அல்லது கடுமையாக தாமதமான ஆர்டர்களுக்கு கீழே உள்ள விதிகளின் படி பணம் திருப்பி வழங்கப்படலாம்.",
     "policy.refund.body.eligibility.1": "டெலிவரியின் போது சேதமடைந்தது, தவறாக டெலிவரி செய்யப்பட்டு, அல்லது வாக்குறுதியான நேரத்தில் டெலிவரி செய்யப்படாத தயாரிப்புகளுக்கே பணம் திருப்பி வழங்கப்படும். புகைப்படங்கள்/வீடியோ ஆதாரம் தேவைப்படலாம்.",
     "policy.refund.body.process.1": "டெலிவரியிலிருந்து 24 மணி நேரத்திற்குள் எங்களை தொடர்பு கொண்டு உங்கள் ஆர்டர் ஐடி, பிரச்சினையின் குறுகிய விளக்கம் மற்றும் உதவிப் புகைப்படங்களை அனுப்பவும்.",
-    "policy.refund.body.delivery.1": "திரும்பளிப்பு மற்றும் மாற்று டெலிவரி நேரம் 24 மணி நேரம்.",
+    "policy.refund.body.delivery.1": "சேதமடைந்த அல்லது கோளாறான தயாரிப்புகளுக்கு, திரும்பளிப்பு மற்றும் மாற்று டெலிவரி நேரம் 24 மணி நேரம்.",
+    "policy.refund.body.credit.1": "பணம் திருப்பி வழங்கப்பட்டவுடன், தொகை 2–5 வேலை நாட்களுக்குள் உங்கள் கணக்கில் சேர்க்கப்படும்.",
     "policy.refund.body.contact.1": "பணம் திருப்பி தொடர்பான கேள்விகளுக்கு எங்களை தொடர்பு கொள்ளவும்:",
 
     // Policy pages (Terms)

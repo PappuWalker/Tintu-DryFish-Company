@@ -31,20 +31,10 @@ export default function AboutPage() {
         <div className="rounded-2xl border border-border bg-card p-4 md:p-6">
           <div className="flex items-center justify-between gap-4 flex-wrap">
             <p className="text-sm text-muted-foreground">
-              {t("about.license.desc", "You can view or download our official license copy here.")}
+              <span className="font-medium text-foreground mr-2">{t("about.license.number", "License Number")}:</span>
+              <span className="inline-flex items-center rounded-md border px-2.5 py-1 text-sm font-mono tracking-wide">12425008003353</span>
             </p>
-            <div className="flex items-center gap-2">
-              <a
-                href="/images/TINTU%20CUTS%20-%20LICENSE%20COPY.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center rounded-md px-3 py-2 bg-primary text-primary-foreground text-sm font-medium hover:opacity-90"
-              >
-                {t("about.license.view", "View License")}
-              </a>
-            </div>
           </div>
-          {/* License preview intentionally hidden; only buttons shown */}
         </div>
       </section>
 
