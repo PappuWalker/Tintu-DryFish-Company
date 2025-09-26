@@ -42,13 +42,6 @@ export default function AboutPage() {
               >
                 {t("about.license.view", "View License")}
               </a>
-              <a
-                href="/images/TINTU%20CUTS%20-%20LICENSE%20COPY.pdf"
-                download
-                className="inline-flex items-center rounded-md px-3 py-2 border border-border text-sm font-medium hover:bg-accent"
-              >
-                {t("about.license.download", "Download PDF")}
-              </a>
             </div>
           </div>
           {/* License preview intentionally hidden; only buttons shown */}
