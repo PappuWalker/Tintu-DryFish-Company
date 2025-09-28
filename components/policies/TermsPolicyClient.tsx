@@ -53,9 +53,9 @@ export default function TermsPolicyClient() {
 
                 <h2 id="contact">{t("policy.terms.toc.contact", "Contact")}</h2>
                 <p>{t("policy.terms.body.contact.1", "If you have questions about these terms, please contact us:")}</p>
-                <ul>
+                <ul className="mt-3 space-y-2">
                   <li>By email: tintucuts@gmail.com</li>
-                  <li>By phone: +91 9962040219,  +91 6383115007</li>
+                  <li>By phone: +91 9962040219, +91 6383115007</li>
                   <li>By address: No: 4G, 1 Cross Street, Bhavani Nagar, Old Pallavaram, Chennai - 600117</li>
                 </ul>
               </div>

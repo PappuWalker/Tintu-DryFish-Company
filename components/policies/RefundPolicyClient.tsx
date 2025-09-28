@@ -57,9 +57,9 @@ export default function RefundPolicyClient() {
 
                 <h2 id="contact">{t("policy.refund.toc.contact", "Contact")}</h2>
                 <p>{t("policy.refund.body.contact.1", "For refund requests or questions, please reach out:")}</p>
-                <ul className="space-y-2">
+                <ul className="mt-3 space-y-2">
                   <li>By email: tintucuts@gmail.com</li>
-                  <li>By phone: +91 9962040219,  +91 6383115007</li>
+                  <li>By phone: +91 9962040219, +91 6383115007</li>
                   <li>By address: No: 4G, 1 Cross Street, Bhavani Nagar, Old Pallavaram, Chennai - 600117</li>
                 </ul>
               </div>
