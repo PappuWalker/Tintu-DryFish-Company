@@ -1,5 +1,7 @@
+"use client";
 import { Metadata } from "next";
 import Link from "next/link";
+import { useEffect, useMemo } from "react";
 import { CheckCircle2 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -11,6 +13,20 @@ export const metadata: Metadata = {
 };
 
 export default function PaymentSuccessPage() {
+  // On landing, call status endpoint once to ensure server finalizes order & notifications
+  const mtid = useMemo(() => {
+    if (typeof window === "undefined") return "";
+    return new URLSearchParams(window.location.search).get("mtid") || "";
+  }, []);
+
+  useEffect(() => {
+    if (!mtid) return;
+    // Use our proxy to avoid CORS and keep headers consistent
+    fetch(`/api/payments/phonepe/status?merchantTransactionId=${encodeURIComponent(mtid)}`, { cache: "no-store" })
+      .then(() => void 0)
+      .catch(() => void 0);
+  }, [mtid]);
+
   return (
     <main className="relative min-h-screen w-full overflow-hidden bg-gradient-to-b from-emerald-50 to-emerald-100 dark:from-emerald-950 dark:to-emerald-900/40">
       <section className="relative mx-auto max-w-2xl px-4 py-16 sm:py-24">

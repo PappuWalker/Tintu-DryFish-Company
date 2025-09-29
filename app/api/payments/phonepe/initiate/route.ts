@@ -11,10 +11,9 @@ export async function POST(req: Request) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        // Per provided cURL for initiate
+        // Match provided cURL for initiate (prod): only x-api-key
         "x-api-key": ADMIN_API_KEY,
-        // Some production setups may expect Bearer as well
-        Authorization: `Bearer ${ADMIN_API_KEY}`,
+        "Accept": "application/json",
       },
       body: JSON.stringify(body),
       cache: "no-store",

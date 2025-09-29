@@ -81,6 +81,15 @@ export default function CheckoutPage() {
       const redirectUrl: string | undefined = payJson?.providerResponse?.redirectUrl;
       if (!redirectUrl) throw new Error("No redirectUrl from provider");
 
+      // TEMP: diagnostics for environment
+      // eslint-disable-next-line no-console
+      console.log("[PhonePe Initiate] response:", payJson);
+      // eslint-disable-next-line no-console
+      console.log("[PhonePe Initiate] redirectUrl:", redirectUrl);
+      if (/mercury-uat|sandbox|uat/i.test(redirectUrl)) {
+        alert("Payment redirect appears to point to UAT/sandbox (" + redirectUrl + ")");
+      }
+
       // 3) Redirect to hosted checkout
       window.location.href = redirectUrl;
     } catch (e: any) {
