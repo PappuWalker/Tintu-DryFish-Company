@@ -1,26 +1,28 @@
-"use client";
 import Link from "next/link";
-import { useEffect, useMemo } from "react";
+import { redirect } from "next/navigation";
 import { CheckCircle2 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import ConfettiLayer from "@/components/confetti-layer";
 import DateTimeStamp from "@/components/date-time-stamp";
 
-export default function PaymentSuccessPage() {
-  // On landing, call status endpoint once to ensure server finalizes order & notifications
-  const mtid = useMemo(() => {
-    if (typeof window === "undefined") return "";
-    return new URLSearchParams(window.location.search).get("mtid") || "";
-  }, []);
+export default async function PaymentSuccessPage({ searchParams }: { searchParams: { mtid?: string } }) {
+  const mtid = searchParams?.mtid || "";
+  if (!mtid) redirect("/payment-failure");
 
-  useEffect(() => {
-    if (!mtid) return;
-    // Use our proxy to avoid CORS and keep headers consistent
-    fetch(`/api/payments/phonepe/status?merchantTransactionId=${encodeURIComponent(mtid)}`, { cache: "no-store" })
-      .then(() => void 0)
-      .catch(() => void 0);
-  }, [mtid]);
+  // Server-side status check
+  const base = process.env.ADMIN_BASE_URL || "https://admin.tintucuts.com";
+  const res = await fetch(`${base}/api/payments/phonepe/status?merchantTransactionId=${encodeURIComponent(mtid)}`, { cache: "no-store" });
+  const json: any = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    redirect(`/payment-failure?mtid=${encodeURIComponent(mtid)}`);
+  }
+  const code = String(json?.code || "").toUpperCase();
+  const state = String(json?.data?.state || json?.state || "").toUpperCase();
+  const isCompleted = code === "COMPLETED" || state === "COMPLETED";
+  if (!isCompleted) {
+    redirect(`/payment-failure?mtid=${encodeURIComponent(mtid)}`);
+  }
 
   return (
     <main className="relative min-h-screen w-full overflow-hidden bg-gradient-to-b from-emerald-50 to-emerald-100 dark:from-emerald-950 dark:to-emerald-900/40">

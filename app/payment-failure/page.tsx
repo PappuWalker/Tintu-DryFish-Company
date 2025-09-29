@@ -1,15 +1,34 @@
-import { Metadata } from "next";
+"use client";
 import Link from "next/link";
+import { useEffect, useMemo } from "react";
 import { AlertCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import GoBackButton from "@/components/go-back-button";
 
-export const metadata: Metadata = {
-  title: "Payment Failed",
-};
-
 export default function PaymentFailurePage() {
+  // Validate status and bounce to success if payment actually completed
+  const mtid = useMemo(() => {
+    if (typeof window === "undefined") return "";
+    return new URLSearchParams(window.location.search).get("mtid") || "";
+  }, []);
+
+  useEffect(() => {
+    if (!mtid) return;
+    fetch(`/api/payments/phonepe/status?merchantTransactionId=${encodeURIComponent(mtid)}`, { cache: "no-store" })
+      .then(async (res) => {
+        const json = await res.json().catch(() => ({} as any));
+        if (!res.ok) throw new Error(json?.error || `HTTP ${res.status}`);
+        const code = String(json?.code || "").toUpperCase();
+        const state = String(json?.data?.state || json?.state || "").toUpperCase();
+        const isCompleted = code === "COMPLETED" || state === "COMPLETED";
+        if (isCompleted && typeof window !== "undefined") {
+          window.location.href = `https://tintucuts.com/payment-success?mtid=${encodeURIComponent(mtid)}`;
+        }
+      })
+      .catch(() => void 0);
+  }, [mtid]);
+
   return (
     <main className="relative min-h-screen w-full overflow-hidden bg-gradient-to-b from-red-50 to-red-100 dark:from-red-950 dark:to-red-900/40">
       <section className="relative mx-auto max-w-2xl px-4 py-16 sm:py-24">
