@@ -11,6 +11,17 @@ import { useLanguage } from "@/context/language-context";
 export default function CheckoutPage() {
   const { cart, updateQuantity, removeFromCart, cartTotal, clearCart } = useCart();
   const [ackDeliveryCharges, setAckDeliveryCharges] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+
+  // Customer & shipping state
+  const [fullName, setFullName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [addressLine1, setAddressLine1] = useState("");
+  const [city, setCity] = useState("");
+  const [pincode, setPincode] = useState("");
+  const [notes, setNotes] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
   const { t } = useLanguage();
 
   if (cart.length === 0) {
@@ -23,6 +34,60 @@ export default function CheckoutPage() {
         </Link>
       </div>
     );
+  }
+
+  async function handleProceed() {
+    setErrorMsg("");
+    if (!ackDeliveryCharges) return;
+    if (!fullName || !phone || !addressLine1 || !city || !pincode) {
+      setErrorMsg("Please fill all required fields.");
+      return;
+    }
+    if (cart.length === 0) return;
+    try {
+      setSubmitting(true);
+
+      // Compute shipping: using 0 for now (delivery charges handled offline or free over threshold)
+      // You can change this to a flat/tiered calculation if needed.
+      const shippingPaise = cartTotal >= 5000 ? 0 : 0;
+
+      // Build items payload: send productId and quantity
+      const items = cart.map((it) => ({ productId: it.id, quantity: it.quantity }));
+
+      // 1) Create order
+      const orderRes = await fetch("/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          customer: { name: fullName, phone, email },
+          shipping: { addressLine1, city, pincode },
+          notes,
+          items,
+          charges: { shipping_paise: shippingPaise, discount_paise: 0, tax_paise: 0 },
+        }),
+      });
+      const orderJson = await orderRes.json();
+      if (!orderRes.ok) throw new Error(orderJson?.error || "Create order failed");
+
+      // 2) Initiate payment (PhonePe)
+      const payRes = await fetch("/api/payments/phonepe/initiate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ orderId: orderJson.orderId }),
+      });
+      const payJson = await payRes.json();
+      if (!payRes.ok) throw new Error(payJson?.error || "Initiate payment failed");
+
+      const redirectUrl: string | undefined = payJson?.providerResponse?.redirectUrl;
+      if (!redirectUrl) throw new Error("No redirectUrl from provider");
+
+      // 3) Redirect to hosted checkout
+      window.location.href = redirectUrl;
+    } catch (e: any) {
+      setErrorMsg(e?.message || "Unexpected error");
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -69,25 +134,36 @@ export default function CheckoutPage() {
             <form className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="col-span-1 md:col-span-2">
                 <label htmlFor="name" className="block text-sm font-medium text-foreground">{t("form.fullName", "Full Name")}</label>
-                <Input type="text" id="name" placeholder={t("form.placeholder.fullName", "John Doe")} />
+                <Input type="text" id="name" placeholder={t("form.placeholder.fullName", "John Doe")} value={fullName} onChange={(e) => setFullName(e.target.value)} />
+              </div>
+              <div>
+                <label htmlFor="phone" className="block text-sm font-medium text-foreground">{t("form.phone", "Phone")}</label>
+                <Input type="tel" id="phone" placeholder={t("form.placeholder.phone", "9999999999")} value={phone} onChange={(e) => setPhone(e.target.value)} />
+              </div>
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-foreground">{t("form.email", "Email")}</label>
+                <Input type="email" id="email" placeholder={t("form.placeholder.email", "test@example.com")} value={email} onChange={(e) => setEmail(e.target.value)} />
               </div>
               <div className="col-span-1 md:col-span-2">
                 <label htmlFor="address" className="block text-sm font-medium text-foreground">{t("form.address", "Address")}</label>
-                <Input type="text" id="address" placeholder={t("form.placeholder.address", "123 Main St")} />
+                <Input type="text" id="address" placeholder={t("form.placeholder.address", "123 Main St")} value={addressLine1} onChange={(e) => setAddressLine1(e.target.value)} />
               </div>
               <div>
                 <label htmlFor="city" className="block text-sm font-medium text-foreground">{t("form.city", "City")}</label>
-                <Input type="text" id="city" placeholder={t("form.placeholder.city", "Anytown")} />
+                <Input type="text" id="city" placeholder={t("form.placeholder.city", "Anytown")} value={city} onChange={(e) => setCity(e.target.value)} />
               </div>
               <div>
                 <label htmlFor="zip" className="block text-sm font-medium text-foreground">{t("form.zip", "Zip Code")}</label>
-                <Input type="text" id="zip" placeholder={t("form.placeholder.zip", "12345")} />
+                <Input type="text" id="zip" placeholder={t("form.placeholder.zip", "600001")} value={pincode} onChange={(e) => setPincode(e.target.value)} />
               </div>
               <div className="col-span-1 md:col-span-2">
                 <label htmlFor="notes" className="block text-sm font-medium text-foreground">{t("form.notes", "Order Notes (optional)")}</label>
-                <textarea id="notes" rows={3} className="mt-1 w-full rounded-md border border-border bg-background text-foreground placeholder:text-muted-foreground shadow-sm focus:border-primary focus:ring-primary p-2 text-sm" placeholder={t("form.placeholder.notes", "Any special instructions?")} />
+                <textarea id="notes" rows={3} className="mt-1 w-full rounded-md border border-border bg-background text-foreground placeholder:text-muted-foreground shadow-sm focus:border-primary focus:ring-primary p-2 text-sm" placeholder={t("form.placeholder.notes", "Any special instructions?")} value={notes} onChange={(e) => setNotes(e.target.value)} />
               </div>
             </form>
+            {errorMsg && (
+              <p className="mt-3 text-sm text-red-600">{errorMsg}</p>
+            )}
           </div>
         </div>
 
@@ -125,9 +201,10 @@ export default function CheckoutPage() {
             </div>
             <Button
               className="w-full bg-primary text-primary-foreground hover:opacity-90"
-              disabled={!ackDeliveryCharges}
+              disabled={!ackDeliveryCharges || submitting}
+              onClick={handleProceed}
             >
-              {t("btn.proceedToPayment", "Proceed to Payment")}
+              {submitting ? t("btn.processing", "Processing...") : t("btn.proceedToPayment", "Proceed to Payment")}
             </Button>
             <p className="text-xs text-muted-foreground">{t("checkout.termsNote", "By continuing, you agree to our Terms and Privacy Policy.")}</p>
           </div>
