@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import ConfettiLayer from "@/components/confetti-layer";
 import DateTimeStamp from "@/components/date-time-stamp";
 import GoBackButton from "@/components/go-back-button";
+import LangText from "@/components/lang-text";
 
 type StatusState = "loading" | "success" | "failed" | "error" | "invalid";
 
@@ -65,8 +66,8 @@ export default function PaymentPage() {
                 <Loader2 className="h-12 w-12 animate-spin" />
               </div>
             </div>
-            <p className="text-lg font-medium">Verifying payment status...</p>
-            <p className="text-sm text-muted-foreground">This usually takes just a moment</p>
+            <p className="text-lg font-medium"><LangText en="Verifying payment status..." ta="கட்டண நிலையை சரிபார்க்கிறது..." /></p>
+            <p className="text-sm text-muted-foreground"><LangText en="This usually takes just a moment" ta="இது பொதுவாக சில நொடிகள் மட்டுமே எடுக்கும்" /></p>
           </div>
         </section>
       </main>
@@ -88,27 +89,32 @@ export default function PaymentPage() {
                     <CheckCircle2 className="size-10" aria-hidden="true" />
                   </div>
                 </div>
-                <CardTitle className="text-3xl font-semibold">Payment Complete</CardTitle>
+                <CardTitle className="text-3xl font-semibold">
+                  <LangText en="Payment Complete" ta="கட்டணம் வெற்றிகரமாக முடிந்தது" />
+                </CardTitle>
                 <CardDescription className="text-base leading-relaxed">
-                  Wonderful! Your payment was successful and your order is queued up. We'll have it dispatched within 24 hours, and <strong>you'll get a confirmation email shortly. Thanks for your patience!</strong>
+                  <LangText
+                    en={<span>Wonderful! Your payment was successful and your order is queued up. We'll have it dispatched within 24 hours, and <strong>you'll get a confirmation email shortly. Thanks for your patience!</strong></span>}
+                    ta={<span>அற்புதம்! உங்கள் கட்டணம் வெற்றிகரமாக முடிந்தது மற்றும் உங்கள் ஆர்டர் தயாராக உள்ளது. இது 24 மணிநேரத்திற்குள் அனுப்பப்படும், மேலும் <strong>உறுதிப்படுத்தல் மின்னஞ்சல் விரைவில் கிடைக்கும். உங்கள் பொறுமைக்கு நன்றி!</strong></span>}
+                  />
                 </CardDescription>
               </div>
             </CardHeader>
 
             <CardContent className="space-y-6 py-6">
               <div className="rounded-lg border bg-card/60 p-4 text-center">
-                <p className="text-sm text-muted-foreground">Order status</p>
-                <p className="mt-1 text-sm font-medium text-foreground">Queued for dispatch within 24 hours</p>
+                <p className="text-sm text-muted-foreground"><LangText en="Order status" ta="ஆர்டர் நிலை" /></p>
+                <p className="mt-1 text-sm font-medium text-foreground"><LangText en="Queued for dispatch within 24 hours" ta="24 மணிநேரத்திற்குள் அனுப்ப தயாராக உள்ளது" /></p>
               </div>
-              <p className="text-center text-xs text-muted-foreground">Updated <DateTimeStamp />{fetchedAt ? "" : ""}</p>
+              <p className="text-center text-xs text-muted-foreground"><LangText en="Updated " ta="புதுப்பிக்கப்பட்டது " /><DateTimeStamp />{fetchedAt ? "" : ""}</p>
             </CardContent>
 
             <CardFooter className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
               <Button asChild>
-                <Link href="/">Continue Shopping</Link>
+                <Link href="/"><LangText en="Continue Shopping" ta="வாங்குவதைக் தொடரவும்" /></Link>
               </Button>
               <Button asChild variant="ghost">
-                <Link href="/contact">Need Help? Contact Us</Link>
+                <Link href="/contact"><LangText en="Need Help? Contact Us" ta="உதவி வேண்டுமா? எங்களை தொடர்பு கொள்ளவும்" /></Link>
               </Button>
             </CardFooter>
           </Card>
@@ -130,14 +136,28 @@ export default function PaymentPage() {
                   <AlertCircle className="size-10" aria-hidden="true" />
                 </div>
               </div>
-              <CardTitle className="text-3xl font-semibold">Payment {state === "invalid" ? "Missing" : "Failed"}</CardTitle>
+              <CardTitle className="text-3xl font-semibold">
+                {state === "invalid" ? (
+                  <LangText en="Payment Missing" ta="கட்டண தகவல் இல்லை" />
+                ) : (
+                  <LangText en="Payment Failed" ta="கட்டணம் தோல்வியடைந்தது" />
+                )}
+              </CardTitle>
               <CardDescription className="text-sm">
-                {state === "invalid" ? "We couldn't find a transaction id (mtid)." : state === "error" ? "We couldn't verify your payment at the moment." : "We couldn't process your payment."}
+                {state === "invalid" ? (
+                  <LangText en="We couldn't find a transaction id (mtid)." ta="பரிவர்த்தனை ஐடி (mtid) கிடைக்கவில்லை." />
+                ) : state === "error" ? (
+                  <LangText en="We couldn't verify your payment at the moment." ta="தற்போது உங்கள் கட்டணத்தை சரிபார்க்க முடியவில்லை." />
+                ) : (
+                  <LangText en="We couldn't process your payment." ta="உங்கள் கட்டணத்தை செயலாக்க முடியவில்லை." />
+                )}
               </CardDescription>
               <CardDescription className="mt-7 text-base leading-relaxed">
-                {state === "invalid"
-                  ? "Please return to checkout and try again. If the issue persists, contact us through the information given in the contact page."
-                  : "No worries - please try again! If the issue persists, contact us through the information given in the contact page."}
+                {state === "invalid" ? (
+                  <LangText en="Please return to checkout and try again. If the issue persists, contact us through the information given in the contact page." ta="தயவுசெய்து செக்அவுட்டிற்கு திரும்பி மீண்டும் முயற்சிக்கவும். பிரச்சனை தொடர்ந்தால், தொடர்பு பக்கத்தில் கொடுக்கப்பட்ட தகவல்களின் மூலம் எங்களை தொடர்பு கொள்ளுங்கள்." />
+                ) : (
+                  <LangText en="No worries - please try again! If the issue persists, contact us through the information given in the contact page." ta="கவலைப்பட வேண்டாம் — தயவு செய்து மீண்டும் முயற்சி செய்யுங்கள்! பிரச்சனை தொடர்ந்தால், தொடர்பு பக்கத்தில் கொடுக்கப்பட்ட தகவல்களின் மூலம் எங்களை தொடர்பு கொள்ளுங்கள்." />
+                )}
               </CardDescription>
             </div>
           </CardHeader>
@@ -146,12 +166,12 @@ export default function PaymentPage() {
 
           <CardFooter className="flex flex-col items-stretch gap-3 sm:max-w-md sm:self-center">
             <Button asChild className="w-full">
-              <Link href="/">Try Again</Link>
+              <Link href="/"><LangText en="Try Again" ta="மீண்டும் முயற்சிக்கவும்" /></Link>
             </Button>
             <div className="flex items-center justify-between gap-3">
-              <GoBackButton>Go Back</GoBackButton>
+              <GoBackButton><LangText en="Go Back" ta="பின்னுக்கு செல்லவும்" /></GoBackButton>
               <Button asChild variant="ghost">
-                <Link href="/contact">Contact Support</Link>
+                <Link href="/contact"><LangText en="Contact Support" ta="ஆதரவை தொடர்பு கொள்ளவும்" /></Link>
               </Button>
             </div>
           </CardFooter>
