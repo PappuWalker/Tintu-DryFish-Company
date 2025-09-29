@@ -117,7 +117,7 @@ export default function PaymentPage() {
                 <Link href="/contact">
                   <LangText
                     en="Need Help? Contact Us"
-                    ta={<span>உதவி வேண்டுமா? <br className="block lg:hidden" /> எங்களை தொடர்பு கொள்ளவும்</span>}
+                    ta={<span>உதவி வேண்டுமா?<br className="block" /> எங்களை தொடர்பு கொள்ளவும்</span>}
                   />
                 </Link>
               </Button>

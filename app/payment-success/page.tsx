@@ -59,7 +59,6 @@ export default async function PaymentSuccessPage({ searchParams }: { searchParam
             </div>
             <p className="text-center text-xs text-muted-foreground"><LangText en="Updated " ta="புதுப்பிக்கப்பட்டது " /><DateTimeStamp /></p>
           </CardContent>
-
           <CardFooter className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
             <Button asChild>
               <Link href="/"><LangText en="Continue Shopping" ta="வாங்குவதைக் தொடரவும்" /></Link>
@@ -68,7 +67,7 @@ export default async function PaymentSuccessPage({ searchParams }: { searchParam
               <Link href="/contact">
                 <LangText
                   en="Need Help? Contact Us"
-                  ta={<span>உதவி வேண்டுமா? <br className="block lg:hidden" /> எங்களை தொடர்பு கொள்ளவும்</span>}
+                  ta={<span>உதவி வேண்டுமா?<br className="block" /> எங்களை தொடர்பு கொள்ளவும்</span>}
                 />
               </Link>
             </Button>
