@@ -65,7 +65,12 @@ export default async function PaymentSuccessPage({ searchParams }: { searchParam
               <Link href="/"><LangText en="Continue Shopping" ta="வாங்குவதைக் தொடரவும்" /></Link>
             </Button>
             <Button asChild variant="ghost">
-              <Link href="/contact"><LangText en="Need Help? Contact Us" ta="உதவி வேண்டுமா? எங்களை தொடர்பு கொள்ளவும்" /></Link>
+              <Link href="/contact">
+                <LangText
+                  en="Need Help? Contact Us"
+                  ta={<span>உதவி வேண்டுமா? <br className="block lg:hidden" /> எங்களை தொடர்பு கொள்ளவும்</span>}
+                />
+              </Link>
             </Button>
           </CardFooter>
         </Card>

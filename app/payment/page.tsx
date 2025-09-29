@@ -114,7 +114,12 @@ export default function PaymentPage() {
                 <Link href="/"><LangText en="Continue Shopping" ta="வாங்குவதைக் தொடரவும்" /></Link>
               </Button>
               <Button asChild variant="ghost">
-                <Link href="/contact"><LangText en="Need Help? Contact Us" ta="உதவி வேண்டுமா? எங்களை தொடர்பு கொள்ளவும்" /></Link>
+                <Link href="/contact">
+                  <LangText
+                    en="Need Help? Contact Us"
+                    ta={<span>உதவி வேண்டுமா? <br className="block lg:hidden" /> எங்களை தொடர்பு கொள்ளவும்</span>}
+                  />
+                </Link>
               </Button>
             </CardFooter>
           </Card>
@@ -169,7 +174,6 @@ export default function PaymentPage() {
               <Link href="/"><LangText en="Try Again" ta="மீண்டும் முயற்சிக்கவும்" /></Link>
             </Button>
             <div className="flex items-center justify-between gap-3">
-              <GoBackButton><LangText en="Go Back" ta="பின்னுக்கு செல்லவும்" /></GoBackButton>
               <Button asChild variant="ghost">
                 <Link href="/contact"><LangText en="Contact Support" ta="ஆதரவை தொடர்பு கொள்ளவும்" /></Link>
               </Button>

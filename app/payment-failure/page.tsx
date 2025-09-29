@@ -64,8 +64,7 @@ export default function PaymentFailurePage() {
             <Button asChild className="w-full">
               <Link href="/"><LangText en="Try Again" ta="மீண்டும் முயற்சிக்கவும்" /></Link>
             </Button>
-            <div className="flex items-center justify-between gap-3">
-              <GoBackButton><LangText en="Go Back" ta="பின்னுக்கு செல்லவும்" /></GoBackButton>
+            <div className="flex items-center justify-center gap-3">
               <Button asChild variant="ghost">
                 <Link href="/contact"><LangText en="Contact Support" ta="ஆதரவை தொடர்பு கொள்ளவும்" /></Link>
               </Button>
