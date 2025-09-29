@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter }
 import { Button } from "@/components/ui/button";
 import ConfettiLayer from "@/components/confetti-layer";
 import DateTimeStamp from "@/components/date-time-stamp";
+import LangText from "@/components/lang-text";
 
 export default async function PaymentSuccessPage({ searchParams }: { searchParams: { mtid?: string } }) {
   const mtid = searchParams?.mtid || "";
@@ -39,27 +40,32 @@ export default async function PaymentSuccessPage({ searchParams }: { searchParam
                   <CheckCircle2 className="size-10" aria-hidden="true" />
                 </div>
               </div>
-              <CardTitle className="text-3xl font-semibold">Payment Complete</CardTitle>
+              <CardTitle className="text-3xl font-semibold">
+                <LangText en="Payment Complete" ta="கட்டணம் வெற்றிகரமாக முடிந்தது" />
+              </CardTitle>
               <CardDescription className="text-base leading-relaxed">
-                Wonderful! Your payment was successful and your order is queued up. We'll have it dispatched within 24 hours, and <strong>you'll get a confirmation email shortly. Thanks for your patience!</strong>
+                <LangText
+                  en={<span>Wonderful! Your payment was successful and your order is queued up. We'll have it dispatched within 24 hours, and <strong>you'll get a confirmation email shortly. Thanks for your patience!</strong></span>}
+                  ta={<span>அற்புதம்! உங்கள் கட்டணம் வெற்றிகரமாக முடிந்தது மற்றும் உங்கள் ஆர்டர் தயாராக உள்ளது. இது 24 மணிநேரத்திற்குள் அனுப்பப்படும், மேலும் <strong>உறுதிப்படுத்தல் மின்னஞ்சல் விரைவில் கிடைக்கும். உங்கள் பொறுமைக்கு நன்றி!</strong></span>}
+                />
               </CardDescription>
             </div>
           </CardHeader>
 
           <CardContent className="space-y-6 py-6">
             <div className="rounded-lg border bg-card/60 p-4 text-center">
-              <p className="text-sm text-muted-foreground">Order status</p>
-              <p className="mt-1 text-sm font-medium text-foreground">Queued for dispatch within 24 hours</p>
+              <p className="text-sm text-muted-foreground"><LangText en="Order status" ta="ஆர்டர் நிலை" /></p>
+              <p className="mt-1 text-sm font-medium text-foreground"><LangText en="Queued for dispatch within 24 hours" ta="24 மணிநேரத்திற்குள் அனுப்ப தயாராக உள்ளது" /></p>
             </div>
-            <p className="text-center text-xs text-muted-foreground">Updated <DateTimeStamp /></p>
+            <p className="text-center text-xs text-muted-foreground"><LangText en="Updated " ta="புதுப்பிக்கப்பட்டது " /><DateTimeStamp /></p>
           </CardContent>
 
           <CardFooter className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
             <Button asChild>
-              <Link href="/">Continue Shopping</Link>
+              <Link href="/"><LangText en="Continue Shopping" ta="வாங்குவதைக் தொடரவும்" /></Link>
             </Button>
             <Button asChild variant="ghost">
-              <Link href="/contact">Need Help? Contact Us</Link>
+              <Link href="/contact"><LangText en="Need Help? Contact Us" ta="உதவி வேண்டுமா? எங்களை தொடர்பு கொள்ளவும்" /></Link>
             </Button>
           </CardFooter>
         </Card>

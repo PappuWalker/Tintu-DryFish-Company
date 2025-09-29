@@ -5,6 +5,7 @@ import { AlertCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import GoBackButton from "@/components/go-back-button";
+import LangText from "@/components/lang-text";
 
 export default function PaymentFailurePage() {
   // Validate status and bounce to success if payment actually completed
@@ -42,10 +43,17 @@ export default function PaymentFailurePage() {
                   <AlertCircle className="size-10" aria-hidden="true" />
                 </div>
               </div>
-              <CardTitle className="text-3xl font-semibold">Payment Failed</CardTitle>
-              <CardDescription className="text-sm">We couldn't process your payment</CardDescription>
+              <CardTitle className="text-3xl font-semibold">
+                <LangText en="Payment Failed" ta="கட்டணம் தோல்வியடைந்தது" />
+              </CardTitle>
+              <CardDescription className="text-sm">
+                <LangText en="We couldn't process your payment" ta="உங்கள் கட்டணத்தை செயலாக்க முடியவில்லை" />
+              </CardDescription>
               <CardDescription className="mt-7 text-base leading-relaxed">
-                Unfortunately, your payment was unsuccessful. No worries - please try again! If the issue persists, <strong>contact us through the information given in the contact page.</strong>
+                <LangText
+                  en={<span>Unfortunately, your payment was unsuccessful. No worries - please try again! If the issue persists, <strong>contact us through the information given in the contact page.</strong></span>}
+                  ta={<span>துரதிருஷ்டவசமாக, உங்கள் கட்டணம் வெற்றிகரமாக இல்லை. கவலைப்பட வேண்டாம் — தயவு செய்து மீண்டும் முயற்சி செய்யுங்கள்! பிரச்சனை தொடர்ந்தால், <strong>தொடர்பு பக்கத்தில் கொடுக்கப்பட்ட தகவல்களின் மூலம் எங்களை தொடர்பு கொள்ளுங்கள்.</strong></span>}
+                />
               </CardDescription>
             </div>
           </CardHeader>
@@ -54,12 +62,12 @@ export default function PaymentFailurePage() {
 
           <CardFooter className="flex flex-col items-stretch gap-3 sm:max-w-md sm:self-center">
             <Button asChild className="w-full">
-              <Link href="/">Try Again</Link>
+              <Link href="/"><LangText en="Try Again" ta="மீண்டும் முயற்சிக்கவும்" /></Link>
             </Button>
             <div className="flex items-center justify-between gap-3">
-              <GoBackButton>Go Back</GoBackButton>
+              <GoBackButton><LangText en="Go Back" ta="பின்னுக்கு செல்லவும்" /></GoBackButton>
               <Button asChild variant="ghost">
-                <Link href="/contact">Contact Support</Link>
+                <Link href="/contact"><LangText en="Contact Support" ta="ஆதரவை தொடர்பு கொள்ளவும்" /></Link>
               </Button>
             </div>
           </CardFooter>

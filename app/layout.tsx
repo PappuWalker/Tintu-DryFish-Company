@@ -12,8 +12,13 @@ import { ConditionalFloatingCartButton } from "@/components/conditional-floating
 import { LanguageProvider } from "@/context/language-context"
 
 export const metadata: Metadata = {
-  title: "Tintu Cuts",
+  title: "Tintu Cuts - Fresh and Dry Fish Company",
   description: "Tintu Cuts - Fresh and Dry Fish Company",
+  icons: {
+    icon: "/images/tinty.png",
+    shortcut: "/images/tinty.png",
+    apple: "/images/tinty.png",
+  },
 }
 
 const montserratAlternates = Montserrat_Alternates({
