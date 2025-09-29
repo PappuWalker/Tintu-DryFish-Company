@@ -1,5 +1,4 @@
 "use client";
-import { Metadata } from "next";
 import Link from "next/link";
 import { useEffect, useMemo } from "react";
 import { CheckCircle2 } from "lucide-react";
@@ -7,10 +6,6 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter }
 import { Button } from "@/components/ui/button";
 import ConfettiLayer from "@/components/confetti-layer";
 import DateTimeStamp from "@/components/date-time-stamp";
-
-export const metadata: Metadata = {
-  title: "Payment Successful",
-};
 
 export default function PaymentSuccessPage() {
   // On landing, call status endpoint once to ensure server finalizes order & notifications
