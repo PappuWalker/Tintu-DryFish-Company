@@ -1,3 +1,4 @@
+import { NEXT_PUBLIC_PRODUCTS_API } from "./config";
 export type Product = {
   id: string;
   name: string;
@@ -16,7 +17,7 @@ export type Product = {
   image_url?: string;
 };
 
-const API_URL = "https://admin.tintucuts.com/api/products";
+const API_URL = NEXT_PUBLIC_PRODUCTS_API;
 
 let cachedProducts: Product[] | null = null;
 

@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-
-const ADMIN_BASE_URL = process.env.ADMIN_BASE_URL || "https://admin.tintucuts.com";
+import { ADMIN_BASE_URL } from "@/lib/config";
 
 export async function GET(req: Request) {
   try {

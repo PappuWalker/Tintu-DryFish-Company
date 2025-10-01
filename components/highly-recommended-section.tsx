@@ -8,43 +8,49 @@ import { slugify } from "@/lib/utils";
 import { useLanguage } from "@/context/language-context";
 
 // Memoized components for better performance
-const ProductCard = memo(({ product, isActive }: { product: Product; isActive: boolean }) => (
-  <Link
-    href={`/product/${slugify(product.name)}`}
-    className={`p-2 md:p-4 cursor-pointer text-center transition-all duration-300 ease-in-out rounded-lg block
-                ${isActive ? 'bg-gradient-to-r from-[#020a08] via-[#2f3c41] to-[#020a08] text-white shadow-lg scale-105' : 'bg-gray-100 text-gray-800 hover:bg-gray-200'}`}
-  >
-    <span className="block font-semibold text-sm md:text-lg">
-      {product.name}
-    </span>
-  </Link>
-));
+const ProductCard = memo(({ product, isActive, lang }: { product: Product; isActive: boolean; lang: 'en' | 'ta' }) => {
+  const displayName = (lang === 'ta' && product.name_ta) ? product.name_ta : product.name;
+  return (
+    <Link
+      href={`/product/${slugify(product.name)}`}
+      className={`p-2 md:p-4 cursor-pointer text-center transition-all duration-300 ease-in-out rounded-lg block
+                  ${isActive ? 'bg-gradient-to-r from-[#020a08] via-[#2f3c41] to-[#020a08] text-white shadow-lg scale-105' : 'bg-gray-100 text-gray-800 hover:bg-gray-200'}`}
+    >
+      <span className="block font-semibold text-sm md:text-lg">
+        {displayName}
+      </span>
+    </Link>
+  );
+});
 
-const ProductImage = memo(({ product, isActive }: { product: Product; isActive: boolean }) => (
-  <Link
-    href={`/product/${slugify(product.name)}`}
-    className={`absolute inset-0 w-full h-full transition-opacity duration-500 ease-in-out block
-                ${isActive ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
-  >
-    <div className="relative w-full h-full overflow-hidden">
-      <Image
-        src={product.image || 'https://via.placeholder.com/500'}
-        alt={product.name}
-        fill
-        style={{ objectFit: 'cover' }} // Ensure images fill the card width
-        className={`transition-transform duration-500 ease-in-out ${isActive ? 'scale-110' : 'scale-100'}`} // Zoom from center
-        unoptimized
-        priority={true}
-      />
-    </div>
-  </Link>
-));
+const ProductImage = memo(({ product, isActive, lang }: { product: Product; isActive: boolean; lang: 'en' | 'ta' }) => {
+  const displayName = (lang === 'ta' && product.name_ta) ? product.name_ta : product.name;
+  return (
+    <Link
+      href={`/product/${slugify(product.name)}`}
+      className={`absolute inset-0 w-full h-full transition-opacity duration-500 ease-in-out block
+                  ${isActive ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+    >
+      <div className="relative w-full h-full overflow-hidden">
+        <Image
+          src={product.image || 'https://via.placeholder.com/500'}
+          alt={displayName}
+          fill
+          style={{ objectFit: 'cover' }} // Ensure images fill the card width
+          className={`transition-transform duration-500 ease-in-out ${isActive ? 'scale-110' : 'scale-100'}`} // Zoom from center
+          unoptimized
+          priority={true}
+        />
+      </div>
+    </Link>
+  );
+});
 
 export function HighlyRecommendedSection() {
   const [products, setProducts] = useState<Product[]>([]);
   const [activeProductIndex, setActiveProductIndex] = useState(0);
   const [isMounted, setIsMounted] = useState(false);
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage() as any;
 
   // Memoized handlers
   const handleProductClick = useCallback((index: number) => {
@@ -88,6 +94,7 @@ export function HighlyRecommendedSection() {
               key={product.id}
               product={product}
               isActive={index === activeProductIndex}
+              lang={lang}
             />
           ))}
         </div>
@@ -97,6 +104,7 @@ export function HighlyRecommendedSection() {
               key={product.id}
               product={product}
               isActive={index === activeProductIndex}
+              lang={lang}
             />
           ))}
         </div>

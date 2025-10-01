@@ -1,7 +1,5 @@
 import { NextResponse } from "next/server";
-
-const ADMIN_BASE_URL = process.env.ADMIN_BASE_URL || "https://admin.tintucuts.com";
-const ADMIN_API_KEY = process.env.ADMIN_API_KEY || "SuD0MeoW96F";
+import { ADMIN_BASE_URL, ADMIN_API_KEY } from "@/lib/config";
 
 export async function POST(req: Request) {
   try {
