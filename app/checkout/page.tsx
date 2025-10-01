@@ -52,11 +52,12 @@ export default function CheckoutPage() {
       const shippingPaise = cartTotal >= 5000 ? 0 : 0;
 
       // Build items payload:
-      // Backend expects `quantity` to represent total weight in kg for each product.
-      // Our cart tracks pack count and selected weight variant separately.
-      // So convert to weight-based quantity: weightKg * count (e.g., 0.5, 1, 1.5, 2 ...)
+      // Make intent explicit for backend by sending both units and weightKg, plus the derived total weight in kg.
+      // quantity => total weight in kg (e.g., 0.5, 1, 1.5, 2 ...)
       const items = cart.map((it) => ({
         productId: it.id,
+        units: it.quantity,
+        weightKg: it.weightKg,
         quantity: Number((it.weightKg * it.quantity).toFixed(3)),
       }));
 
