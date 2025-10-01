@@ -51,8 +51,14 @@ export default function CheckoutPage() {
       // You can change this to a flat/tiered calculation if needed.
       const shippingPaise = cartTotal >= 5000 ? 0 : 0;
 
-      // Build items payload: send productId and quantity
-      const items = cart.map((it) => ({ productId: it.id, quantity: it.quantity }));
+      // Build items payload:
+      // Backend expects `quantity` to represent total weight in kg for each product.
+      // Our cart tracks pack count and selected weight variant separately.
+      // So convert to weight-based quantity: weightKg * count (e.g., 0.5, 1, 1.5, 2 ...)
+      const items = cart.map((it) => ({
+        productId: it.id,
+        quantity: Number((it.weightKg * it.quantity).toFixed(3)),
+      }));
 
       // 1) Create order
       const orderRes = await fetch("/api/orders", {
