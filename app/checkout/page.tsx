@@ -22,7 +22,7 @@ export default function CheckoutPage() {
   const [pincode, setPincode] = useState("");
   const [notes, setNotes] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage() as any;
 
   if (cart.length === 0) {
     return (
@@ -99,6 +99,8 @@ export default function CheckoutPage() {
     }
   }
 
+  const formatWeight = (w: number) => (w === 0.5 ? "500 g" : `${w} kg`);
+
   return (
     <div className="container mx-auto px-4 py-10">
       <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-6">{t("checkout.title", "Checkout")}</h1>
@@ -114,14 +116,30 @@ export default function CheckoutPage() {
                 <div key={`${item.name}-${item.weightKg}`} className="flex items-center gap-4 border border-border rounded-xl p-3 md:p-4">
                   <img src={item.image} alt={item.name} className="w-16 h-16 md:w-20 md:h-20 object-cover rounded-lg" />
                   <div className="flex-1 min-w-0 pr-2">
-                    <h3 className="font-semibold whitespace-normal">{item.name} <span className="text-xs text-muted-foreground">· {item.weightKg} kg</span></h3>
-                    <p className="text-muted-foreground mb-2">₹{(item.price * item.weightKg).toFixed(2)} <span className="text-xs">per unit</span></p>
+                    <h3 className="font-semibold whitespace-normal">{(lang === 'ta' && item.name_ta) ? item.name_ta : item.name} <span className="text-xs text-muted-foreground">· {formatWeight(item.weightKg)}</span></h3>
+                    <p className="text-muted-foreground mb-2">
+                      {item.sale_price ? (
+                        <>
+                          <span className="line-through mr-1">₹{(item.price * item.weightKg).toFixed(2)}</span>
+                          <span>₹{(item.sale_price * item.weightKg).toFixed(2)}</span>
+                        </>
+                      ) : (
+                        <>₹{(item.price * item.weightKg).toFixed(2)}</>
+                      )}
+                      {" "}<span className="text-xs">per unit</span>
+                    </p>
                     <div className="flex items-center gap-2">
                       <Button variant="outline" size="icon" onClick={() => updateQuantity(item.name, item.weightKg, item.quantity - 1)} aria-label="Decrease quantity">
                         <Minus className="h-4 w-4" />
                       </Button>
                       <span className="text-base md:text-lg font-semibold w-6 text-center">{item.quantity}</span>
-                      <Button variant="outline" size="icon" onClick={() => updateQuantity(item.name, item.weightKg, item.quantity + 1)} aria-label="Increase quantity">
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        onClick={() => updateQuantity(item.name, item.weightKg, item.quantity + 1)}
+                        aria-label="Increase quantity"
+                        disabled={typeof item.inventory === 'number' && item.quantity >= item.inventory}
+                      >
                         <Plus className="h-4 w-4" />
                       </Button>
                       <Button variant="ghost" size="icon" onClick={() => removeFromCart(item.name, item.weightKg)} aria-label="Remove item">

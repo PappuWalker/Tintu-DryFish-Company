@@ -12,9 +12,9 @@ import { useLanguage } from "@/context/language-context";
 export default function ProductDetailPage() {
   const params = useParams<{ slug: string }>();
   const { addToCart, cart } = useCart();
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage() as any;
   const [quantity, setQuantity] = useState(1);
-  const [weightKg, setWeightKg] = useState<1 | 2>(1);
+  const [weightKg, setWeightKg] = useState<0.5 | 1 | 1.5 | 2>(1);
   const [product, setProduct] = useState<Product | null>(null);
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
   const [justAdded, setJustAdded] = useState(false);
@@ -61,6 +61,8 @@ export default function ProductDetailPage() {
   };
 
   const inCart = product ? cart.some((item) => item.name === product.name) : false;
+  const outOfStock = product && typeof product.inventory === 'number' ? product.inventory <= 0 : false;
+  const displayName = product ? ((lang === 'ta' && product.name_ta) ? product.name_ta : product.name) : "";
 
   return (
     <div className="container mx-auto px-4 py-10">
@@ -74,15 +76,32 @@ export default function ProductDetailPage() {
           <span className="absolute top-4 left-4 bg-primary text-primary-foreground text-xs font-semibold px-2.5 py-0.5 rounded">
             {localizeCategory(product.category)}
           </span>
+          {product.is_on_sale && (
+            <span className="absolute top-4 right-4 bg-emerald-600 text-white text-xs font-semibold px-2.5 py-0.5 rounded">
+              {t('badge.onSale', 'On Sale')}
+            </span>
+          )}
+          {outOfStock && (
+            <span
+              className="absolute top-12 right-4 text-white text-sm font-semibold px-3 py-1 rounded"
+              style={{ backgroundColor: '#d30c19' }}
+            >
+              {t('badge.outOfStock', 'Out of Stock')}
+            </span>
+          )}
         </div>
         <div>
-          <h1 className="text-3xl font-bold mb-2">{product.name}</h1>
+          <h1 className="text-3xl font-bold mb-2">{displayName}</h1>
           <div className="flex items-center text-sm text-muted-foreground mb-4">
             <Star className="h-4 w-4 fill-yellow-400 text-yellow-400 mr-1" />
-            <span>4.5 · {t("product.inStock", "In Stock")}</span>
+            <span>{(product.rating ?? 4.5).toFixed(1)} · {!outOfStock ? t("product.inStock", "In Stock") : t('badge.outOfStock', 'Out of Stock')}</span>
           </div>
           <p className="text-lg text-muted-foreground mb-6">
-            {t("product.desc.prefix", "Traditional sun-dried")} {product.name} {t("product.desc.suffix", "with rich umami flavor.")}
+            {product.description && product.description.trim().length > 0
+              ? product.description
+              : (<>
+                  {t("product.desc.prefix", "Traditional sun-dried")} {product.name} {t("product.desc.suffix", "with rich umami flavor.")}
+                </>)}
           </p>
 
           <div className="grid grid-cols-2 gap-4 mb-6">
@@ -94,33 +113,70 @@ export default function ProductDetailPage() {
               <p className="text-sm text-muted-foreground">{t("product.bestFor", "Best For")}</p>
               <p className="font-semibold">{t("product.bestFor.values", "Fry · Curry · Grill")}</p>
             </div>
+            {typeof product.inventory === 'number' && (
+              <div className="border rounded-lg p-4 col-span-2">
+                <p className="text-sm text-muted-foreground">{t('product.stock', 'Stock')}</p>
+                <p className="font-semibold">{product.inventory}</p>
+              </div>
+            )}
           </div>
 
           <div className="flex items-center justify-between mb-2">
-            <span className="text-2xl font-bold">{t("product.price", "Price")} ₹{(product.price * weightKg).toFixed(2)}</span>
+            <span className="text-2xl font-bold">
+              {t("product.price", "Price")} {product.sale_price ? (
+                <>
+                  <span className="text-lg line-through text-muted-foreground mr-2">₹{(product.price * weightKg).toFixed(2)}</span>
+                  <span>₹{(product.sale_price * weightKg).toFixed(2)}</span>
+                </>
+              ) : (
+                <>₹{(product.price * weightKg).toFixed(2)}</>
+              )}
+            </span>
             <div className="flex items-center space-x-2">
               <Button variant="outline" size="icon" onClick={() => setQuantity(prev => Math.max(1, prev - 1))}>
                 <Minus className="h-4 w-4" />
               </Button>
               <span className="text-lg font-semibold">{quantity}</span>
-              <Button variant="outline" size="icon" onClick={() => setQuantity(prev => prev + 1)}>
+              <Button
+                variant="outline"
+                size="icon"
+                disabled={typeof product.inventory === 'number' ? quantity >= product.inventory : false}
+                onClick={() => setQuantity(prev => {
+                  const stock = typeof product.inventory === 'number' ? product.inventory : Infinity;
+                  return Math.min(stock, prev + 1);
+                })}
+              >
                 <Plus className="h-4 w-4" />
               </Button>
             </div>
           </div>
           <div className="mb-6 text-sm text-muted-foreground">
-            {t("product.total", "Total")}: ₹{(product.price * weightKg * quantity).toFixed(2)}
+            {t("product.total", "Total")}: ₹{(((product.sale_price ?? product.price) * weightKg) * quantity).toFixed(2)}
           </div>
           {/* Weight selector */}
           <div className="flex items-center gap-2 mb-6">
             <span className="text-sm text-muted-foreground">Weight</span>
             <div className="flex items-center gap-2">
               <Button
+                variant={weightKg === 0.5 ? "default" : "outline"}
+                size="sm"
+                onClick={() => setWeightKg(0.5)}
+              >
+                500 g
+              </Button>
+              <Button
                 variant={weightKg === 1 ? "default" : "outline"}
                 size="sm"
                 onClick={() => setWeightKg(1)}
               >
                 1 kg
+              </Button>
+              <Button
+                variant={weightKg === 1.5 ? "default" : "outline"}
+                size="sm"
+                onClick={() => setWeightKg(1.5)}
+              >
+                1.5 kg
               </Button>
               <Button
                 variant={weightKg === 2 ? "default" : "outline"}
@@ -134,7 +190,7 @@ export default function ProductDetailPage() {
           <Button
             className="w-full bg-primary text-primary-foreground hover:opacity-90 disabled:opacity-70"
             onClick={handleAddToCart}
-            disabled={justAdded}
+            disabled={justAdded || outOfStock}
           >
             <ShoppingCart className="h-5 w-5 mr-2" /> {justAdded ? t("product.addedToCart", "Added to Cart") : t("product.addToCart", "Add to Cart")}
           </Button>

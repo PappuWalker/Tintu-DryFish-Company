@@ -9,7 +9,9 @@ import { useLanguage } from "@/context/language-context"
 
 export function CartDrawer({ open, onOpenChange }: { open: boolean; onOpenChange: (v: boolean) => void }) {
   const { cart, cartTotal, updateQuantity, removeFromCart, clearCart } = useCart()
-  const { t } = useLanguage()
+  const { t, lang } = useLanguage() as any
+
+  const formatWeight = (w: number) => (w === 0.5 ? "500 g" : `${w} kg`);
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -28,15 +30,33 @@ export function CartDrawer({ open, onOpenChange }: { open: boolean; onOpenChange
                   <div className="flex-1">
                     <div className="flex items-start justify-between gap-2">
                       <div>
-                        <h4 className="font-medium leading-tight">{item.name} <span className="text-xs text-muted-foreground">· {item.weightKg} kg</span></h4>
-                        <p className="text-sm text-muted-foreground">₹{(item.price * item.weightKg).toFixed(2)}{" "}<span className="text-xs">per unit</span></p>
+                        <h4 className="font-medium leading-tight">{(lang === 'ta' && item.name_ta) ? item.name_ta : item.name} <span className="text-xs text-muted-foreground">· {formatWeight(item.weightKg)}</span></h4>
+                        <p className="text-sm text-muted-foreground">
+                          {item.sale_price ? (
+                            <>
+                              <span className="line-through mr-1">₹{(item.price * item.weightKg).toFixed(2)}</span>
+                              <span>₹{(item.sale_price * item.weightKg).toFixed(2)}</span>
+                            </>
+                          ) : (
+                            <>₹{(item.price * item.weightKg).toFixed(2)}</>
+                          )}
+                          {" "}<span className="text-xs">per unit</span>
+                        </p>
                       </div>
                       <button className="text-xs text-muted-foreground hover:text-foreground" onClick={() => removeFromCart(item.name, item.weightKg)}>{t("drawer.cart.remove", "Remove")}</button>
                     </div>
                     <div className="mt-2 flex items-center gap-2">
                       <Button variant="outline" size="icon" aria-label="Decrease" onClick={() => updateQuantity(item.name, item.weightKg, item.quantity - 1)}>-</Button>
                       <span className="w-8 text-center text-sm">{item.quantity}</span>
-                      <Button variant="outline" size="icon" aria-label="Increase" onClick={() => updateQuantity(item.name, item.weightKg, item.quantity + 1)}>+</Button>
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        aria-label="Increase"
+                        disabled={typeof item.inventory === 'number' && item.quantity >= item.inventory}
+                        onClick={() => updateQuantity(item.name, item.weightKg, item.quantity + 1)}
+                      >
+                        +
+                      </Button>
                     </div>
                   </div>
                 </li>
@@ -61,3 +81,4 @@ export function CartDrawer({ open, onOpenChange }: { open: boolean; onOpenChange
     </Sheet>
   )
 }
+

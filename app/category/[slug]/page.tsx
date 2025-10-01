@@ -3,10 +3,12 @@
 import { useState, useEffect } from "react";
 import { ProductSection } from "@/components/product-section";
 import { fetchProducts, Product } from "@/lib/products";
+import { useParams } from "next/navigation";
 
-export default function CategoryPage({ params }: { params: { slug: string } }) {
+export default function CategoryPage() {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
-  const decodedSlug = decodeURIComponent(params.slug);
+  const params = useParams<{ slug: string }>();
+  const decodedSlug = decodeURIComponent(String(params.slug));
   const category = decodedSlug.replace(/-/g, ' ');
 
   useEffect(() => {

@@ -50,6 +50,8 @@ export const translations = {
     // Product
     "product.addToCart": "Add to Cart",
     "product.addedToCart": "Added to Cart",
+    "badge.onSale": "On Sale",
+    "badge.outOfStock": "Out of Stock",
 
     // Contact Page
     "contact.title": "Contact Us",
@@ -153,6 +155,8 @@ export const translations = {
     "product.cleaning.text": "Expertly cleaned and cut, minimal wastage",
     "product.guarantee": "Guarantee",
     "product.guarantee.text": "Freshness guaranteed or full refund",
+    "product.stock": "Stock",
+    "product.description": "Description",
 
     // Policy pages (Privacy)
     "policy.updated": "Updated",
@@ -273,6 +277,8 @@ export const translations = {
     // Product
     "product.addToCart": "வண்டியில் சேர்",
     "product.addedToCart": "வண்டியில் சேர்க்கப்பட்டது",
+    "badge.onSale": "சலுகையில்",
+    "badge.outOfStock": "பங்கு இல்லை",
 
     // Contact Page
     "contact.title": "எங்களை தொடர்பு கொள்ள",
@@ -376,6 +382,8 @@ export const translations = {
     "product.cleaning.text": "நிபுணத்துவமாக சுத்தம் செய்து வெட்டுதல், குறைந்த வீணாக்கம்",
     "product.guarantee": "உறுதி",
     "product.guarantee.text": "புதியதன்மை உறுதி அல்லது முழு பணம் திருப்பி",
+    "product.stock": "பங்கு",
+    "product.description": "விவரம்",
 
     // Policy pages (Privacy)
     "policy.updated": "புதுப்பிக்கப்பட்டது",
