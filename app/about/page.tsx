@@ -26,7 +26,7 @@ export default function AboutPage() {
       </section>
 
       {/* License */}
-      <section className="container mx-auto px-4 pb-14">
+      <section className="container mx-auto px-4 mt-6 md:mt-10 pb-14">
         <h2 className="text-2xl md:text-3xl font-bold mb-4">{t("about.license", "Business License")}</h2>
         <div className="rounded-2xl border border-border bg-card p-4 md:p-6">
           <div className="flex items-center justify-between gap-4 flex-wrap">

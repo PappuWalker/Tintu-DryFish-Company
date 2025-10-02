@@ -76,11 +76,7 @@ export default function ProductDetailPage() {
           <span className="absolute top-4 left-4 bg-primary text-primary-foreground text-xs font-semibold px-2.5 py-0.5 rounded">
             {localizeCategory(product.category)}
           </span>
-          {product.is_on_sale && (
-            <span className="absolute top-4 right-4 bg-emerald-600 text-white text-xs font-semibold px-2.5 py-0.5 rounded">
-              {t('badge.onSale', 'On Sale')}
-            </span>
-          )}
+          {/* On-sale badge removed as sale flags/prices are no longer used */}
           {outOfStock && (
             <span
               className="absolute top-12 right-4 text-white text-sm font-semibold px-3 py-1 rounded"
@@ -123,14 +119,7 @@ export default function ProductDetailPage() {
 
           <div className="flex items-center justify-between mb-2">
             <span className="text-2xl font-bold">
-              {t("product.price", "Price")} {product.sale_price ? (
-                <>
-                  <span className="text-lg line-through text-muted-foreground mr-2">₹{(product.price * weightKg).toFixed(2)}</span>
-                  <span>₹{(product.sale_price * weightKg).toFixed(2)}</span>
-                </>
-              ) : (
-                <>₹{(product.price * weightKg).toFixed(2)}</>
-              )}
+              {t("product.price", "Price")} ₹{(product.price * weightKg).toFixed(2)}
             </span>
             <div className="flex items-center space-x-2">
               <Button variant="outline" size="icon" onClick={() => setQuantity(prev => Math.max(1, prev - 1))}>
@@ -151,7 +140,7 @@ export default function ProductDetailPage() {
             </div>
           </div>
           <div className="mb-6 text-sm text-muted-foreground">
-            {t("product.total", "Total")}: ₹{(((product.sale_price ?? product.price) * weightKg) * quantity).toFixed(2)}
+            {t("product.total", "Total")}: ₹{((product.price * weightKg) * quantity).toFixed(2)}
           </div>
           {/* Weight selector */}
           <div className="flex items-center gap-2 mb-6">

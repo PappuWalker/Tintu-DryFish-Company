@@ -231,24 +231,45 @@ export default function StickyFooter() {
               className="flex flex-col md:flex-row justify-between items-start md:items-end relative z-10 gap-1.5 md:gap-2 mt-1"
             >
               <div className="flex-1">
-                <motion.h1
-                  initial={{ opacity: 0, x: -50 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 1, duration: 0.8, ease: "easeOut" }}
-                  whileHover={{
-                    scale: 1.02,
-                    transition: { type: "spring", stiffness: 300, damping: 20 },
-                  }}
-                  className="text-[8vw] md:text-[6vw] lg:text-[5vw] xl:text-[4vw] leading-[0.8] font-sans bg-gradient-to-r from-foreground via-muted-foreground to-foreground/60 bg-clip-text text-transparent cursor-default footer-brand-title"
-                >
-                  {footerData.title}
-                </motion.h1>
+                {/* On mobile, place brand and social icons in one row (icons to the right). On md+, fall back to block layout. */}
+                <div className="flex items-center justify-between md:block">
+                  <motion.h1
+                    initial={{ opacity: 0, x: -50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 1, duration: 0.8, ease: "easeOut" }}
+                    whileHover={{
+                      scale: 1.02,
+                      transition: { type: "spring", stiffness: 300, damping: 20 },
+                    }}
+                    className="text-[8vw] md:text-[6vw] lg:text-[5vw] xl:text-[4vw] leading-[0.8] font-sans bg-gradient-to-r from-foreground via-muted-foreground to-foreground/60 bg-clip-text text-transparent cursor-default footer-brand-title"
+                  >
+                    {footerData.title}
+                  </motion.h1>
+
+                  {/* Mobile-only social icons to the right of brand title */}
+                  <motion.div
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate="visible"
+                    transition={{ delay: 1.4, staggerChildren: 0.1 }}
+                    className="flex md:hidden ml-3 gap-2"
+                  >
+                    {footerData.social.map((social, index) => (
+                      <SocialLink
+                        key={`mobile-${social.label}`}
+                        href={social.href}
+                        label={social.label}
+                        icon={social.icon}
+                        index={index}
+                      />
+                    ))}
+                  </motion.div>
+                </div>
 
                 <motion.div
                   initial={{ opacity: 0, width: 0 }}
                   animate={{ opacity: 1, width: "auto" }}
                   transition={{ delay: 1.2, duration: 0.6 }}
-                  className="flex items-center gap-3 md:gap-4 mt-3 md:mt-4"
                 >
                   <motion.div
                     className="w-8 md:w-12 h-0.5 bg-gradient-to-r from-primary to-secondary"
@@ -292,7 +313,7 @@ export default function StickyFooter() {
                   initial="hidden"
                   animate="visible"
                   transition={{ delay: 2, staggerChildren: 0.1 }}
-                  className="flex gap-2 md:gap-3"
+                  className="hidden md:flex gap-2 md:gap-3"
                 >
                   {footerData.social.map((social, index) => (
                     <SocialLink

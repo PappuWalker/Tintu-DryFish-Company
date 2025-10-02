@@ -11,6 +11,7 @@ import { useLanguage } from "@/context/language-context";
 export default function CheckoutPage() {
   const { cart, updateQuantity, removeFromCart, cartTotal, clearCart } = useCart();
   const [ackDeliveryCharges, setAckDeliveryCharges] = useState(false);
+  const [ackPaymentWait, setAckPaymentWait] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
   // Customer & shipping state
@@ -43,7 +44,7 @@ export default function CheckoutPage() {
 
   async function handleProceed() {
     setErrorMsg("");
-    if (!ackDeliveryCharges) return;
+    if (!ackDeliveryCharges || !ackPaymentWait) return;
     if (!fullName || phoneDigits.length !== 10 || !email || !addressLine1 || !city || !pincode) {
       setErrorMsg("Please fill all required fields.");
       return;
@@ -134,15 +135,7 @@ export default function CheckoutPage() {
                   <div className="flex-1 min-w-0 pr-2">
                     <h3 className="font-semibold whitespace-normal">{(lang === 'ta' && item.name_ta) ? item.name_ta : item.name} <span className="text-xs text-muted-foreground">· {formatWeight(item.weightKg)}</span></h3>
                     <p className="text-muted-foreground mb-2">
-                      {item.sale_price ? (
-                        <>
-                          <span className="line-through mr-1">₹{(item.price * item.weightKg).toFixed(2)}</span>
-                          <span>₹{(item.sale_price * item.weightKg).toFixed(2)}</span>
-                        </>
-                      ) : (
-                        <>₹{(item.price * item.weightKg).toFixed(2)}</>
-                      )}
-                      {" "}<span className="text-xs">per unit</span>
+                      ₹{(item.price * item.weightKg).toFixed(2)} <span className="text-xs">per unit</span>
                     </p>
                     <div className="flex items-center gap-2">
                       <Button variant="outline" size="icon" onClick={() => updateQuantity(item.name, item.weightKg, item.quantity - 1)} aria-label="Decrease quantity">
@@ -267,21 +260,36 @@ export default function CheckoutPage() {
                 <span>₹{cartTotal.toFixed(2)}</span>
               </div>
             </div>
-            <div className="flex items-start gap-3 rounded-lg border border-border p-3 bg-muted/40">
-              <input
-                id="delivery-ack"
-                type="checkbox"
-                className="mt-1 h-4 w-4 rounded border-border text-primary focus:ring-primary"
-                checked={ackDeliveryCharges}
-                onChange={(e) => setAckDeliveryCharges(e.target.checked)}
-              />
-              <label htmlFor="delivery-ack" className="text-sm text-foreground leading-relaxed font-semibold">
-                {t("checkout.deliveryAck", "Delivery charges apply to all orders and are calculated based on distance from our location. You'll pay these charges when your order is delivered. Spend ₹5,000 or more to get free delivery.")}
-              </label>
+            <div className="flex flex-col gap-3 rounded-lg border border-border p-3 bg-muted/40">
+              <div className="flex items-start gap-3">
+                <input
+                  id="delivery-ack"
+                  type="checkbox"
+                  className="mt-1 h-4 w-4 rounded border-border text-primary focus:ring-primary"
+                  checked={ackDeliveryCharges}
+                  onChange={(e) => setAckDeliveryCharges(e.target.checked)}
+                />
+                <label htmlFor="delivery-ack" className="text-sm text-foreground leading-relaxed font-semibold">
+                  {t("checkout.deliveryAck", "Delivery charges apply to all orders and are calculated based on distance from our location. You'll pay these charges when your order is delivered. Delivery is free for locations within 3 km. Spend ₹5,000 or more to get free delivery.")}
+                </label>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <input
+                  id="payment-wait-ack"
+                  type="checkbox"
+                  className="mt-1 h-4 w-4 rounded border-border text-primary focus:ring-primary"
+                  checked={ackPaymentWait}
+                  onChange={(e) => setAckPaymentWait(e.target.checked)}
+                />
+                <label htmlFor="payment-wait-ack" className="text-sm text-foreground leading-relaxed font-semibold">
+                  Please wait for 5 to 10 seconds on the payment page for the payment to be confirmed; otherwise, your payment won't be processed
+                </label>
+              </div>
             </div>
             <Button
               className="w-full bg-primary text-primary-foreground hover:opacity-90"
-              disabled={!ackDeliveryCharges || submitting}
+              disabled={!ackDeliveryCharges || !ackPaymentWait || submitting}
               onClick={handleProceed}
             >
               {submitting ? t("btn.processing", "Processing...") : t("btn.proceedToPayment", "Proceed to Payment")}

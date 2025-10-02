@@ -32,15 +32,7 @@ export function CartDrawer({ open, onOpenChange }: { open: boolean; onOpenChange
                       <div>
                         <h4 className="font-medium leading-tight">{(lang === 'ta' && item.name_ta) ? item.name_ta : item.name} <span className="text-xs text-muted-foreground">· {formatWeight(item.weightKg)}</span></h4>
                         <p className="text-sm text-muted-foreground">
-                          {item.sale_price ? (
-                            <>
-                              <span className="line-through mr-1">₹{(item.price * item.weightKg).toFixed(2)}</span>
-                              <span>₹{(item.sale_price * item.weightKg).toFixed(2)}</span>
-                            </>
-                          ) : (
-                            <>₹{(item.price * item.weightKg).toFixed(2)}</>
-                          )}
-                          {" "}<span className="text-xs">per unit</span>
+                          ₹{(item.price * item.weightKg).toFixed(2)} <span className="text-xs">per unit</span>
                         </p>
                       </div>
                       <button className="text-xs text-muted-foreground hover:text-foreground" onClick={() => removeFromCart(item.name, item.weightKg)}>{t("drawer.cart.remove", "Remove")}</button>

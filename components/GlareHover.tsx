@@ -27,7 +27,7 @@ const GlareHover: React.FC<GlareHoverProps> = ({
   borderColor = '#333',
   children,
   glareColor = '#ffffff',
-  glareOpacity = 10.5,
+  glareOpacity = 0.3,
   glareAngle = -45,
   glareSize = 950,
   transitionDuration = 650,
@@ -84,7 +84,8 @@ const GlareHover: React.FC<GlareHoverProps> = ({
     backgroundSize: `${glareSize}% ${glareSize}%, 100% 100%`,
     backgroundRepeat: 'no-repeat',
     backgroundPosition: '-100% -100%, 0 0',
-    pointerEvents: 'none'
+    pointerEvents: 'none',
+    zIndex: 2
   };
 
   return (
@@ -101,8 +102,8 @@ const GlareHover: React.FC<GlareHoverProps> = ({
       onMouseEnter={animateIn}
       onMouseLeave={animateOut}
     >
-      <div ref={overlayRef} style={overlayStyle} />
       {children}
+      <div ref={overlayRef} style={overlayStyle} />
     </div>
   );
 };

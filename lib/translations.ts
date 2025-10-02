@@ -94,7 +94,7 @@ export const translations = {
     "summary.freeDelivery": "Free delivery",
     "summary.calculatedAtDelivery": "Calculated at delivery",
     "summary.total": "Total",
-    "checkout.deliveryAck": "Delivery charges apply to all orders and are calculated based on distance from our location. You'll pay these charges when your order is delivered. Spend ₹5,000 or more to get free delivery.",
+    "checkout.deliveryAck": "Delivery charges apply to all orders and are calculated based on distance from our location. You'll pay these charges when your order is delivered. Delivery is free for locations within 3 km. Spend ₹5,000 or more to get free delivery.",
     "btn.proceedToPayment": "Proceed to Payment",
     "checkout.termsNote": "By continuing, you agree to our Terms and Privacy Policy.",
 

@@ -63,7 +63,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const cartTotal = cart.reduce((total, item) => {
-    const unit = (item.sale_price ?? item.price);
+    const unit = item.price;
     return total + (unit * item.weightKg) * item.quantity;
   }, 0);
   const cartItemCount = cart.reduce((count, item) => count + item.quantity, 0);

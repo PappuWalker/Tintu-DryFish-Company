@@ -55,12 +55,7 @@ export function ProductSection({ title, products }: { title: string; products: P
                 className="h-full w-full object-cover"
               />
             </div>
-            {/* Badges */}
-            {p.is_on_sale && (
-              <span className="absolute top-2 left-2 text-[11px] px-2 py-0.5 rounded bg-emerald-600 text-white">
-                {t('badge.onSale', 'On Sale')}
-              </span>
-            )}
+            {/* On-sale badge removed as sale flags/prices are no longer used */}
             {outOfStock && (
               <div
                 className="absolute inset-x-0 bottom-0 text-white text-center text-sm font-semibold py-2"
@@ -74,14 +69,7 @@ export function ProductSection({ title, products }: { title: string; products: P
             <h3 className="text-base font-semibold">{displayName}</h3>
             <div className="mt-2 flex flex-col md:flex-row md:items-center md:justify-between gap-2">
               <div className="flex items-center gap-2">
-                {p.sale_price ? (
-                  <>
-                    <span className="text-sm line-through text-muted-foreground">₹{(p.price * weightKg).toFixed(2)}</span>
-                    <span className="text-primary font-semibold">₹{(p.sale_price * weightKg).toFixed(2)}</span>
-                  </>
-                ) : (
-                  <span className="text-primary font-semibold">₹{(p.price * weightKg).toFixed(2)}</span>
-                )}
+                <span className="text-primary font-semibold">₹{(p.price * weightKg).toFixed(2)}</span>
               </div>
               {/* Weight selector: below price on mobile; inline on md+ */}
               <div className="flex items-center gap-1">
