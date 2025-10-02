@@ -15,7 +15,7 @@ export default function CheckoutPage() {
 
   // Customer & shipping state
   const [fullName, setFullName] = useState("");
-  const [phone, setPhone] = useState("");
+  const [phoneDigits, setPhoneDigits] = useState(""); // 10 digits only, will be sent with +91
   const [email, setEmail] = useState("");
   const [addressLine1, setAddressLine1] = useState("");
   const [city, setCity] = useState("");
@@ -36,11 +36,20 @@ export default function CheckoutPage() {
     );
   }
 
+  const isValidEmail = (val: string) => {
+    // Simple email regex
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+  };
+
   async function handleProceed() {
     setErrorMsg("");
     if (!ackDeliveryCharges) return;
-    if (!fullName || !phone || !addressLine1 || !city || !pincode) {
+    if (!fullName || phoneDigits.length !== 10 || !email || !addressLine1 || !city || !pincode) {
       setErrorMsg("Please fill all required fields.");
+      return;
+    }
+    if (!isValidEmail(email)) {
+      setErrorMsg("Please enter a valid email address.");
       return;
     }
     if (cart.length === 0) return;
@@ -66,7 +75,7 @@ export default function CheckoutPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          customer: { name: fullName, phone, email },
+          customer: { name: fullName, phone: "+91" + phoneDigits, email },
           shipping: { addressLine1, city, pincode },
           notes,
           items,
@@ -168,15 +177,52 @@ export default function CheckoutPage() {
             <form className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="col-span-1 md:col-span-2">
                 <label htmlFor="name" className="block text-sm font-medium text-foreground">{t("form.fullName", "Full Name")}</label>
-                <Input type="text" id="name" placeholder={t("form.placeholder.fullName", "John Doe")} value={fullName} onChange={(e) => setFullName(e.target.value)} />
+                <Input
+                  type="text"
+                  id="name"
+                  placeholder={t("form.placeholder.fullName", "John Doe")}
+                  value={fullName}
+                  onChange={(e) => {
+                    // Allow only letters, spaces, and dot
+                    const sanitized = e.target.value.replace(/[^A-Za-z. ]/g, "");
+                    setFullName(sanitized);
+                  }}
+                />
               </div>
               <div>
                 <label htmlFor="phone" className="block text-sm font-medium text-foreground">{t("form.phone", "Phone")}</label>
-                <Input type="tel" id="phone" placeholder={t("form.placeholder.phone", "9999999999")} value={phone} onChange={(e) => setPhone(e.target.value)} />
+                <Input
+                  type="tel"
+                  id="phone"
+                  placeholder={t("form.placeholder.phone", "+91 9876543210")}
+                  value={"+91" + phoneDigits}
+                  onChange={(e) => {
+                    // Keep only digits, drop any leading country code, cap to 10
+                    const digits = (e.target.value.replace(/\D/g, "").replace(/^91/, "")).slice(0, 10);
+                    setPhoneDigits(digits);
+                  }}
+                  onKeyDown={(e) => {
+                    // Prevent deleting the +91 prefix
+                    const input = e.currentTarget as HTMLInputElement;
+                    const caretPos = input.selectionStart ?? 0;
+                    const isBackspaceAtPrefix = e.key === "Backspace" && caretPos <= 3;
+                    const isDeleteAtPrefix = e.key === "Delete" && caretPos < 3;
+                    if (isBackspaceAtPrefix || isDeleteAtPrefix) {
+                      e.preventDefault();
+                    }
+                  }}
+                />
+                <p className="mt-1 text-xs text-muted-foreground">Format: +91XXXXXXXXXX (10 digits)</p>
               </div>
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-foreground">{t("form.email", "Email")}</label>
-                <Input type="email" id="email" placeholder={t("form.placeholder.email", "test@example.com")} value={email} onChange={(e) => setEmail(e.target.value)} />
+                <Input
+                  type="email"
+                  id="email"
+                  placeholder={t("form.placeholder.email", "test@example.com")}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
               </div>
               <div className="col-span-1 md:col-span-2">
                 <label htmlFor="address" className="block text-sm font-medium text-foreground">{t("form.address", "Address")}</label>
