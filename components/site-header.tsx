@@ -27,18 +27,23 @@ export function SiteHeader() {
   const isAboutPage = pathname === "/about";
   const shouldAnimateLogo = isHomePage || isAboutPage; // Animation applies to home/about
 
-  // Logo should be visible initially if it's desktop and not on an animating page
-  // Otherwise, it should be hidden initially (for animating pages on desktop, or for mobile/tablet where it's never shown)
-  const [showTintyLogo, setShowTintyLogo] = useState(isDesktop && !shouldAnimateLogo);
+  // Logo should be visible initially if it's NOT a tablet and NOT an animating page
+  const [showTintyLogo, setShowTintyLogo] = useState(!isTablet && !shouldAnimateLogo);
 
   useEffect(() => {
-    // If it's not desktop, or it's not an animating page, the logo should not be animated.
-    // It should either be constantly visible (if desktop, not animating) or not visible at all (mobile/tablet).
-    if (!isDesktop || !shouldAnimateLogo) {
-      setShowTintyLogo(isDesktop && !shouldAnimateLogo); // Constantly visible on non-animating desktop pages, false otherwise
+    // If it's a tablet, the logo should never be shown.
+    if (isTablet) {
+      setShowTintyLogo(false);
       return;
     }
 
+    // If it's not an animating page, the logo should be constantly visible.
+    if (!shouldAnimateLogo) {
+      setShowTintyLogo(true);
+      return;
+    }
+
+    // Otherwise, it's an animating page (home/about) and not a tablet, so apply scroll effect.
     const handleScroll = () => {
       if (window.scrollY > window.innerHeight * 0.8) { // Adjust threshold as needed
         setShowTintyLogo(true);
@@ -49,7 +54,7 @@ export function SiteHeader() {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [isDesktop, shouldAnimateLogo, pathname]);
+  }, [isTablet, shouldAnimateLogo, pathname]);
 
   function LanguageToggle() {
     return (
@@ -80,9 +85,9 @@ export function SiteHeader() {
       style={{ background: 'linear-gradient(to right, #010907, #242e30)' }}
     >
       <div className="container flex h-16 items-center justify-between gap-4 px-4">
-        {/* Desktop: tinty.png with scroll effect for home/about, or constant on other desktop pages */}
+        {/* tinty.png with scroll effect for home/about on mobile/desktop, or constant on other mobile/desktop pages */}
         <AnimatePresence>
-          {isDesktop && showTintyLogo && (
+          {!isTablet && showTintyLogo && ( // Only render if NOT tablet and showTintyLogo is true
             <motion.div
               initial={shouldAnimateLogo ? { opacity: 0, x: -20 } : undefined}
               animate={{ opacity: 1, x: 0 }}
@@ -173,7 +178,7 @@ export function SiteHeader() {
                   onClick={() => setCartOpen(true)}
                 >
                   <ShoppingCart className="h-5 w-5" />
-                  {cartItemCount > 0 ? `(${cartItemCount})` : ''}
+                  {t("cart.view", "View Cart")} {cartItemCount > 0 ? `(${cartItemCount})` : ''}
                 </Button>
               </nav>
             </SheetContent>
