@@ -8,11 +8,13 @@ import { Star, Minus, Plus, ShoppingCart } from "lucide-react";
 import { useCart } from "@/context/cart-context";
 import { useParams } from "next/navigation";
 import { useLanguage } from "@/context/language-context";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export default function ProductDetailPage() {
   const params = useParams<{ slug: string }>();
   const { addToCart, cart } = useCart();
   const { t, lang } = useLanguage() as any;
+  const isMobile = useIsMobile();
   const [quantity, setQuantity] = useState(1);
   const [weightKg, setWeightKg] = useState<0.5 | 1 | 1.5 | 2>(1);
   const [product, setProduct] = useState<Product | null>(null);
@@ -148,28 +150,28 @@ export default function ProductDetailPage() {
             <div className="flex items-center gap-2">
               <Button
                 variant={weightKg === 0.5 ? "default" : "outline"}
-                size="sm"
+                size={isMobile ? "sm" : "default"}
                 onClick={() => setWeightKg(0.5)}
               >
                 500 g
               </Button>
               <Button
                 variant={weightKg === 1 ? "default" : "outline"}
-                size="sm"
+                size={isMobile ? "sm" : "default"}
                 onClick={() => setWeightKg(1)}
               >
                 1 kg
               </Button>
               <Button
                 variant={weightKg === 1.5 ? "default" : "outline"}
-                size="sm"
+                size={isMobile ? "sm" : "default"}
                 onClick={() => setWeightKg(1.5)}
               >
                 1.5 kg
               </Button>
               <Button
                 variant={weightKg === 2 ? "default" : "outline"}
-                size="sm"
+                size={isMobile ? "sm" : "default"}
                 onClick={() => setWeightKg(2)}
               >
                 2 kg
@@ -179,33 +181,33 @@ export default function ProductDetailPage() {
           <Button
             className="w-full bg-primary text-primary-foreground hover:opacity-90 disabled:opacity-70"
             onClick={handleAddToCart}
-            disabled={justAdded || outOfStock}
           >
-            <ShoppingCart className="h-5 w-5 mr-2" /> {justAdded ? t("product.addedToCart", "Added to Cart") : t("product.addToCart", "Add to Cart")}
+            <ShoppingCart className="h-5 w-5 mr-2" /> {justAdded ? t("product.addedToCart", "Added to Cart") : (isMobile ? t("product.addCart", "add cart") : t("product.addToCart", "add to cart"))}
           </Button>
         </div>
       </div>
-
-      {relatedProducts.length > 0 && (
-        <section className="mt-16">
-          <ProductSection title={t("product.related", "Related Products")} products={relatedProducts} />
-        </section>
-      )}
-
       <div className="grid md:grid-cols-3 gap-8 mt-16 text-center">
-        <div className="border rounded-lg p-6">
-          <h3 className="font-semibold text-lg mb-2">{t("product.delivery", "Delivery")}</h3>
-          <p className="text-muted-foreground">{t("product.delivery.text", "Same-day dispatch · 24-48h delivery window")}</p>
-        </div>
-        <div className="border rounded-lg p-6">
+      <div className="border rounded-lg p-6">
+        <h3 className="font-semibold text-lg mb-2">{t("product.delivery", "Delivery")}</h3>
+        <p className="text-muted-foreground">{t("product.delivery.text", "Same-day dispatch · 24-48h delivery window")}</p>
+      </div>
+      <div className="border rounded-lg p-6">
+        <div className="container mx-auto p-4">
           <h3 className="font-semibold text-lg mb-2">{t("product.cleaning", "Cleaning")}</h3>
           <p className="text-muted-foreground">{t("product.cleaning.text", "Expertly cleaned and cut, minimal wastage")}</p>
         </div>
-        <div className="border rounded-lg p-6">
-          <h3 className="font-semibold text-lg mb-2">{t("product.guarantee", "Guarantee")}</h3>
-          <p className="text-muted-foreground">{t("product.guarantee.text", "Freshness guaranteed or full refund")}</p>
-        </div>
+      </div>
+      <div className="border rounded-lg p-6">
+        <h3 className="font-semibold text-lg mb-2">{t("product.guarantee", "Guarantee")}</h3>
+        <p className="text-muted-foreground">{t("product.guarantee.text", "Freshness guaranteed or full refund")}</p>
       </div>
     </div>
+
+    {relatedProducts.length > 0 && (
+      <div className="mt-16">
+        <ProductSection title={t("product.related", "Related Products")} products={relatedProducts} />
+      </div>
+    )}
+  </div>
   );
 }

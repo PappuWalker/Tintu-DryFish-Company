@@ -1,6 +1,7 @@
 "use client"
 
 import { motion, type Variants } from "motion/react"
+import Image from "next/image";
 import { Instagram, MessageCircle } from "lucide-react"; // Import social media icons
 import { useLanguage } from "@/context/language-context"
 
@@ -91,8 +92,8 @@ const buildFooterData = (t: (k: string, f?: string) => string) => ({
     },
   ],
   social: [
-    { href: "https://www.instagram.com/tintu_cuts?igsh=NTA4YTkxZDJiNW80&utm_source=qr", label: "Instagram", icon: <Instagram className="w-4 h-4" /> },
-    { href: "https://chat.whatsapp.com/KDn1mXcSfANFnlD5G2tMDq?mode=ems_copy_t", label: "WhatsApp", icon: <MessageCircle className="w-4 h-4" /> },
+    { href: "https://www.instagram.com/tintu_cuts?igsh=NTA4YTkxZDJiNW80&utm_source=qr", label: "Instagram", icon: <Image src="/images/instagram.jpg" alt="Instagram" width={16} height={16} className="w-4 h-4" /> },
+    { href: "https://chat.whatsapp.com/KDn1mXcSfANFnlD5G2tMDq?mode=ems_copy_t", label: "WhatsApp", icon: <Image src="/images/whatsapp.jpg" alt="WhatsApp" width={16} height={16} className="w-4 h-4" /> },
   ],
   title: t("hero.brand", "Tintu Cuts"),
   subtitle: t("footer.tagline", "Premium seafood, fresh or frozen, delivered fast."),

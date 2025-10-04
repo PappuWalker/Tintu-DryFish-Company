@@ -4,12 +4,16 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ShoppingCart, Home, Store, Info, Phone, Menu, Search } from "lucide-react"
 import { useCart } from "@/context/cart-context"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { ThemeToggle } from "@/components/theme-toggle"
+import Image from "next/image";
+import { AnimatePresence, motion } from "framer-motion";
 import { CommandMenu, CommandButton } from "@/components/command-menu"
 import { CartDrawer } from "@/components/cart-drawer"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { useLanguage } from "@/context/language-context"
+import { usePathname } from "next/navigation";
+import { useDeviceType } from "@/hooks/use-device-type"; // Import the new hook
 
 export function SiteHeader() {
   const { cartItemCount } = useCart();
@@ -17,6 +21,35 @@ export function SiteHeader() {
   const [cartOpen, setCartOpen] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const { lang, setLang, t } = useLanguage()
+  const { isMobile, isTablet, isDesktop } = useDeviceType(); // Use the new hook
+  const pathname = usePathname();
+  const isHomePage = pathname === "/";
+  const isAboutPage = pathname === "/about";
+  const shouldAnimateLogo = isHomePage || isAboutPage; // Animation applies to home/about
+
+  // Logo should be visible initially if it's desktop and not on an animating page
+  // Otherwise, it should be hidden initially (for animating pages on desktop, or for mobile/tablet where it's never shown)
+  const [showTintyLogo, setShowTintyLogo] = useState(isDesktop && !shouldAnimateLogo);
+
+  useEffect(() => {
+    // If it's not desktop, or it's not an animating page, the logo should not be animated.
+    // It should either be constantly visible (if desktop, not animating) or not visible at all (mobile/tablet).
+    if (!isDesktop || !shouldAnimateLogo) {
+      setShowTintyLogo(isDesktop && !shouldAnimateLogo); // Constantly visible on non-animating desktop pages, false otherwise
+      return;
+    }
+
+    const handleScroll = () => {
+      if (window.scrollY > window.innerHeight * 0.8) { // Adjust threshold as needed
+        setShowTintyLogo(true);
+      } else {
+        setShowTintyLogo(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [isDesktop, shouldAnimateLogo, pathname]);
 
   function LanguageToggle() {
     return (
@@ -47,6 +80,22 @@ export function SiteHeader() {
       style={{ background: 'linear-gradient(to right, #010907, #242e30)' }}
     >
       <div className="container flex h-16 items-center justify-between gap-4 px-4">
+        {/* Desktop: tinty.png with scroll effect for home/about, or constant on other desktop pages */}
+        <AnimatePresence>
+          {isDesktop && showTintyLogo && (
+            <motion.div
+              initial={shouldAnimateLogo ? { opacity: 0, x: -20 } : undefined}
+              animate={{ opacity: 1, x: 0 }}
+              exit={shouldAnimateLogo ? { opacity: 0, x: -20 } : undefined}
+              transition={{ duration: 0.3 }}
+              className="flex items-center mr-auto"
+            >
+              <Link href="/">
+                <Image src="/images/tinty.png" alt="Tintu Cuts" width={32} height={32} className="h-8 w-8" />
+              </Link>
+            </motion.div>
+          )}
+        </AnimatePresence>
         {/* Mobile: search bar (166x36), theme, hamburger */}
         <div className="ml-auto flex items-center md:hidden gap-2">
           <Button
@@ -72,6 +121,7 @@ export function SiteHeader() {
             >
               <div className="px-3 pt-3 pb-2.5 border-b border-white/10">
                 <div className="flex items-center gap-2.5">
+                  {/* Removed tinty.png from mobile menu header */}
                   <img src="/images/tinty.png" alt="Tintu Cuts" className="h-6 w-6" />
                   <div className="flex flex-col leading-none">
                     <h3 className="text-base font-semibold text-white">Tintu Cuts</h3>
@@ -123,7 +173,7 @@ export function SiteHeader() {
                   onClick={() => setCartOpen(true)}
                 >
                   <ShoppingCart className="h-5 w-5" />
-                  {t("cart.view", "View Cart")} {cartItemCount > 0 ? `(${cartItemCount})` : ''}
+                  {cartItemCount > 0 ? `(${cartItemCount})` : ''}
                 </Button>
               </nav>
             </SheetContent>

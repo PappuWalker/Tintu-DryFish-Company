@@ -270,7 +270,7 @@ export default function CheckoutPage() {
                   onChange={(e) => setAckDeliveryCharges(e.target.checked)}
                 />
                 <label htmlFor="delivery-ack" className="text-sm text-foreground leading-relaxed font-semibold">
-                  {t("checkout.deliveryAck", "Delivery charges apply to all orders and are calculated based on distance from our location. You'll pay these charges when your order is delivered. Delivery is free for locations within 3 km. Spend ₹5,000 or more to get free delivery.")}
+                  {t("checkout.deliveryAck", "Delivery charges apply based on distance and are paid on delivery. For Cash on Delivery, contact us via the WhatsApp icon on products. Enjoy free delivery within 3 km or on orders above ₹5,000.")}
                 </label>
               </div>
 

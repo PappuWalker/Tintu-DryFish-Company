@@ -48,7 +48,9 @@ export const translations = {
     "drawer.checkout": "Checkout",
 
     // Product
-    "product.addToCart": "Add to Cart",
+    "product.addToCart": "add to cart",
+    "product.addCart": "add cart",
+    "product.addCartMobile": "Cart",
     "product.addedToCart": "Added to Cart",
     "badge.onSale": "On Sale",
     "badge.outOfStock": "Out of Stock",
@@ -94,7 +96,7 @@ export const translations = {
     "summary.freeDelivery": "Free delivery",
     "summary.calculatedAtDelivery": "Calculated at delivery",
     "summary.total": "Total",
-    "checkout.deliveryAck": "Delivery charges apply to all orders and are calculated based on distance from our location. You'll pay these charges when your order is delivered. Delivery is free for locations within 3 km. Spend ₹5,000 or more to get free delivery.",
+    "checkout.deliveryAck": "Delivery charges apply based on distance and are paid on delivery. For Cash on Delivery, contact us via the WhatsApp icon on products. Enjoy free delivery within 3 km or on orders above ₹5,000.",
     "btn.proceedToPayment": "Proceed to Payment",
     "checkout.termsNote": "By continuing, you agree to our Terms and Privacy Policy.",
 
@@ -276,6 +278,8 @@ export const translations = {
 
     // Product
     "product.addToCart": "வண்டியில் சேர்",
+    "product.addCart": "வண்டியில் சேர்",
+    "product.addCartMobile": "வண்டி",
     "product.addedToCart": "வண்டியில் சேர்க்கப்பட்டது",
     "badge.onSale": "சலுகையில்",
     "badge.outOfStock": "பங்கு இல்லை",
@@ -321,7 +325,7 @@ export const translations = {
     "summary.freeDelivery": "இலவச டெலிவரி",
     "summary.calculatedAtDelivery": "டெலிவரியில் கணக்கிடப்படும்",
     "summary.total": "மொத்தம்",
-    "checkout.deliveryAck": "எங்கள் இடத்திலிருந்து தூரத்தின் அடிப்படையில் டெலிவரி கட்டணம் கணக்கிடப்படும். இந்த கட்டணத்தை டெலிவரியின் போது செலுத்த வேண்டும். ₹5,000 அல்லது அதற்கு மேல் செலவிட்டால் இலவச டெலிவரி.",
+    "checkout.deliveryAck": "டெலிவரி கட்டணங்கள் தூரத்தைப் பொறுத்து பொருந்தும் மற்றும் டெலிவரியின் போது செலுத்த வேண்டும். Cash on Delivery வேண்டுமெனில், தயாரிப்பு கார்டுகளில் உள்ள WhatsApp ஐகானை மூலம் எங்களை தொடர்பு கொள்ளுங்கள். 3 கிமீ உட்பகுதியில் அல்லது ₹5,000-க்கு மேற்பட்ட ஆர்டர்களுக்கு இலவச டெலிவரி கிடைக்கும்.",
     "btn.proceedToPayment": "கட்டணத்திற்கு செல்லவும்",
     "checkout.termsNote": "தொடர்வதன் மூலம், எங்கள் விதிமுறைகள் மற்றும் தனியுரிமைக் கொள்கைக்கு நீங்கள் சம்மதிக்கிறீர்கள்.",
 
