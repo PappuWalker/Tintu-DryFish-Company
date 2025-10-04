@@ -8,7 +8,7 @@ export function SiteFooter() {
         </div>
         <div>
           <h4 className="font-medium">Links</h4>
-          <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
+          <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
             <li>
               <a href="/shop" className="hover:text-foreground">
                 Shop
@@ -28,7 +28,7 @@ export function SiteFooter() {
         </div>
         <div>
           <h4 className="font-medium">Policies</h4>
-          <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
+          <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
             <li>
               <a href="/refund-policy" className="hover:text-foreground">
                 Refund Policy
@@ -53,7 +53,7 @@ export function SiteFooter() {
         </div>
         <div>
           <h4 className="font-medium">Company</h4>
-          <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
+          <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
             <li>
               <a href="/" className="hover:text-foreground">
                 Tintu Cuts

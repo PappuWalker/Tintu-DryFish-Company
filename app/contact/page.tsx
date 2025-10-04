@@ -1,12 +1,18 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Mail, Phone, MapPin, Clock } from "lucide-react";
+
+import { useState } from "react";
+import Image from "next/image";
+import { Mail, Phone, MapPin } from "lucide-react"; // Keep Mail, Phone, MapPin for contact info
 import { useLanguage } from "@/context/language-context";
 
 export default function ContactPage() {
   const { t } = useLanguage();
+  const [isHovered, setIsHovered] = useState(false);
+
+  const whatsappLink = 'https://chat.whatsapp.com/KDn1mXcSfANFnlD5G2tMDq?mode=ems_copy_t';
+
   return (
     <div className="container mx-auto px-4 py-10">
       <div className="max-w-3xl md:max-w-none">
@@ -14,7 +20,7 @@ export default function ContactPage() {
         <p className="text-muted-foreground mb-8">{t("contact.subtitle", "We'd love to hear from you. Reach out and we'll respond as soon as we can.")}</p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 items-stretch gap-6 lg:gap-8">
         {/* Left: Contact Info */}
         <div className="lg:col-span-1 space-y-4">
           <div className="rounded-2xl border border-border bg-card/80 dark:bg-card/60 backdrop-blur p-5">
@@ -42,32 +48,64 @@ export default function ContactPage() {
           </div>
         </div>
 
-        {/* Right: Form */}
-        <div className="lg:col-span-2">
-          <div className="rounded-2xl border border-border bg-card/80 dark:bg-card/60 backdrop-blur p-5 md:p-6">
-            <h2 className="text-xl md:text-2xl font-semibold mb-4">{t("contact.sendMessage", "Send us a message")}</h2>
-            <form className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-foreground">{t("form.fullName", "Full Name")}</label>
-                <Input type="text" id="name" placeholder={t("form.placeholder.fullName", "John Doe")} />
-              </div>
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-foreground">{t("form.email", "Email")}</label>
-                <Input type="email" id="email" placeholder={t("form.placeholder.email", "you@example.com")} />
-              </div>
-              <div className="md:col-span-2">
-                <label htmlFor="subject" className="block text-sm font-medium text-foreground">{t("form.subject", "Subject")}</label>
-                <Input type="text" id="subject" placeholder={t("form.placeholder.subject", "How can we help?")} />
-              </div>
-              <div className="md:col-span-2">
-                <label htmlFor="message" className="block text-sm font-medium text-foreground">{t("form.message", "Message")}</label>
-                <textarea id="message" rows={5} className="mt-1 w-full rounded-md border border-border bg-background text-foreground placeholder:text-muted-foreground shadow-sm focus:border-primary focus:ring-primary p-2 text-sm" placeholder={t("form.placeholder.message", "Write your message here...")} />
-              </div>
-              <div className="md:col-span-2 flex justify-end pt-2">
-                <Button className="bg-primary text-primary-foreground hover:opacity-90">{t("btn.submit", "Submit")}</Button>
-              </div>
-            </form>
-          </div>
+        {/* Divider with "or" - Mobile (horizontal) */}
+        <div className="lg:hidden flex items-center justify-center my-6">
+          <div className="flex-grow border-t border-border" />
+          <span className="mx-4 text-muted-foreground">{t("contact.or", "or")}</span>
+          <div className="flex-grow border-t border-border" />
+        </div>
+
+        {/* Divider with "or" - Desktop (vertical) */}
+        <div className="hidden lg:flex h-full flex-col items-center justify-center">
+          <div className="flex-1 w-px bg-border" />
+          <span className="my-2 text-muted-foreground">{t("contact.or", "or")}</span>
+          <div className="flex-1 w-px bg-border" />
+        </div>
+
+        {/* Right: WhatsApp Support */}
+        <div className="lg:col-span-1 flex flex-row lg:flex-col items-center lg:items-center justify-start lg:justify-center gap-4 p-5 md:p-6">
+          {/* Mobile/Tablet image: always show hover image, sizes responsive, visible < lg */}
+          <a
+            href={whatsappLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="relative block w-[80px] h-[80px] md:w-[80px] md:h-[80px] lg:hidden flex-shrink-0"
+            aria-label="WhatsApp Support"
+          >
+            <Image
+              src="/images/whatsapp-icon-hover.png"
+              alt="WhatsApp Icon"
+              fill
+              className="absolute inset-0 object-contain"
+            />
+          </a>
+
+          {/* Desktop image: hover behavior retained, visible on lg+ */}
+          <a
+            href={whatsappLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            className="relative hidden lg:block w-[200px] h-[200px] transition-transform duration-200 hover:scale-105"
+            aria-label="WhatsApp Support"
+          >
+            <Image
+              src={isHovered ? "/images/whatsapp-icon-hover.png" : "/images/whatsapp-nonHover.png"}
+              alt="WhatsApp Icon"
+              fill
+              className="absolute inset-0 object-contain"
+            />
+          </a>
+
+          {/* Instruction text - Mobile/Tablet (without 'above') */}
+          <p className="lg:hidden text-left text-muted-foreground max-w-md">
+            {t("contact.whatsappInstructionMobile", "Click the WhatsApp icon and kindly reach out to us there with your inquiries.")}
+          </p>
+          {/* Instruction text - Desktop (with 'above') */}
+          <p className="hidden lg:block text-left lg:text-center text-muted-foreground max-w-md">
+            {t("contact.whatsappInstruction", "Click the WhatsApp icon above and kindly reach out to us there with your inquiries.")}
+          </p>
         </div>
       </div>
 

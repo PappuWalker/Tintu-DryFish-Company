@@ -73,6 +73,9 @@ export const translations = {
     "form.placeholder.message": "Write your message here...",
     "btn.submit": "Submit",
     "contact.mapTitle": "Find Us on the Map",
+    "contact.or": "or",
+    "contact.whatsappInstruction": "Click the WhatsApp icon above and kindly reach out to us there with your inquiries.",
+    "contact.whatsappInstructionMobile": "Click the WhatsApp icon and kindly reach out to us there with your inquiries.",
 
     // Checkout Page
     "checkout.empty.title": "Your Cart is Empty",
@@ -302,6 +305,9 @@ export const translations = {
     "form.placeholder.message": "உங்கள் செய்தியை இங்கே எழுதவும்...",
     "btn.submit": "சமர்ப்பிக்க",
     "contact.mapTitle": "வரைபடத்தில் எங்களை கண்டறியவும்",
+    "contact.or": "அல்லது",
+    "contact.whatsappInstruction": "மேலே உள்ள வாட்ஸ்அப் ஐகானை கிளிக் செய்து, உங்கள் விசாரணைகளுடன் எங்களை அணுகவும்.",
+    "contact.whatsappInstructionMobile": "வாட்ஸ்அப் ஐகானை கிளிக் செய்து, உங்கள் விசாரணைகளுடன் எங்களை அணுகவும்.",
 
     // Checkout Page
     "checkout.empty.title": "உங்கள் வண்டி காலியாக உள்ளது",

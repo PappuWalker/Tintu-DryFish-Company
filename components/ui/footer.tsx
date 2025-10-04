@@ -117,7 +117,11 @@ const NavSection = ({ title, links, index }: { title: string; links: { label: st
     </motion.h3>
     {/* Links container: for the third section (Policies), show two columns on mobile to save vertical space */}
     <div
-      className={index === 2 ? "policies-links grid grid-cols-2 gap-1 -mx-2 px-2 md:flex md:flex-col" : "flex flex-col"}
+      className={
+        index === 2
+          ? "policies-links grid grid-cols-2 gap-x-6 gap-y-2 -mx-2 px-2 md:flex md:flex-col md:gap-2"
+          : "flex flex-col gap-2"
+      }
       style={index === 2 ? { gridTemplateColumns: "repeat(2, minmax(170px, 1fr))" } : undefined}
     >
       {links.map((link, linkIndex) => (
@@ -174,9 +178,9 @@ export default function StickyFooter() {
   const { t } = useLanguage()
   const footerData = buildFooterData(t)
   return (
-    <div className="relative h-[32vh] footer-outer" style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}>
-      <div className="relative h-[calc(100vh+32vh)] -top-[100vh] footer-mid">
-        <div className="h-[32vh] sticky top-[calc(100vh-32vh)] footer-sticky">
+    <div className="relative h-[39vh] footer-outer" style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}>
+      <div className="relative h-[calc(100vh+39vh)] -top-[100vh] footer-mid">
+        <div className="h-[39vh] sticky top-[calc(100vh-39vh)] footer-sticky">
           <motion.div
             initial="hidden"
             animate="visible"
@@ -229,7 +233,7 @@ export default function StickyFooter() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8, duration: 0.8, ease: "easeOut" }}
-              className="flex flex-col md:flex-row justify-between items-start md:items-end relative z-10 gap-1.5 md:gap-2 mt-1"
+              className="flex flex-col md:flex-row justify-between items-start md:items-end relative z-10 gap-1.5 md:gap-2 mt-4"
             >
               <div className="flex-1">
                 {/* On mobile, place brand and social icons in one row (icons to the right). On md+, fall back to block layout. */}
@@ -242,7 +246,7 @@ export default function StickyFooter() {
                       scale: 1.02,
                       transition: { type: "spring", stiffness: 300, damping: 20 },
                     }}
-                    className="text-[8vw] md:text-[6vw] lg:text-[5vw] xl:text-[4vw] leading-[0.8] font-sans bg-gradient-to-r from-foreground via-muted-foreground to-foreground/60 bg-clip-text text-transparent cursor-default footer-brand-title"
+                    className="text-[8vw] md:text-[6vw] lg:text-[5vw] xl:text-[4vw] leading-[0.8] font-sans bg-gradient-to-r from-foreground via-muted-foreground to-foreground/60 bg-clip-text text-transparent cursor-default footer-brand-title mb-2 md:mb-3"
                   >
                     {footerData.title}
                   </motion.h1>
@@ -271,6 +275,7 @@ export default function StickyFooter() {
                   initial={{ opacity: 0, width: 0 }}
                   animate={{ opacity: 1, width: "auto" }}
                   transition={{ delay: 1.2, duration: 0.6 }}
+                  className="mt-3 md:mt-4 space-y-3"
                 >
                   <motion.div
                     className="w-8 md:w-12 h-0.5 bg-gradient-to-r from-primary to-secondary"
