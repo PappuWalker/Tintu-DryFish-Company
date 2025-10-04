@@ -102,6 +102,7 @@ export const translations = {
     "checkout.deliveryAck": "Delivery charges apply based on distance and are paid on delivery. For Cash on Delivery, contact us via the WhatsApp icon on products. Enjoy free delivery within 3 km or on orders above ₹5,000.",
     "btn.proceedToPayment": "Proceed to Payment",
     "checkout.termsNote": "By continuing, you agree to our Terms and Privacy Policy.",
+    "payment.waitConfirm": "Please wait for 5 to 10 seconds on the payment page for the payment to be confirmed; otherwise, your payment won't be processed",
 
     // Shop Page
     "shop.title": "Shop Our Products",
@@ -331,9 +332,10 @@ export const translations = {
     "summary.freeDelivery": "இலவச டெலிவரி",
     "summary.calculatedAtDelivery": "டெலிவரியில் கணக்கிடப்படும்",
     "summary.total": "மொத்தம்",
-    "checkout.deliveryAck": "டெலிவரி கட்டணங்கள் தூரத்தைப் பொறுத்து பொருந்தும் மற்றும் டெலிவரியின் போது செலுத்த வேண்டும். Cash on Delivery வேண்டுமெனில், தயாரிப்பு கார்டுகளில் உள்ள WhatsApp ஐகானை மூலம் எங்களை தொடர்பு கொள்ளுங்கள். 3 கிமீ உட்பகுதியில் அல்லது ₹5,000-க்கு மேற்பட்ட ஆர்டர்களுக்கு இலவச டெலிவரி கிடைக்கும்.",
+    "checkout.deliveryAck": "டெலிவரி கட்டணங்கள் தூரத்தைப் பொறுத்து பொருந்தும் மற்றும் டெலிவரியின் போது செலுத்த வேண்டும். கேஷ் ஆன் டெலிவரி வேண்டுமெனில், தயாரிப்பு கார்டுகளில் உள்ள வாட்ஸ்அப் ஐகானை மூலம் எங்களை தொடர்பு கொள்ளுங்கள். 3 கிமீ உட்பகுதியில் அல்லது ₹5,000-க்கு மேற்பட்ட ஆர்டர்களுக்கு இலவச டெலிவரி கிடைக்கும்.",
     "btn.proceedToPayment": "கட்டணத்திற்கு செல்லவும்",
     "checkout.termsNote": "தொடர்வதன் மூலம், எங்கள் விதிமுறைகள் மற்றும் தனியுரிமைக் கொள்கைக்கு நீங்கள் சம்மதிக்கிறீர்கள்.",
+    "payment.waitConfirm": "கட்டணம் உறுதிப்படுத்தப்படும் வரை கட்டணப் பக்கத்தில் 5 முதல் 10 விநாடிகள் காத்திருக்கவும்; இல்லையெனில் உங்கள் கட்டணம் செயலாக்கப்படாது.",
 
     // Shop Page
     "shop.title": "எங்களின் தயாரிப்புகள்",
