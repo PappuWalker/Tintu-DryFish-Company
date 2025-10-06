@@ -15,6 +15,7 @@ export function CommandMenu({
 }) {
   const router = useRouter()
   const [products, setProducts] = React.useState<Product[]>([]);
+  const [searchValue, setSearchValue] = React.useState("");
 
   React.useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
@@ -40,9 +41,22 @@ export function CommandMenu({
     router.push(href)
   }
 
+  React.useEffect(() => {
+    if (open) {
+      const list = document.querySelector('[cmdk-list]');
+      if (list) {
+        list.scrollTop = 0;
+      }
+    }
+  }, [searchValue, open]);
+
   return (
     <CommandDialog open={open} onOpenChange={onOpenChange}>
-      <CommandInput placeholder="Search products, categories, or pages..." />
+      <CommandInput 
+        placeholder="Search products, categories, or pages..." 
+        value={searchValue}
+        onValueChange={setSearchValue}
+      />
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandGroup heading="Products">

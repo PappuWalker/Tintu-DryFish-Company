@@ -9,81 +9,33 @@ const SQRT_5000 = Math.sqrt(5000);
 
 // Dummy review data (English)
 const reviewsDataEn = [
-  {
-    id: "r1",
-    name: "Anita",
-    text: "Super fresh and quick delivery. The salmon was perfect for grilling!",
-    rating: 5,
-    imgSrc: "https://i.pravatar.cc/150?img=1" // Placeholder image
-  },
-  {
-    id: "r2",
-    name: "Rahul",
-    text: "Great selection of dry fish and frozen prawns. Will order again.",
-    rating: 4,
-    imgSrc: "https://i.pravatar.cc/150?img=2" // Placeholder image
-  },
-  {
-    id: "r3",
-    name: "Meera",
-    text: "Loved the fresh cuts—cleaned and ready to cook. Highly recommend Tintu Cuts.",
-    rating: 5,
-    imgSrc: "https://i.pravatar.cc/150?img=3" // Placeholder image
-  },
-  {
-    id: "r4",
-    name: "Priya",
-    text: "The quality of the fish is consistently excellent. Always fresh!",
-    rating: 5,
-    imgSrc: "https://i.pravatar.cc/150?img=4"
-  },
-  {
-    id: "r5",
-    name: "Suresh",
-    text: "Fast delivery and well-packaged. The prawns were delicious.",
-    rating: 4,
-    imgSrc: "https://i.pravatar.cc/150?img=5"
-  },
-  {
-    id: "r6",
-    name: "Deepa",
-    text: "Tintu Cuts has become my go-to for seafood. Never disappointed.",
-    rating: 5,
-    imgSrc: "https://i.pravatar.cc/150?img=6"
-  },
-  {
-    id: "r7",
-    name: "Arjun",
-    text: "Excellent service and fresh products. Highly satisfied!",
-    rating: 5,
-    imgSrc: "https://i.pravatar.cc/150?img=7"
-  },
-  {
-    id: "r8",
-    name: "Kavya",
-    text: "The dry fish selection is amazing. Authentic taste.",
-    rating: 4,
-    imgSrc: "https://i.pravatar.cc/150?img=8"
-  },
+  { id: "r1", name: "Anita", text: "Super fresh and quick delivery. The salmon was perfect for grilling!", rating: 5, imgSrc: "https://plus.unsplash.com/premium_photo-1723568666044-1b066e26b1fb?q=80&w=721&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+  { id: "r2", name: "Rahul", text: "Great selection of dry fish and frozen prawns. Will order again.", rating: 4, imgSrc: "https://wallpapers.com/images/high/ms-dhoni-dark-blue-sunglasses-fva21cjtsrgvv6p8.webp" },
+  { id: "r3", name: "Meera", text: "Loved the fresh cuts—cleaned and ready to cook. Highly recommend Tintu Cuts.", rating: 5, imgSrc: "https://images.unsplash.com/photo-1622782262026-6a327a45014f?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+  { id: "r4", name: "Priya", text: "The quality of the fish is consistently excellent. Always fresh!", rating: 5, imgSrc: "https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2F9%2F9f%2FBeautiful_Red_Rose.jpg&f=1&nofb=1&ipt=89bcb4c4450fe8720ec04097cbde50388753e00994281774486cd187282de9bf" },
+  { id: "r5", name: "Suresh", text: "Fast delivery and well-packaged. The prawns were delicious.", rating: 4, imgSrc: "https://images.unsplash.com/photo-1598096969068-7f52cac10c83?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+  { id: "r6", name: "Deepa", text: "Tintu Cuts has become my go-to for seafood. Never disappointed.", rating: 5, imgSrc: "https://images.unsplash.com/photo-1706943262117-b35de4ba50b4?q=80&w=701&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+  { id: "r7", name: "Arjun", text: "Excellent service and fresh products. Highly satisfied!", rating: 5, imgSrc: "https://plus.unsplash.com/premium_photo-1661963991154-cecd5254a979?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+  { id: "r8", name: "Kavya", text: "The dry fish selection is amazing. Authentic taste.", rating: 4, imgSrc: "https://images.unsplash.com/photo-1611407940821-896e88707f70?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OTl8fGluZGlhbiUyMGdpcmx8ZW58MHx8MHx8fDA%3D" },
 ];
 
 // Dummy review data (Tamil)
 const reviewsDataTa = [
-  { id: "r1", name: "அனிதா", text: "மிகவும் புது மீன் மற்றும் வேகமான டெலிவரி. சால்மன் கிரில்லுக்கு சரியானது!", rating: 5, imgSrc: "https://i.pravatar.cc/150?img=1" },
-  { id: "r2", name: "ராகுல்", text: "உலர் மீன் மற்றும் உறைந்த இறால் வகைகள் அருமை. மீண்டும் ஆர்டர் செய்வேன்.", rating: 4, imgSrc: "https://i.pravatar.cc/150?img=2" },
-  { id: "r3", name: "மீரா", text: "புதிய வெட்டுகள்—சுத்தமாகவும் உடனே சமைக்க தயாராகவும். டிண்டு கட்ட்ஸை பரிந்துரைக்கிறேன்.", rating: 5, imgSrc: "https://i.pravatar.cc/150?img=3" },
-  { id: "r4", name: "பிரியா", text: "மீனின் தரம் எப்போதும் சிறந்தது. எப்போதும் புது!", rating: 5, imgSrc: "https://i.pravatar.cc/150?img=4" },
-  { id: "r5", name: "சுரேஷ்", text: "வேகமான டெலிவரி மற்றும் நன்றாக பேக் செய்யப்பட்டது. இறால் ருசியாக இருந்தது.", rating: 4, imgSrc: "https://i.pravatar.cc/150?img=5" },
-  { id: "r6", name: "தீபா", text: "டிண்டு கட்ட்ஸ் என் கடலுணவுக்கான முதன்மை தேர்வாகிவிட்டது. ஒருபோதும் ஏமாற்றவில்லை.", rating: 5, imgSrc: "https://i.pravatar.cc/150?img=6" },
-  { id: "r7", name: "அர்ஜுன்", text: "சிறந்த சேவை மற்றும் புது தயாருப்புகள். மிகவும் திருப்தி!", rating: 5, imgSrc: "https://i.pravatar.cc/150?img=7" },
-  { id: "r8", name: "கவ்யா", text: "உலர் மீன் வகைகள் அற்புதம். இயல்பான சுவை.", rating: 4, imgSrc: "https://i.pravatar.cc/150?img=8" },
+  { id: "r1", name: "அனிதா", text: "மிகவும் புது மீன் மற்றும் வேகமான டெலிவரி. சால்மன் கிரில்லுக்கு சரியானது!", rating: 5, imgSrc: "https://plus.unsplash.com/premium_photo-1723568666044-1b066e26b1fb?q=80&w=721&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+  { id: "r2", name: "ராகுல்", text: "உலர் மீன் மற்றும் உறைந்த இறால் வகைகள் அருமை. மீண்டும் ஆர்டர் செய்வேன்.", rating: 4, imgSrc: "https://wallpapers.com/images/high/ms-dhoni-dark-blue-sunglasses-fva21cjtsrgvv6p8.webp" },
+  { id: "r3", name: "மீரா", text: "புதிய வெட்டுகள்—சுத்தமாகவும் உடனே சமைக்க தயாராகவும். டிண்டு கட்ட்ஸை பரிந்துரைக்கிறேன்.", rating: 5, imgSrc: "https://images.unsplash.com/photo-1622782262026-6a327a45014f?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+  { id: "r4", name: "பிரியா", text: "மீனின் தரம் எப்போதும் சிறந்தது. எப்போதும் புது!", rating: 5, imgSrc: "https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2F9%2F9f%2FBeautiful_Red_Rose.jpg&f=1&nofb=1&ipt=89bcb4c4450fe8720ec04097cbde50388753e00994281774486cd187282de9bf" },
+  { id: "r5", name: "சுரேஷ்", text: "வேகமான டெலிவரி மற்றும் நன்றாக பேக் செய்யப்பட்டது. இறால் ருசியாக இருந்தது.", rating: 4, imgSrc: "https://images.unsplash.com/photo-1598096969068-7f52cac10c83?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+  { id: "r6", name: "தீபா", text: "டிண்டு கட்ட்ஸ் என் கடலுணவுக்கான முதன்மை தேர்வாகிவிட்டது. ஒருபோதும் ஏமாற்றவில்லை.", rating: 5, imgSrc: "https://images.unsplash.com/photo-1706943262117-b35de4ba50b4?q=80&w=701&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+  { id: "r7", name: "அர்ஜுன்", text: "சிறந்த சேவை மற்றும் புது தயாருப்புகள். மிகவும் திருப்தி!", rating: 5, imgSrc: "https://plus.unsplash.com/premium_photo-1661963991154-cecd5254a979?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+  { id: "r8", name: "கவ்யா", text: "உலர் மீன் வகைகள் அற்புதம். இயல்பான சுவை.", rating: 4, imgSrc: "https://images.unsplash.com/photo-1611407940821-896e88707f70?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OTl8fGluZGlhbiUyMGdpcmx8ZW58MHx8MHx8fDA%3D" },
 ];
 
 const mapReviews = (data: typeof reviewsDataEn) => data.map(review => ({
   tempId: Math.random(),
   testimonial: review.text,
   by: `${review.name}, ${review.rating} ★`,
-  imgSrc: review.imgSrc,
+  imgSrc: review.imgSrc, // Use the imgSrc from the data directly
 }));
 
 type Testimonial = {
@@ -142,7 +94,17 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
       <img
         src={testimonial.imgSrc}
         alt={`${testimonial.by.split(',')[0]}`}
-        className="mb-4 h-14 w-12 bg-muted object-cover object-top"
+        className="mb-4 h-16 w-16 rounded-full bg-muted object-cover object-center border border-border"
+        loading="lazy"
+        referrerPolicy="no-referrer"
+        onError={(e) => {
+          const name = (testimonial.by?.split(',')[0] || 'User').trim();
+          const fallback = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&size=64&background=E5E7EB&color=111827`;
+          const img = e.currentTarget as HTMLImageElement;
+          if (img.src !== fallback) {
+            img.src = fallback;
+          }
+        }}
         style={{
           boxShadow: "3px 3px 0px hsl(var(--background))"
         }}
@@ -202,6 +164,8 @@ export const StaggeredReviews: React.FC = () => {
   useEffect(() => {
     setTestimonialsList(mapReviews(lang === 'ta' ? reviewsDataTa : reviewsDataEn));
   }, [lang]);
+
+  // No runtime fetch needed for static stock images (Unsplash Source)
 
   useEffect(() => {
     const interval = setInterval(() => {
