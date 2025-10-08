@@ -2,7 +2,8 @@
 
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Product } from "@/lib/products"
+import { Product } from "@/lib/products";
+import { ProductSkeleton } from "./product-skeleton";
 import GlareHover from './GlareHover'
 import { useCart } from "@/context/cart-context"
 import { useCallback, useState } from "react";
@@ -12,7 +13,7 @@ import { MessageCircle } from "lucide-react";
 import { useLanguage } from "@/context/language-context"
 import { useIsMobile } from "@/hooks/use-mobile";
 
-export function ProductSection({ title, products }: { title: string; products: Product[] }) {
+export function ProductSection({ title, products, isLoading }: { title:string; products: Product[]; isLoading?: boolean }) {
   const { cart, addToCart, updateQuantity } = useCart();
   const { t, lang } = useLanguage() as any;
 
@@ -157,9 +158,9 @@ export function ProductSection({ title, products }: { title: string; products: P
         </Link>
       </div>
       <div className="grid gap-4 grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
-        {products.map((p, index) => (
-          <ProductCard key={p.id ?? index} p={p} />
-        ))}
+        {isLoading
+          ? Array.from({ length: 8 }).map((_, index) => <ProductSkeleton key={index} />)
+          : products.map((p, index) => <ProductCard key={p.id ?? index} p={p} />)}
       </div>
     </div>
   );

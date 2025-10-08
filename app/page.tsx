@@ -12,12 +12,15 @@ import { useLanguage } from "@/context/language-context"
 
 export default function HomePage() {
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const { t } = useLanguage();
 
   useEffect(() => {
     const loadFeaturedProducts = async () => {
+      setIsLoading(true);
       const products = await getRandomProducts(8);
       setFeaturedProducts(products);
+      setIsLoading(false);
     };
     loadFeaturedProducts();
   }, []);
@@ -39,6 +42,7 @@ export default function HomePage() {
         <ProductSection
           title={t("home.featuredProducts", "Featured Products")}
           products={featuredProducts}
+          isLoading={isLoading}
         />
       </section>
 

@@ -3,7 +3,8 @@
 import Link from "next/link"
 import { useState, useEffect } from "react";
 import { CustomButton } from "@/components/ui/custom-button"
-import { fetchProducts, Product } from "@/lib/products"
+import { fetchProducts, Product } from "@/lib/products";
+import { CategorySkeleton } from "./category-skeleton";
 import GlareHover from './GlareHover'
 import { useLanguage } from "@/context/language-context"
 
@@ -17,16 +18,14 @@ const getCategoryIcon = (categoryKey: string) => {
 }
 
 export function CategoriesGrid() {
-  const [allProducts, setAllProducts] = useState<Product[]>([]);
-  const [uniqueCategories, setUniqueCategories] = useState<
-    { key: string; label: string; image: string }[]
-  >([]);
+  const [uniqueCategories, setUniqueCategories] = useState<{ key: string; label: string; image: string }[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const { t } = useLanguage();
 
   useEffect(() => {
     const loadProducts = async () => {
+      setIsLoading(true);
       const fetchedProducts = await fetchProducts();
-      setAllProducts(fetchedProducts);
 
       const categoriesFromApi = Array.from(new Set(fetchedProducts.map(p => p.category)))
         .filter((category) => {
@@ -43,6 +42,7 @@ export function CategoriesGrid() {
         };
       });
       setUniqueCategories(categoriesData);
+      setIsLoading(false);
     };
     loadProducts();
   }, []);
@@ -58,7 +58,9 @@ export function CategoriesGrid() {
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 categories-grid">
-      {uniqueCategories.map((cat) => (
+      {isLoading
+        ? Array.from({ length: 4 }).map((_, index) => <CategorySkeleton key={index} />)
+        : uniqueCategories.map((cat) => (
         <Link href={`/category/${encodeURIComponent(cat.key.replace(/\s+/g, '-'))}`} key={cat.key}>
           <GlareHover
             glareColor="#ffffff"
