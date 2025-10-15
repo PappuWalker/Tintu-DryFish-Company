@@ -6,11 +6,12 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function slugify(text: string) {
-  return text
+  const baseSlug = text
     .toString()
     .toLowerCase()
     .trim()
-    .replace(/\s+/g, '-')      // Replace spaces with -
-    .replace(/[^\w-]+/g, '')   // Remove all non-word chars
-    .replace(/--+/g, '-');     // Replace multiple - with single -
+    .replace(/\s+/g, '-');      // Replace spaces with -
+
+  // Encode the entire slug to handle special characters like brackets
+  return encodeURIComponent(baseSlug);
 }

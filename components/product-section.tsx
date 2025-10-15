@@ -17,13 +17,13 @@ export function ProductSection({ title, products, isLoading }: { title:string; p
   const { cart, addToCart, updateQuantity } = useCart();
   const { t, lang } = useLanguage() as any;
 
-  const handleAdd = useCallback((e: React.MouseEvent, p: Product, weightKg: 0.5 | 1 | 1.5 | 2) => {
+  const handleAdd = useCallback((e: React.MouseEvent, p: Product, weightKg: 0.25 | 0.5 | 1 | 1.5 | 2) => {
     e.stopPropagation();
     // Add 1 unit for the selected weight variant (unit here means one pack of selected kg)
     addToCart(p, 1, weightKg);
   }, [addToCart]);
 
-  const handleUpdateQuantity = useCallback((e: React.MouseEvent, p: Product, weightKg: 0.5 | 1 | 1.5 | 2, quantity: number) => {
+  const handleUpdateQuantity = useCallback((e: React.MouseEvent, p: Product, weightKg: 0.25 | 0.5 | 1 | 1.5 | 2, quantity: number) => {
     e.preventDefault();
     e.stopPropagation();
     updateQuantity(p.name, weightKg, quantity);
@@ -31,7 +31,7 @@ export function ProductSection({ title, products, isLoading }: { title:string; p
 
   function ProductCard({ p }: { p: Product }) {
     const isMobile = useIsMobile();
-    const [weightKg, setWeightKg] = useState<0.5 | 1 | 1.5 | 2>(1);
+    const [weightKg, setWeightKg] = useState<0.25 | 0.5 | 1 | 1.5 | 2>(1);
     const cartItem = cart.find((item) => item.name === p.name && item.weightKg === weightKg);
     const displayName = (lang === 'ta' && p.name_ta) ? p.name_ta : p.name;
     const outOfStock = typeof p.inventory === 'number' && p.inventory <= 0;
@@ -76,10 +76,16 @@ export function ProductSection({ title, products, isLoading }: { title:string; p
               {/* Weight selector: below price on mobile; inline on md+ */}
               <div className="flex items-center gap-1 flex-wrap">
                 <button
+                  className={`${isMobile ? 'px-1.5 py-0.5 text-[11px]' : 'px-3 py-1 text-sm'} rounded border ${weightKg === 0.25 ? 'bg-primary text-primary-foreground border-primary' : 'border-border text-foreground/80'}`}
+                  onClick={(e) => { e.preventDefault(); e.stopPropagation(); setWeightKg(0.25); }}
+                >
+                  250 g
+                </button>
+                <button
                   className={`${isMobile ? 'px-1.5 py-0.5 text-[11px]' : 'px-3 py-1 text-sm'} rounded border ${weightKg === 0.5 ? 'bg-primary text-primary-foreground border-primary' : 'border-border text-foreground/80'}`}
                   onClick={(e) => { e.preventDefault(); e.stopPropagation(); setWeightKg(0.5); }}
                 >
-                  500g
+                  500 g
                 </button>
                 <button
                   className={`${isMobile ? 'px-1.5 py-0.5 text-[11px]' : 'px-3 py-1 text-sm'} rounded border ${weightKg === 1 ? 'bg-primary text-primary-foreground border-primary' : 'border-border text-foreground/80'}`}
