@@ -116,7 +116,11 @@ export default function CheckoutPage() {
     }
   }
 
-  const formatWeight = (w: number) => (w === 0.5 ? "500 g" : `${w} kg`);
+  const formatWeight = (w: number) => {
+    if (w === 0.25) return "250 g";
+    if (w === 0.5) return "500 g";
+    return `${w} kg`;
+  };
 
   return (
     <div className="container mx-auto px-4 py-10">

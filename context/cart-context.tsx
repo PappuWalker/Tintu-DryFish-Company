@@ -5,14 +5,14 @@ import { Product } from '@/lib/products';
 
 interface CartItem extends Product {
   quantity: number; // number of units for this weight variant
-  weightKg: 0.5 | 1 | 1.5 | 2; // variant weight in kg
+  weightKg: 0.25 | 0.5 | 1 | 1.5 | 2; // variant weight in kg
 }
 
 interface CartContextType {
   cart: CartItem[];
-  addToCart: (product: Product, units: number, weightKg: 0.5 | 1 | 1.5 | 2) => void;
-  removeFromCart: (productName: string, weightKg: 0.5 | 1 | 1.5 | 2) => void;
-  updateQuantity: (productName: string, weightKg: 0.5 | 1 | 1.5 | 2, quantity: number) => void;
+  addToCart: (product: Product, units: number, weightKg: 0.25 | 0.5 | 1 | 1.5 | 2) => void;
+  removeFromCart: (productName: string, weightKg: 0.25 | 0.5 | 1 | 1.5 | 2) => void;
+  updateQuantity: (productName: string, weightKg: 0.25 | 0.5 | 1 | 1.5 | 2, quantity: number) => void;
   clearCart: () => void;
   cartTotal: number;
   cartItemCount: number;
@@ -23,7 +23,7 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
 
-  const addToCart = (product: Product, units: number, weightKg: 0.5 | 1 | 1.5 | 2) => {
+  const addToCart = (product: Product, units: number, weightKg: 0.25 | 0.5 | 1 | 1.5 | 2) => {
     setCart((prevCart) => {
       const existingItem = prevCart.find((item) => item.name === product.name && item.weightKg === weightKg);
       if (existingItem) {
@@ -41,11 +41,11 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     });
   };
 
-  const removeFromCart = (productName: string, weightKg: 0.5 | 1 | 1.5 | 2) => {
+  const removeFromCart = (productName: string, weightKg: 0.25 | 0.5 | 1 | 1.5 | 2) => {
     setCart((prevCart) => prevCart.filter((item) => !(item.name === productName && item.weightKg === weightKg)));
   };
 
-  const updateQuantity = (productName: string, weightKg: 0.5 | 1 | 1.5 | 2, quantity: number) => {
+  const updateQuantity = (productName: string, weightKg: 0.25 | 0.5 | 1 | 1.5 | 2, quantity: number) => {
     setCart((prevCart) =>
       prevCart.map((item) => {
         if (item.name === productName && item.weightKg === weightKg) {

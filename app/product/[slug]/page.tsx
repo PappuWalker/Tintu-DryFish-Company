@@ -16,7 +16,7 @@ export default function ProductDetailPage() {
   const { t, lang } = useLanguage() as any;
   const isMobile = useIsMobile();
   const [quantity, setQuantity] = useState(1);
-  const [weightKg, setWeightKg] = useState<0.5 | 1 | 1.5 | 2>(1);
+  const [weightKg, setWeightKg] = useState<0.25 | 0.5 | 1 | 1.5 | 2>(1);
   const [product, setProduct] = useState<Product | null>(null);
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
   const [justAdded, setJustAdded] = useState(false);
@@ -148,6 +148,13 @@ export default function ProductDetailPage() {
           <div className="flex items-center gap-2 mb-6">
             <span className="text-sm text-muted-foreground">Weight</span>
             <div className="flex items-center gap-2">
+              <Button
+                variant={weightKg === 0.25 ? "default" : "outline"}
+                size={isMobile ? "sm" : "default"}
+                onClick={() => setWeightKg(0.25)}
+              >
+                250 g
+              </Button>
               <Button
                 variant={weightKg === 0.5 ? "default" : "outline"}
                 size={isMobile ? "sm" : "default"}
