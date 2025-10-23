@@ -62,6 +62,7 @@ export function CommandMenu({
         <CommandGroup heading="Products">
           {products.slice(0, 50).map((p) => {
             const slug = encodeURIComponent(p.name.toLowerCase().replace(/\s+/g, '-'))
+            const outOfStock = typeof p.inventory === 'number' && p.inventory <= 0;
             return (
               <CommandItem
                 key={p.id}
@@ -80,8 +81,12 @@ export function CommandMenu({
                     <div className="text-xs text-muted-foreground capitalize truncate">{p.category}</div>
                   </div>
                   <div className="flex flex-col items-end gap-1">
-                    <span className="text-sm font-semibold">₹{p.price.toFixed(2)}</span>
-                    <span className="inline-flex items-center rounded bg-emerald-500/10 px-2 py-0.5 text-[10px] font-medium text-emerald-600 ring-1 ring-emerald-500/20">In stock</span>
+                    <span className="text-sm font-semibold">₹{(p.price * 0.25).toFixed(2)}</span>
+                    {outOfStock ? (
+                      <span className="inline-flex items-center rounded bg-red-500/10 px-2 py-0.5 text-[10px] font-medium text-red-600 ring-1 ring-red-500/20">Out of Stock</span>
+                    ) : (
+                      <span className="inline-flex items-center rounded bg-emerald-500/10 px-2 py-0.5 text-[10px] font-medium text-emerald-600 ring-1 ring-emerald-500/20">In stock</span>
+                    )}
                   </div>
                 </div>
               </CommandItem>

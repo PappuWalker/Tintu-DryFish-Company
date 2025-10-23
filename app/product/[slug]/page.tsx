@@ -16,7 +16,7 @@ export default function ProductDetailPage() {
   const { t, lang } = useLanguage() as any;
   const isMobile = useIsMobile();
   const [quantity, setQuantity] = useState(1);
-  const [weightKg, setWeightKg] = useState<0.25 | 0.5 | 1 | 1.5 | 2>(1);
+const [weightKg, setWeightKg] = useState<0.25 | 0.5 | 1 | 1.5 | 2>(0.25);
   const [product, setProduct] = useState<Product | null>(null);
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
   const [justAdded, setJustAdded] = useState(false);
@@ -81,7 +81,7 @@ export default function ProductDetailPage() {
           {/* On-sale badge removed as sale flags/prices are no longer used */}
           {outOfStock && (
             <span
-              className="absolute top-12 right-4 text-white text-sm font-semibold px-3 py-1 rounded"
+              className="absolute inset-x-0 top-1/2 -translate-y-1/2 text-center text-white text-lg font-semibold px-3 py-1 rounded"
               style={{ backgroundColor: '#d30c19' }}
             >
               {t('badge.outOfStock', 'Out of Stock')}
@@ -188,6 +188,7 @@ export default function ProductDetailPage() {
           <Button
             className="w-full bg-primary text-primary-foreground hover:opacity-90 disabled:opacity-70"
             onClick={handleAddToCart}
+            disabled={outOfStock}
           >
             <ShoppingCart className="h-5 w-5 mr-2" /> {justAdded ? t("product.addedToCart", "Added to Cart") : (isMobile ? t("product.addCart", "add cart") : t("product.addToCart", "add to cart"))}
           </Button>

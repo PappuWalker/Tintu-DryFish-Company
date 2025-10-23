@@ -31,7 +31,7 @@ export function ProductSection({ title, products, isLoading }: { title:string; p
 
   function ProductCard({ p }: { p: Product }) {
     const isMobile = useIsMobile();
-    const [weightKg, setWeightKg] = useState<0.25 | 0.5 | 1 | 1.5 | 2>(1);
+    const [weightKg, setWeightKg] = useState<0.25 | 0.5 | 1 | 1.5 | 2>(0.25);
     const cartItem = cart.find((item) => item.name === p.name && item.weightKg === weightKg);
     const displayName = (lang === 'ta' && p.name_ta) ? p.name_ta : p.name;
     const outOfStock = typeof p.inventory === 'number' && p.inventory <= 0;
